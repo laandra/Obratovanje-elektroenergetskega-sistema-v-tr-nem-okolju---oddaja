@@ -10,3 +10,6 @@ __pycache__/
 New pricing functions/__pycache__/
 
 *.pyc
+
+# Local virtual environment
+.venv/
