@@ -106,9 +106,19 @@ FULL_PERIOD_GAP_REL = 0.001
 FULL_PERIOD_TIME_LIMIT_S = 900
 
 
-def full_period_solver(gap_rel=FULL_PERIOD_GAP_REL, time_limit_s=FULL_PERIOD_TIME_LIMIT_S):
-    """CBC with the whole-period gap and time limit every study solves at."""
-    return pulp.PULP_CBC_CMD(msg=False, gapRel=float(gap_rel), timeLimit=float(time_limit_s))
+def full_period_solver(gap_rel=FULL_PERIOD_GAP_REL, time_limit_s=FULL_PERIOD_TIME_LIMIT_S,
+                        threads=None):
+    """CBC with the whole-period gap and time limit every study solves at.
+
+    `threads` lets CBC's own branch-and-bound run multi-threaded on one solve;
+    left at `None` it reproduces every study's past behaviour (CBC's single-
+    threaded default), so this is opt-in per caller rather than a repository-
+    wide change.
+    """
+    kwargs = dict(msg=False, gapRel=float(gap_rel), timeLimit=float(time_limit_s))
+    if threads is not None:
+        kwargs["threads"] = int(threads)
+    return pulp.PULP_CBC_CMD(**kwargs)
 
 
 def step_energy_kwh(capacity_kwh, c_rate=C_RATE, inverter_max_kw=INVERTER_MAX_KW,
