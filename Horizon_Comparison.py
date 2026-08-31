@@ -30,11 +30,22 @@ the regulatory floor and the connection-power ceiling both need a connection
 agreement the profiles do not carry -- and is derived from the profile the
 DISPATCH achieved, not from the no-battery one: a household whose battery
 flattens its peaks re-agrees its dogovorjena moc down to the flattened figure and
-is then billed against the line it made. `full_period` decides that contract
-inside its own LP, the rolling strategies converge to it, and the no-battery
-reference keeps the no-battery contract, which is its own. The first month has no
-predecessor and `AGREED_POWER_BOOTSTRAP = "cyclic"` gives it the last complete
-month of the same dataset.
+is then billed against the line it made. The no-battery reference keeps the
+no-battery contract, which is its own. The first month has no predecessor and
+`AGREED_POWER_BOOTSTRAP = "cyclic"` gives it the last complete month of the same
+dataset.
+
+Only `full_period` can DECIDE that contract: with a one-month lag, the month a
+dispatch's peaks set is billed in a month a one-day horizon does not contain, so
+the contract enters its LP as a variable and comes out optimal. The shorter
+horizons are not therefore stuck with a constant. They roll the contract forward
+one month at a time off their own executed meter (`AGREED_POWER_ROLL`), and they
+price the contract they are setting inside every sub-solve as a shadow price
+built from the peaks the month has already metered (`AGREED_POWER_SURROGATE`).
+Neither reads an interval the controller has not executed, which is the point:
+what a short horizon lacks is knowledge of the FUTURE, and a household's own
+past peaks are not that. The gap that remains is the price of foresight, not the
+price of a bookkeeping shortcut.
 
 The year is always closed: both SOC modes start at 50 % and the final period must
 end at 50 %, so a free-terminal strategy cannot sell off its opening charge and
@@ -73,6 +84,7 @@ from MILP_Household import (  # noqa: F401
 )
 from Pricing_Functions import (
     InvoiceBuilder,
+    PAKETI,
     calculate_interval_price,
     invoice_total,
     oznaka_razporeda_moci,
@@ -121,16 +133,47 @@ CONSUMPTION_COLUMN = "Consumption_Volume_kWh"
 #
 # `slug` is the results-file suffix; the default list carries none.
 PRICING_SCHEME = "si_samooskrba"
+
+
+def _scheme_for(paket_id):
+    """The settlement scheme a price list is signed under.
+
+    Not a free choice, and not one constant for the whole study: a list that
+    REQUIRES a self-consumption device is settled under samooskrba, one that
+    does not under plain supply, and the invoice path rejects the cross outright
+    (`si_invoice.NezdruzljivPaket` -- a household cannot both hold a samooskrba
+    device and sign a no-samooskrba shelf). Interval pricing does NOT reject it,
+    because with no generation the samooskrba overlay has nothing to act on and
+    the two schemes bill the same number; only the invoice notices. So the
+    scheme is read off the catalogue here rather than repeated per entry, where
+    a plain-supply list once inherited the samooskrba constant and produced a
+    household no invoice could be issued for.
+    """
+    return PRICING_SCHEME if PAKETI[paket_id].zahteva_pv else "si_dobava"
 TARIFFS = {
-    "Dinamični": {"paket_id": "GENI_SAMO_DINAMICNI", "scheme": PRICING_SCHEME, "slug": None,
+    "Dinamični": {"paket_id": "GENI_SAMO_DINAMICNI", "scheme": _scheme_for("GENI_SAMO_DINAMICNI"), "slug": None,
                   "structure": "dynamic (SIPX)", "buyback": True, "scope": "all"},
-    "Aktivni":   {"paket_id": "GENI_SAMO_AKTIVNI",   "scheme": PRICING_SCHEME, "slug": "aktivni",
+    "Aktivni":   {"paket_id": "GENI_SAMO_AKTIVNI",   "scheme": _scheme_for("GENI_SAMO_AKTIVNI"), "slug": "aktivni",
                   "structure": "4 time blocks", "buyback": True, "scope": "all"},
-    "Redni 1T":  {"paket_id": "GENI_SAMO_REDNI",     "scheme": PRICING_SCHEME, "slug": "redni1t",
+    "Redni 1T":  {"paket_id": "GENI_SAMO_REDNI",     "scheme": _scheme_for("GENI_SAMO_REDNI"), "slug": "redni1t",
                   "structure": "flat (ET)", "buyback": True, "scope": "all"},
-    "Redni 2T":  {"paket_id": "GENI_REDNI",          "scheme": PRICING_SCHEME, "slug": "redni2t",
+    "Redni 2T":  {"paket_id": "GENI_REDNI",          "scheme": _scheme_for("GENI_REDNI"), "slug": "redni2t",
                   "structure": "two-tariff (VT/MT)", "buyback": False, "scope": "no_pv"},
 }
+# The scope has to agree with the scheme, or a job the batch builds is one the
+# invoice refuses: a list requiring a self-consumption device may not be offered
+# to a group without a roof, and a plain-supply list may not be offered to one
+# with. Checked here, at import, because the alternative is finding out four
+# hours into a batch.
+for _tariff, _cfg in TARIFFS.items():
+    _needs_pv = PAKETI[_cfg["paket_id"]].zahteva_pv
+    if _needs_pv and _cfg["scope"] == "no_pv":
+        raise ValueError(f"{_tariff!r} needs a self-consumption device but is scoped no_pv")
+    if not _needs_pv and _cfg["scope"] != "no_pv":
+        raise ValueError(f"{_tariff!r} is a plain-supply list and must be scoped no_pv, "
+                         f"not {_cfg['scope']!r}")
+del _tariff, _cfg, _needs_pv
+
 TARIFF_ORDER = list(TARIFFS)
 DEFAULT_TARIFF = "Dinamični"
 PAKET_ID = TARIFFS[DEFAULT_TARIFF]["paket_id"]   # kept for callers that want one id
@@ -177,6 +220,38 @@ AGREED_POWER_N_PEAKS = 5
 # dominant lever on what a shaved peak is worth -- at 1 it buys one month of a
 # lower charge, at 12 a year -- so it is worth running both.
 AGREED_POWER_N_MONTHS_WINDOW = 1
+# --- How a rolling horizon gets a contract it cannot decide -----------------
+# Only `full_period` can put the contract in the LP: with a one-month lag the
+# month a dispatch's peaks set is billed in a month a one-day horizon does not
+# contain. The two settings below are how every shorter horizon copes, and both
+# are CAUSAL -- they read the meter behind them, never the data ahead.
+#
+# "causal"      roll the contract forward one month at a time: execute a month,
+#               read its per-block peaks off the executed meter trace, and fix
+#               the next month's contract from them before that month starts.
+#               The contract of month m depends only on months before m, so the
+#               map is lower-triangular and forward substitution solves it
+#               EXACTLY in one pass -- the same fixed point the loop below
+#               chases, at one dispatch instead of up to AGREED_POWER_MAX_ITER.
+# "fixed_point" the previous behaviour: re-roll the whole year under a static
+#               contract until the contract and the dispatch agree
+#               (`Environment.converge_agreed_power`). It is Jacobi iteration on
+#               a triangular system, so it needs as many passes as there are
+#               months and a 12-month horizon does not converge in 6; kept for
+#               comparison, and for a household the causal roll cannot serve.
+AGREED_POWER_ROLL = "causal"
+# Price next month's contract INSIDE every sub-solve, as a shadow price built
+# from the peaks the current month has already metered
+# (`MILP_Household.add_online_agreed_power_surrogate`). Without it a rolling
+# solve sees the contract as a constant and has no reason to shave a peak it is
+# not already paying excess power on, which is the horizon's real handicap on
+# the power charge -- and not one that needs tomorrow's weather to fix.
+AGREED_POWER_SURROGATE = True
+# A multiplier on that shadow price. 1.0 is the tariff's own value of a kW;
+# below 1 buys back some of the greedy surrogate's early-month over-shaving at
+# the cost of shaving less. Only ever a planner weight -- it cannot reach a bill.
+AGREED_POWER_SURROGATE_WEIGHT = 1.0
+
 # `full_period` puts the contract in the LP and solves it exactly at every
 # window setting: the sum-of-k-largest epigraph is one continuous variable per
 # pooled interval and no new binaries, and a full year measured FASTER than the
@@ -197,6 +272,33 @@ AGREED_POWER_TAG = oznaka_razporeda_moci(
 )
 # What rows without the column were priced under.
 LEGACY_AGREED_POWER_TAG = "flat_peak_over_1.5"
+
+# How the row's strategy came by the contract it was billed under -- a separate
+# column from the rule above, because it is not a rule. `AGREED_POWER_TAG` says
+# what the operator does; this says what the controller knew when it did it, and
+# only a strategy that DISPATCHES under a rolling contract has an answer. So a
+# no-battery bill and a rule-based controller keep their caches when the roll
+# changes, and so does `full_period`, which does not roll the contract at all --
+# it solves it (`in_lp`).
+CONTRACT_ROLL_TAG = AGREED_POWER_ROLL + (
+    "" if not AGREED_POWER_SURROGATE
+    else "+surrogate" if AGREED_POWER_SURROGATE_WEIGHT == 1.0
+    else f"+surrogate{AGREED_POWER_SURROGATE_WEIGHT:g}"
+)
+# What rows without the column were produced under: the whole-roll fixed point,
+# with the contract a constant inside every sub-solve.
+LEGACY_CONTRACT_ROLL_TAG = "fixed_point"
+
+
+def current_contract_roll_tags():
+    """The `Contract_Roll` values a row of THIS study may carry.
+
+    `in_lp` is always current: a solve that decides the contract is not affected
+    by how a rolling one would have obtained it.
+    """
+    if not AGREED_POWER_FROM_DISPATCH:
+        return {"exogenous"}
+    return {CONTRACT_ROLL_TAG, "in_lp"}
 
 BATTERY_CAPACITY_KWH = 30.0
 # The battery, horizon and solver settings are `MILP_Household`'s, imported
@@ -444,15 +546,26 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
     months, so the contract goes into the LP as a variable and comes out optimal
     (`MILP_Household.add_endogenous_agreed_power`). A rolling strategy cannot --
     a one-day sub-solve sees one day of a contract that is re-agreed monthly --
-    so the whole roll is repeated instead until the contract it is billed under
-    is the one it sets. That converges but does not optimize, which is the right
-    way round: the rolling horizons are the constrained strategies and
-    `full_period` is the bound they are measured against.
+    and under `AGREED_POWER_ROLL` it does not try to. It rolls the contract
+    forward instead, month by month off its own executed meter, and prices the
+    contract it is setting inside each sub-solve as a shadow price
+    (`AGREED_POWER_SURROGATE`). Both are causal: neither reads an interval the
+    controller has not already executed. That is the right way round -- the
+    rolling horizons are the constrained strategies and `full_period` is the
+    bound they are measured against, so a rolling strategy that came out under
+    it would be a pricing bug and not a better policy.
     """
+    if AGREED_POWER_ROLL not in ("causal", "fixed_point"):
+        raise ValueError(f"AGREED_POWER_ROLL must be 'causal' or 'fixed_point', "
+                         f"got {AGREED_POWER_ROLL!r}")
     endogenous = bool(getattr(env, "agreed_power_from_dispatch", False))
+    rolls = bool(getattr(env, "agreed_power_lag_months", None))
     in_lp = (endogenous and horizon_kind == "period" and execution == "block"
              and env.connection_power_kw is None
-             and bool(getattr(env, "agreed_power_lag_months", None)))
+             and rolls)
+    # Nothing to shave for and nothing to roll when the contract does not follow
+    # the dispatch: the household signed a line no peak of its own can move.
+    surrogate = bool(AGREED_POWER_SURROGATE) and endogenous and rolls and not in_lp
 
     if in_lp:
         env.clear_achieved_power()
@@ -461,6 +574,19 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
                                  endogenous_agreed_power=True)
         out["Agreed_Power_Iters"] = 1
         out["Agreed_Power_Converged"] = True
+        out["Contract_Roll"] = "in_lp"
+        return out
+
+    if endogenous and rolls and AGREED_POWER_ROLL == "causal":
+        # Forward substitution on a triangular map: one pass IS the fixed point,
+        # and every contract in it was read off months already executed.
+        env.clear_achieved_power()
+        out = _run_strategy_once(env, horizon_kind, execution, soc_mode=soc_mode,
+                                 n_steps=n_steps, solver=solver, verbose=verbose,
+                                 causal_contract=True, surrogate=surrogate)
+        out["Agreed_Power_Iters"] = 1
+        out["Agreed_Power_Converged"] = True
+        out["Contract_Roll"] = CONTRACT_ROLL_TAG
         return out
 
     if endogenous:
@@ -469,7 +595,8 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
 
         def _dispatch():
             out = _run_strategy_once(env, horizon_kind, execution, soc_mode=soc_mode,
-                                     n_steps=n_steps, solver=solver, verbose=verbose)
+                                     n_steps=n_steps, solver=solver, verbose=verbose,
+                                     surrogate=surrogate)
             spent["solves"] += out["N_Solves"]
             spent["seconds"] += out["Runtime_s"]
             return out, np.maximum(out["_net_trace"], 0.0) / hours
@@ -481,22 +608,76 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
         out["Runtime_s"] = spent["seconds"]
         out["Agreed_Power_Iters"] = info["iterations"]
         out["Agreed_Power_Converged"] = info["converged"]
+        out["Contract_Roll"] = CONTRACT_ROLL_TAG
         return out
 
     out = _run_strategy_once(env, horizon_kind, execution, soc_mode=soc_mode,
                              n_steps=n_steps, solver=solver, verbose=verbose)
     out["Agreed_Power_Iters"] = 1
     out["Agreed_Power_Converged"] = True
+    # The contract does not follow the dispatch, so there is nothing to roll.
+    out["Contract_Roll"] = "exogenous"
     return out
 
 
+def _push_peak(observed, key, value_kw, k_peaks):
+    """Keep the `k_peaks` largest draws metered so far in one (block, month).
+
+    The operator's statistic is the mean of the `k_peaks` highest, and the k
+    largest of a union are drawn from the k largest of each part -- so the whole
+    metered history a sub-solve needs is these k numbers per block, however far
+    into the month the roll has run.
+    """
+    vals = observed.setdefault(key, [])
+    if len(vals) < k_peaks:
+        vals.append(float(value_kw))
+    elif value_kw > vals[-1]:
+        vals[-1] = float(value_kw)
+    else:
+        return
+    vals.sort(reverse=True)
+
+
+def _adopt_month_contract(env, net_trace, idx, hours, month_id, schedule):
+    """Fix the contract of the month starting at `idx`, from the months behind it.
+
+    The operator's own rule applied causally: every month before `idx` is
+    complete and metered, so re-rolling the schedule off the executed draw
+    settles this month's dogovorjena moc on data that already exists -- no
+    iteration, no foresight, one pass.
+
+    Only THIS month's entry is adopted. The months still ahead keep whatever
+    they hold and are fixed the same way when they start; the months behind keep
+    the line they were billed under, which a re-roll off a longer trace would
+    otherwise rewrite after the fact -- the "cyclic" bootstrap reads the last
+    complete month of the dataset, so registering December would move January's
+    contract, and January's bill has already been paid.
+    """
+    env.set_achieved_power_kw(np.maximum(net_trace[:idx], 0.0) / hours, start_idx=0)
+    rolled = env.agreed_power_schedule
+    schedule = dict(schedule)
+    if int(month_id) in rolled:
+        schedule[int(month_id)] = dict(rolled[int(month_id)])
+    env.apply_agreed_power_schedule(schedule)
+    return schedule
+
+
 def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
-                       solver=None, verbose=False, endogenous_agreed_power=False):
+                       solver=None, verbose=False, endogenous_agreed_power=False,
+                       causal_contract=False, surrogate=False):
     """One roll of the strategy under the contract currently in force.
 
     `endogenous_agreed_power` hands the contract to the solve itself, which only
-    a single whole-horizon block can do; every other roll leaves it False and is
-    converged from outside.
+    a single whole-horizon block can do; every other roll leaves it False.
+
+    `causal_contract` re-agrees the dogovorjena moc as the roll goes: each month
+    is contracted at the moment it starts, off the peaks the executed trace has
+    already metered (`_adopt_month_contract`).
+
+    `surrogate` prices that contract inside every sub-solve, so a horizon that
+    ends before the contract is billed still has a reason to shave the peaks
+    that set it (`MILP_Household.add_online_agreed_power_surrogate`). Both read
+    the meter behind the controller and nothing ahead of it.
     """
     n_steps = int(env.episode_length if n_steps is None else n_steps)
     soc_target = SOC_FRACTION * env.battery_capacity_kwh
@@ -530,6 +711,26 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
     # is re-rolled from when the agreed power is endogenous.
     net_trace = np.zeros(n_steps, dtype=float)
 
+    month_ids = np.asarray(env.month_ids[:n_steps])
+    k_peaks = int(getattr(env, "agreed_power_n_peaks", 5))
+    # {(block, month id): the k largest kW this month has already metered}.
+    observed_peaks = {} if surrogate else None
+    # The contract in force, fixed month by month as the roll reaches them. The
+    # first month keeps the bootstrap it walked in with; it has no predecessor
+    # inside the run to be contracted from.
+    causal_schedule = env.agreed_power_schedule if causal_contract else None
+    contracted_month = int(month_ids[0]) if causal_contract else None
+
+    def contract_through(idx):
+        """Settle the contract of the month `idx` falls in, if it is new."""
+        nonlocal causal_schedule, contracted_month
+        month = int(month_ids[idx])
+        if month != contracted_month:
+            causal_schedule = _adopt_month_contract(
+                env, net_trace, idx, hours, month, causal_schedule
+            )
+            contracted_month = month
+
     t = 0
     t_start = time.time()
     while t < n_steps:
@@ -548,6 +749,8 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
         # it a sub-solve pays round-trip losses to shave a peak already charged.
         peak_state = _drop_peak_on_window_start(peak_state, windows, t)
         view.set_peak_state(peak_state)
+        if causal_contract:
+            contract_through(t)
 
         plan = solve_household(
             view,
@@ -558,6 +761,15 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
             solver=solver,
             verbose=False,
             endogenous_agreed_power=endogenous_agreed_power,
+            agreed_power_surrogate=(
+                None if observed_peaks is None else {
+                    "observed_peaks": observed_peaks,
+                    "weight": AGREED_POWER_SURROGATE_WEIGHT,
+                    # The study's last month sets a contract billed after it
+                    # ends; `full_period` carries no term for that either.
+                    "last_billed_month": int(month_ids[-1]),
+                }
+            ),
         )
         n_solves += 1
 
@@ -565,6 +777,12 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
         for k in range(n_exec):
             row = plan.iloc[k]
             idx = t + k
+            # A window that spans a month boundary crosses it here: the new
+            # month is contracted before the first interval of it is priced.
+            # Its own tail was planned under the old one, which is what a
+            # controller standing at the boundary actually knows.
+            if causal_contract:
+                contract_through(idx)
             ch, dis, spill = float(row["Charge_kW"]), float(row["Discharge_kW"]), float(row["Spill_kW"])
             gen, con = float(row["Generation"]), float(row["Consumption"])
             net = con + ch + spill - gen - dis
@@ -578,6 +796,12 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
             soc_trace[idx] = soc
             cost_trace[idx] = cost
             net_trace[idx] = net
+            if observed_peaks is not None:
+                _push_peak(
+                    observed_peaks,
+                    (int(env.tariff_blocks[idx]), int(month_ids[idx])),
+                    max(net, 0.0) / hours, k_peaks,
+                )
             soc += ch * env.charge_efficiency - dis / env.discharge_efficiency
             # A solve that ended non-optimal would silently drift the state.
             clipped = min(max(soc, 0.0), env.battery_capacity_kwh)
@@ -645,12 +869,23 @@ def run_user(household_id, dataset, tariff=DEFAULT_TARIFF, n_steps=None, strateg
         # resuming into them would make the strategies disagree about the charge.
         if (peak_reset_tag(done) == {PEAK_RESET_TAG}
                 and agreed_power_tag(done) == {AGREED_POWER_TAG}):
-            resumable = done
-        else:
+            # The roll goes stale per ROW, not per file: `full_period` solves its
+            # contract instead of rolling one, so the study's most expensive
+            # strategy survives a change to how the rolling ones get theirs.
+            fresh = done[contract_roll_series(done).isin(current_contract_roll_tags())]
+            if len(fresh) < len(done):
+                print(f"  [{dataset} {household_id} | {tariff}] dropped "
+                      f"{len(done) - len(fresh)} of {len(done)} rows rolled under "
+                      f"{sorted(contract_roll_tag(done) - current_contract_roll_tags())} "
+                      f"(current: {sorted(current_contract_roll_tags())})", flush=True)
+            resumable = fresh.reset_index(drop=True) if not fresh.empty else None
+        if resumable is None and not done.empty:
             print(f"  [{dataset} {household_id} | {tariff}] checkpoint written under "
                   f"peak reset {sorted(peak_reset_tag(done))} / agreed power "
-                  f"{sorted(agreed_power_tag(done))} != {PEAK_RESET_TAG} / "
-                  f"{AGREED_POWER_TAG}; recomputing from scratch", flush=True)
+                  f"{sorted(agreed_power_tag(done))} / contract roll "
+                  f"{sorted(contract_roll_tag(done))} != {PEAK_RESET_TAG} / "
+                  f"{AGREED_POWER_TAG} / {sorted(current_contract_roll_tags())}; "
+                  f"recomputing from scratch", flush=True)
     baseline_invoice = float("nan")
     if resumable is not None:
         rows = resumable.to_dict("records")
@@ -787,6 +1022,18 @@ def agreed_power_tag(df):
     return set(df["Agreed_Power"].fillna(LEGACY_AGREED_POWER_TAG).astype(str))
 
 
+def contract_roll_series(df):
+    """Per row: how the strategy came by the contract it was billed under."""
+    if "Contract_Roll" not in df.columns:
+        return pd.Series(LEGACY_CONTRACT_ROLL_TAG, index=df.index, dtype=object)
+    return df["Contract_Roll"].fillna(LEGACY_CONTRACT_ROLL_TAG).astype(str)
+
+
+def contract_roll_tag(df):
+    """The same, as a set of tags."""
+    return set(contract_roll_series(df))
+
+
 def collect_results(output_dir=RESULTS_DIR, require_current_peak_reset=True):
     """Concatenate every per-(household, price list) CSV written so far.
     
@@ -809,6 +1056,7 @@ def collect_results(output_dir=RESULTS_DIR, require_current_peak_reset=True):
         if "Agreed_Power" not in df.columns:
             df["Agreed_Power"] = LEGACY_AGREED_POWER_TAG
         df["Agreed_Power"] = df["Agreed_Power"].fillna(LEGACY_AGREED_POWER_TAG).astype(str)
+        df["Contract_Roll"] = contract_roll_series(df)
         frames.append(df)
     out = pd.concat(frames, ignore_index=True)
 
@@ -822,6 +1070,15 @@ def collect_results(output_dir=RESULTS_DIR, require_current_peak_reset=True):
                       f"(current: {current!r}). Re-run the batch to replace them.",
                       flush=True)
                 out = out[~stale].reset_index(drop=True)
+
+        current = current_contract_roll_tags()
+        stale = ~out["Contract_Roll"].isin(current)
+        if stale.any():
+            print(f"collect_results: dropped {int(stale.sum())} of {len(out)} rows that "
+                  f"rolled their contract under {sorted(set(out.loc[stale, 'Contract_Roll']))} "
+                  f"(current: {sorted(current)}). Re-run the batch to replace them.",
+                  flush=True)
+            out = out[~stale].reset_index(drop=True)
     return out
 
 
