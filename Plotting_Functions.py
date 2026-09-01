@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import date, datetime
 
+from Figure_Export import EXPORT_DPI
+
 
 def plotMultiY(X, Y=None, X_label="X_os", Y_Label=None,
                legend=None, title="title",
@@ -76,8 +78,9 @@ def plotMultiY(X, Y=None, X_label="X_os", Y_Label=None,
     plt.tight_layout()
 
     if save:
-        plt.savefig(f"{title}.png")
+        plt.savefig(f"{title}.png", dpi=EXPORT_DPI, bbox_inches="tight")
     if save_pdf:
-        plt.savefig(f"{title}.pdf")
+        # Vector, so the dpi only sets the fallback for any rasterised artist.
+        plt.savefig(f"{title}.pdf", dpi=EXPORT_DPI, bbox_inches="tight")
 
     plt.show()
