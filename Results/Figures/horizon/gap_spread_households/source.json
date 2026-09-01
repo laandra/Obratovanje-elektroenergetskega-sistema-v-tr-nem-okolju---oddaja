@@ -1,0 +1,97 @@
+{
+  "figure": "gap_spread_households",
+  "created_utc": "2026-09-01T15:00:35+00:00",
+  "files": [
+    "gap_spread_households.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      7.16,
+      2.327
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": null,
+    "notebook_detected_by": null,
+    "cell_execution_count": 12,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "3c6b7c9f845a0f4987657e0f9fa0e4956f6c6cfd",
+    "commit_short": "3c6b7c9",
+    "branch": "Development",
+    "describe": "3c6b7c9-dirty",
+    "subject": "New ploting function",
+    "committed_at": "2026-09-01T16:28:45+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 45,
+    "dirty_files": [
+      "attery_Size_Optimization.ipynb",
+      "Energy_Community_Comparison.ipynb",
+      "Extended_Multuser_Battery_Size_Optimization.ipynb",
+      "\"Household invoice generator.ipynb\"",
+      "MILP_horizon_comparison.ipynb",
+      "Multi_household_baseline.ipynb",
+      "Multuser_Battery_Size_Optimization.ipynb",
+      "No_battery_comparison.ipynb",
+      "RBC_vs_MILP_Comparison.ipynb",
+      "Results/Horizon_Comparison_Groups/Fluvius_HP_EV_user_003.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_EV_user_003.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_EV_user_005_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_001.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_001_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_001_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_002.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_002_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_002_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_003.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_003_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_003_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_004.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_004_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_004_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_005.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_005_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_EV_user_005_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_001_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_002_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_002_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_003.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_003_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_003_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_004.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_004_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_004_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_005.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_005_aktivni.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_HP_user_005_redni1t.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_user_002.csv",
+      "Results/Horizon_Comparison_Groups/Fluvius_PV_user_004_redni1t.csv",
+      "Skupnostna_Samooskrba_vs_Souporaba.ipynb",
+      "Results/Figures/horizon/",
+      "Results/Figures/no_battery/",
+      "_pf_check.ipynb"
+    ],
+    "dirty_stat": "Battery_Size_Optimization.ipynb                    |  88 ++--\n Energy_Community_Comparison.ipynb                  | 228 +++++----\n Extended_Multuser_Battery_Size_Optimization.ipynb  | 520 +++++++++-----------\n Household invoice generator.ipynb                  |  62 +--\n MILP_horizon_comparison.ipynb                      | 331 ++++++-------\n Multi_household_baseline.ipynb                     |  27 +-\n Multuser_Battery_Size_Optimization.ipynb           | 412 +++++++---------\n No_battery_comparison.ipynb                        | 542 ++++++++++-----------\n RBC_vs_MILP_Comparison.ipynb                       | 253 +++++-----\n .../Fluvius_HP_EV_user_003.csv                     |   2 +-\n .../Fluvius_PV_EV_user_003.csv                     |   2 +-\n .../Fluvius_PV_EV_user_005_redni1t.csv             |   2 +-\n .../Fluvius_PV_HP_EV_user_001.csv                  |  10 +-\n .../Fluvius_PV_HP_EV_user_001_aktivni.csv          |  10 +-\n .../Fluvius_PV_HP_EV_user_001_redni1t.csv          |   6 +-\n .../Fluvius_PV_HP_EV_user_002.csv                  |  10 +-\n .../Fluvius_PV_HP_EV_user_002_aktivni.csv          |  10 +-\n .../Fluvius_PV_HP_EV_user_002_redni1t.csv          |  10 +-\n .../Fluvius_PV_HP_EV_user_003.csv                  |  10 +-\n .../Fluvius_PV_HP_EV_user_003_aktivni.csv          |   8 +-\n .../Fluvius_PV_HP_EV_user_003_redni1t.csv          |   8 +-\n .../Fluvius_PV_HP_EV_user_004.csv                  |   6 +-\n .../Fluvius_PV_HP_EV_user_004_aktivni.csv          |  10 +-\n .../Fluvius_PV_HP_EV_user_004_redni1t.csv          |  10 +-\n .../Fluvius_PV_HP_EV_user_005.csv                  |  10 +-\n .../Fluvius_PV_HP_EV_user_005_aktivni.csv          |  10 +-\n .../Fluvius_PV_HP_EV_user_005_redni1t.csv          |   6 +-\n .../Fluvius_PV_HP_user_001_aktivni.csv             |   2 +-\n .../Fluvius_PV_HP_user_002_aktivni.csv             |   2 +-\n .../Fluvius_PV_HP_user_002_redni1t.csv             |   8 +-\n .../Fluvius_PV_HP_user_003.csv                     |   6 +-\n .../Fluvius_PV_HP_user_003_aktivni.csv             |   6 +-\n .../Fluvius_PV_HP_user_003_redni1t.csv             |   6 +-\n .../Fluvius_PV_HP_user_004.csv                     |   8 +-\n .../Fluvius_PV_HP_user_004_aktivni.csv             |   4 +-\n .../Fluvius_PV_HP_user_004_redni1t.csv             |   8 +-\n .../Fluvius_PV_HP_user_005.csv                     |   8 +-\n .../Fluvius_PV_HP_user_005_aktivni.csv             |   8 +-\n .../Fluvius_PV_HP_user_005_redni1t.csv             |   8 +-\n .../Fluvius_PV_user_002.csv                        |   2 +-\n .../Fluvius_PV_user_004_redni1t.csv                |   2 +-\n Skupnostna_Samooskrba_vs_Souporaba.ipynb           | 221 +++++----\n 42 files changed, 1382 insertions(+), 1520 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Vsako gospodinjstvo, vsaka strategija, vsak cenik"
+  ],
+  "note": "resized from 16.00x5.20 to 7.16x2.33 in"
+}

@@ -1,0 +1,63 @@
+{
+  "figure": "no_pv_bill_by_group",
+  "created_utc": "2026-09-01T14:59:31+00:00",
+  "files": [
+    "no_pv_bill_by_group.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "tight",
+    "figsize_in": [
+      7.16,
+      8.5
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": null,
+    "notebook_detected_by": null,
+    "cell_execution_count": 6,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "3c6b7c9f845a0f4987657e0f9fa0e4956f6c6cfd",
+    "commit_short": "3c6b7c9",
+    "branch": "Development",
+    "describe": "3c6b7c9-dirty",
+    "subject": "New ploting function",
+    "committed_at": "2026-09-01T16:28:45+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 12,
+    "dirty_files": [
+      "attery_Size_Optimization.ipynb",
+      "Energy_Community_Comparison.ipynb",
+      "Extended_Multuser_Battery_Size_Optimization.ipynb",
+      "\"Household invoice generator.ipynb\"",
+      "MILP_horizon_comparison.ipynb",
+      "Multi_household_baseline.ipynb",
+      "Multuser_Battery_Size_Optimization.ipynb",
+      "No_battery_comparison.ipynb",
+      "RBC_vs_MILP_Comparison.ipynb",
+      "Skupnostna_Samooskrba_vs_Souporaba.ipynb",
+      "Results/Figures/no_battery/",
+      "_pf_check.ipynb"
+    ],
+    "dirty_stat": "Battery_Size_Optimization.ipynb                   |  88 ++--\n Energy_Community_Comparison.ipynb                 | 228 +++++----\n Extended_Multuser_Battery_Size_Optimization.ipynb | 520 ++++++++++-----------\n Household invoice generator.ipynb                 |  62 +--\n MILP_horizon_comparison.ipynb                     | 331 ++++++-------\n Multi_household_baseline.ipynb                    |  27 +-\n Multuser_Battery_Size_Optimization.ipynb          | 412 +++++++---------\n No_battery_comparison.ipynb                       | 542 +++++++++++-----------\n RBC_vs_MILP_Comparison.ipynb                      | 253 +++++-----\n Skupnostna_Samooskrba_vs_Souporaba.ipynb          | 221 ++++-----\n 10 files changed, 1273 insertions(+), 1411 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Brez PV, brez baterije: edini vzvod je pogodba"
+  ]
+}
