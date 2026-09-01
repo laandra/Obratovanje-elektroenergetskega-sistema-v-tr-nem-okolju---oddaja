@@ -1,0 +1,67 @@
+{
+  "figure": "equivalent_full_cycles",
+  "created_utc": "2026-09-01T14:15:30+00:00",
+  "files": [
+    "equivalent_full_cycles.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "tight",
+    "figsize_in": [
+      7.16,
+      4.4034
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Battery_Size_Optimization.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 63,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "1eed4d3363578dd76521b74406c5b4e3d5087190",
+    "commit_short": "1eed4d3",
+    "branch": "Development",
+    "describe": "1eed4d3-dirty",
+    "subject": "Saving in the midle of ploting functions upgrade",
+    "committed_at": "2026-09-01T09:22:21+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 16,
+    "dirty_files": [
+      "gitignore",
+      "Battery_Size_Optimization.ipynb",
+      "Energy_Community_Comparison.ipynb",
+      "Extended_Multuser_Battery_Size_Optimization.ipynb",
+      "Figure_Export.py",
+      "\"Household invoice generator.ipynb\"",
+      "\"Household_local model.ipynb\"",
+      "MILP_horizon_comparison.ipynb",
+      "Multi_household_baseline.ipynb",
+      "Multuser_Battery_Size_Optimization.ipynb",
+      "No_battery_comparison.ipynb",
+      "Plotting_Functions.py",
+      "RBC_vs_MILP_Comparison.ipynb",
+      "Skupnostna_Samooskrba_vs_Souporaba.ipynb",
+      "PLOTTING_GUIDE.txt",
+      "Results/Figures/"
+    ],
+    "dirty_stat": ".gitignore                                        |    5 +\n Battery_Size_Optimization.ipynb                   |  185 ++--\n Energy_Community_Comparison.ipynb                 |    4 +-\n Extended_Multuser_Battery_Size_Optimization.ipynb |    4 +-\n Figure_Export.py                                  |  531 ---------\n Household invoice generator.ipynb                 |    4 +-\n Household_local model.ipynb                       |    4 +-\n MILP_horizon_comparison.ipynb                     |    4 +-\n Multi_household_baseline.ipynb                    |    4 +-\n Multuser_Battery_Size_Optimization.ipynb          |    4 +-\n No_battery_comparison.ipynb                       |    4 +-\n Plotting_Functions.py                             | 1215 ++++++++++++++++++++-\n RBC_vs_MILP_Comparison.ipynb                      |    4 +-\n Skupnostna_Samooskrba_vs_Souporaba.ipynb          |    4 +-\n 14 files changed, 1299 insertions(+), 677 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Ekvivalentni polni cikli na leto"
+  ]
+}

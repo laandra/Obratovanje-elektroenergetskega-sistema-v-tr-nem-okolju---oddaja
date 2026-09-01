@@ -1,0 +1,44 @@
+# net_annual_benefit
+
+Exported 2026-09-01T14:23:38+00:00
+Files: net_annual_benefit.pdf
+Size: 7.16 x 4.4034 in @ 600 dpi (tight)
+
+## Caption
+
+The title text for this figure, for the article's `\caption{...}`:
+
+- Neto letna korist = prihranek MILP − letni strošek baterije
+
+## Source
+
+- notebook: /Users/summerscholl/Documents/Andraz/Energy_Community/Battery_Size_Optimization.ipynb (via __vsc_ipynb_file__)
+- cell execution count: 66
+- caller: <frozen runpy>:198
+- cell source: cell.py
+
+## Git
+
+- commit: 2c9721a9520115f8809b38ba36bd049e470d14d4 (Development)
+- subject: New ploting function that retuns IEEE compatible images.
+- describe: 2c9721a-dirty
+
+**Working tree was DIRTY (15 files) — the commit above does NOT reproduce this figure on its own.**
+See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
+
+```
+.gitignore                                        |    5 +
+ Battery_Size_Optimization.ipynb                   |  185 ++--
+ Energy_Community_Comparison.ipynb                 |    4 +-
+ Extended_Multuser_Battery_Size_Optimization.ipynb |    4 +-
+ Household invoice generator.ipynb                 |    4 +-
+ Household_local model.ipynb                       |    4 +-
+ MILP_horizon_comparison.ipynb                     |    4 +-
+ Multi_household_baseline.ipynb                    |    4 +-
+ Multuser_Battery_Size_Optimization.ipynb          |    4 +-
+ No_battery_comparison.ipynb                       |    4 +-
+ Plotting_Functions.py                             | 1215 ++++++++++++++++++++-
+ RBC_vs_MILP_Comparison.ipynb                      |    4 +-
+ Skupnostna_Samooskrba_vs_Souporaba.ipynb          |    4 +-
+ 13 files changed, 1299 insertions(+), 146 deletions(-)
+```

@@ -13,3 +13,8 @@ New pricing functions/__pycache__/
 
 # Local virtual environment
 .venv/
+
+# Figure exports: the PDFs and their provenance are tracked, the dirty-tree
+# diffs are not -- they are regenerated on every export and can run to the
+# 1 MB cap each. The producing cell is kept as cell.py, which is tracked.
+Results/Figures/**/uncommitted.diff
