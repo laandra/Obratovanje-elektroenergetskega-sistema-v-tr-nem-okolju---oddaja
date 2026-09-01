@@ -1,5 +1,5 @@
 ### The same ranking per household type, absolute and relative to that group's best
-# Two figures, not two panels: half of \\textwidth is \\columnwidth, and a 25-row
+# Two figures, not two panels: half of \textwidth is \columnwidth, and a 25-row
 # bar chart squeezed into it is unreadable. Same cell, one pf.show each.
 by_group_cost = df_no_pv.pivot_table(index="Option", columns="Dataset",
                                      values="Cost_EUR").reindex(no_pv_summary.index)

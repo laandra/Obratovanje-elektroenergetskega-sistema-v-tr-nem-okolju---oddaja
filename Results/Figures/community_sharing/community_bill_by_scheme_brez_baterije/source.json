@@ -1,0 +1,101 @@
+{
+  "figure": "community_bill_by_scheme_brez_baterije",
+  "created_utc": "2026-09-01T19:35:50+00:00",
+  "files": [
+    "community_bill_by_scheme_brez_baterije.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      7.16,
+      3.7232
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Skupnostna_Samooskrba_vs_Souporaba.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 25,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "1b204c1ba8da6c4476e2896c4e22df5cc1e85268",
+    "commit_short": "1b204c1",
+    "branch": "Development",
+    "describe": "1b204c1-dirty",
+    "subject": "Also implemented new figure saving function in other notebooks.",
+    "committed_at": "2026-09-01T19:44:51+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 60,
+    "dirty_files": [
+      "o_battery_comparison.ipynb",
+      "Results/Figures/no_battery/catalogue_all_bill_ranking/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_all_bill_ranking/catalogue_all_bill_ranking.pdf",
+      "Results/Figures/no_battery/catalogue_all_bill_ranking/source.json",
+      "Results/Figures/no_battery/catalogue_all_overpay_by_group/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_all_overpay_by_group/catalogue_all_overpay_by_group.pdf",
+      "Results/Figures/no_battery/catalogue_all_overpay_by_group/source.json",
+      "Results/Figures/no_battery/catalogue_no_pv_bill_ranking/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_no_pv_bill_ranking/catalogue_no_pv_bill_ranking.pdf",
+      "Results/Figures/no_battery/catalogue_no_pv_bill_ranking/source.json",
+      "Results/Figures/no_battery/catalogue_no_pv_overpay_by_group/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_no_pv_overpay_by_group/catalogue_no_pv_overpay_by_group.pdf",
+      "Results/Figures/no_battery/catalogue_no_pv_overpay_by_group/source.json",
+      "Results/Figures/no_battery/catalogue_premium_by_group/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_premium_by_group/catalogue_premium_by_group.pdf",
+      "Results/Figures/no_battery/catalogue_premium_by_group/source.json",
+      "Results/Figures/no_battery/catalogue_premium_by_supplier/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_premium_by_supplier/catalogue_premium_by_supplier.pdf",
+      "Results/Figures/no_battery/catalogue_premium_by_supplier/source.json",
+      "Results/Figures/no_battery/catalogue_with_pv_bill_ranking/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_with_pv_bill_ranking/catalogue_with_pv_bill_ranking.pdf",
+      "Results/Figures/no_battery/catalogue_with_pv_bill_ranking/source.json",
+      "Results/Figures/no_battery/catalogue_with_pv_overpay_by_group/SOURCE.md",
+      "Results/Figures/no_battery/catalogue_with_pv_overpay_by_group/catalogue_with_pv_overpay_by_group.pdf",
+      "Results/Figures/no_battery/catalogue_with_pv_overpay_by_group/source.json",
+      "Results/Figures/no_battery/export_right_by_group/SOURCE.md",
+      "Results/Figures/no_battery/export_right_by_group/export_right_by_group.pdf",
+      "Results/Figures/no_battery/export_right_by_group/source.json",
+      "Results/Figures/no_battery/export_right_worth/SOURCE.md",
+      "Results/Figures/no_battery/export_right_worth/export_right_worth.pdf",
+      "Results/Figures/no_battery/export_right_worth/source.json",
+      "Results/Figures/no_battery/no_pv_bill_by_group/SOURCE.md",
+      "Results/Figures/no_battery/no_pv_bill_by_group/cell.py",
+      "Results/Figures/no_battery/no_pv_bill_by_group/no_pv_bill_by_group.pdf",
+      "Results/Figures/no_battery/no_pv_bill_by_group/source.json",
+      "Results/Figures/no_battery/no_pv_overpay_by_group/SOURCE.md",
+      "Results/Figures/no_battery/no_pv_overpay_by_group/cell.py",
+      "Results/Figures/no_battery/no_pv_overpay_by_group/no_pv_overpay_by_group.pdf",
+      "Results/Figures/no_battery/no_pv_overpay_by_group/source.json",
+      "Results/Figures/no_battery/pv_bill_composition/SOURCE.md",
+      "Results/Figures/no_battery/pv_bill_composition/pv_bill_composition.pdf",
+      "Results/Figures/no_battery/pv_bill_composition/source.json",
+      "Results/Figures/no_battery/pv_bill_ranking/SOURCE.md",
+      "Results/Figures/no_battery/pv_bill_ranking/pv_bill_ranking.pdf",
+      "Results/Figures/no_battery/pv_bill_ranking/source.json",
+      "Results/Figures/no_battery/pv_nosale_bill_composition/SOURCE.md",
+      "Results/Figures/no_battery/pv_nosale_bill_composition/pv_nosale_bill_composition.pdf",
+      "Results/Figures/no_battery/pv_nosale_bill_composition/source.json",
+      "Results/Figures/no_battery/pv_nosale_bill_ranking/SOURCE.md",
+      "Results/Figures/no_battery/pv_nosale_bill_ranking/pv_nosale_bill_ranking.pdf"
+    ],
+    "dirty_stat": "No_battery_comparison.ipynb                        | 216 +++++++++++----------\n .../catalogue_all_bill_ranking/SOURCE.md           |  70 +++++--\n .../catalogue_all_bill_ranking.pdf                 | Bin 24983 -> 24983 bytes\n .../catalogue_all_bill_ranking/source.json         |  78 +++++---\n .../catalogue_all_overpay_by_group/SOURCE.md       |  73 +++++--\n .../catalogue_all_overpay_by_group.pdf             | Bin 114684 -> 114684 bytes\n .../catalogue_all_overpay_by_group/source.json     |  81 +++++---\n .../catalogue_no_pv_bill_ranking/SOURCE.md         |  58 ++++--\n .../catalogue_no_pv_bill_ranking.pdf               | Bin 25016 -> 25016 bytes\n .../catalogue_no_pv_bill_ranking/source.json       |  66 ++++---\n .../catalogue_no_pv_overpay_by_group/SOURCE.md     |  61 ++++--\n .../catalogue_no_pv_overpay_by_group.pdf           | Bin 83217 -> 83217 bytes\n .../catalogue_no_pv_overpay_by_group/source.json   |  69 ++++---\n .../catalogue_premium_by_group/SOURCE.md           |  79 ++++++--\n .../catalogue_premium_by_group.pdf                 | Bin 59177 -> 59177 bytes\n .../catalogue_premium_by_group/source.json         |  82 +++++---\n .../catalogue_premium_by_supplier/SOURCE.md        |  76 ++++++--\n .../catalogue_premium_by_supplier.pdf              | Bin 28390 -> 28390 bytes\n .../catalogue_premium_by_supplier/source.json      |  82 +++++---\n .../catalogue_with_pv_bill_ranking/SOURCE.md       |  64 ++++--\n .../catalogue_with_pv_bill_ranking.pdf             | Bin 24911 -> 24911 bytes\n .../catalogue_with_pv_bill_ranking/source.json     |  72 ++++---\n .../catalogue_with_pv_overpay_by_group/SOURCE.md   |  67 +++++--\n .../catalogue_with_pv_overpay_by_group.pdf         | Bin 84072 -> 84072 bytes\n .../catalogue_with_pv_overpay_by_group/source.json |  75 ++++---\n .../no_battery/export_right_by_group/SOURCE.md     |  57 ++++--\n .../export_right_by_group.pdf                      | Bin 20105 -> 20105 bytes\n .../no_battery/export_right_by_group/source.json   |  65 ++++---\n .../no_battery/export_right_worth/SOURCE.md        |  57 ++++--\n .../export_right_worth/export_right_worth.pdf      | Bin 24115 -> 24115 bytes\n .../no_battery/export_right_worth/source.json      |  65 ++++---\n .../no_battery/no_pv_bill_by_group/SOURCE.md       |  57 ++++--\n .../Figures/no_battery/no_pv_bill_by_group/cell.py |   2 +-\n .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    | Bin 17923 -> 17923 bytes\n .../no_battery/no_pv_bill_by_group/source.json     |  65 ++++---\n .../no_battery/no_pv_overpay_by_group/SOURCE.md    |  57 ++++--\n .../no_battery/no_pv_overpay_by_group/cell.py      |   2 +-\n .../no_pv_overpay_by_group.pdf                     | Bin 74006 -> 74006 bytes\n .../no_battery/no_pv_overpay_by_group/source.json  |  65 ++++---\n .../no_battery/pv_bill_composition/SOURCE.md       |  57 ++++--\n .../pv_bill_composition/pv_bill_composition.pdf    | Bin 15260 -> 15260 bytes\n .../no_battery/pv_bill_composition/source.json     |  65 ++++---\n .../Figures/no_battery/pv_bill_ranking/SOURCE.md   |  57 ++++--\n .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf | Bin 19236 -> 19236 bytes\n .../Figures/no_battery/pv_bill_ranking/source.json |  65 ++++---\n .../pv_nosale_bill_composition/SOURCE.md           |  57 ++++--\n .../pv_nosale_bill_composition.pdf                 | Bin 18754 -> 18754 bytes\n .../pv_nosale_bill_composition/source.json         |  65 ++++---\n .../no_battery/pv_nosale_bill_ranking/SOURCE.md    |  57 ++++--\n .../pv_nosale_bill_ranking.pdf                     | Bin 19912 -> 19912 bytes\n .../no_battery/pv_nosale_bill_ranking/source.json  |  65 ++++---\n .../pv_nosale_overpay_by_group/SOURCE.md           |  57 ++++--\n .../pv_nosale_overpay_by_group.pdf                 | Bin 44407 -> 44407 bytes\n .../pv_nosale_overpay_by_group/source.json         |  65 ++++---\n .../no_battery/pv_overpay_by_group/SOURCE.md       |  57 ++++--\n .../pv_overpay_by_group/pv_overpay_by_group.pdf    | Bin 45177 -> 45177 bytes\n .../no_battery/pv_overpay_by_group/source.json     |  65 ++++---\n 57 files changed, 1784 insertions(+), 809 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Letni račun šestnajstih gospodinjstev, po shemi in ceniku — brez baterije — Prosta razdelitev deljene energije po intervalih, interna cena 0.050 EUR/kWh, značilni primer 2. Šrafirano = skupnostna samooskrba na ceniku, ki je izrecno ne dovoli (izračun je protidejstven). Manjkajoč stolpec = kombinacija, ki v tej študiji ni rešena (dinamični cenik se rešuje le brez hrambe, razdelek 7)."
+  ]
+}

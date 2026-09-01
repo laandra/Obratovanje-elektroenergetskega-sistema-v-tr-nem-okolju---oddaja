@@ -1,6 +1,6 @@
 # catalogue_with_pv_overpay_by_group
 
-Exported 2026-09-01T14:59:54+00:00
+Exported 2026-09-01T19:03:09+00:00
 Files: catalogue_with_pv_overpay_by_group.pdf
 Size: 7.16 x 8.68 in @ 600 dpi (tight)
 
@@ -12,30 +12,63 @@ The title text for this figure, for the article's `\caption{...}`:
 
 ## Source
 
-- notebook: not detected
+- notebook: /Users/summerscholl/Documents/Andraz/Energy_Community/No_battery_comparison.ipynb (via __vsc_ipynb_file__)
 - cell execution count: 19
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: 3c6b7c9f845a0f4987657e0f9fa0e4956f6c6cfd (Development)
-- subject: New ploting function
-- describe: 3c6b7c9-dirty
+- commit: 1b204c1ba8da6c4476e2896c4e22df5cc1e85268 (Development)
+- subject: Also implemented new figure saving function in other notebooks.
+- describe: 1b204c1-dirty
 
-**Working tree was DIRTY (12 files) — the commit above does NOT reproduce this figure on its own.**
+**Working tree was DIRTY (43 files) — the commit above does NOT reproduce this figure on its own.**
 See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-Battery_Size_Optimization.ipynb                   |  88 ++--
- Energy_Community_Comparison.ipynb                 | 228 +++++----
- Extended_Multuser_Battery_Size_Optimization.ipynb | 520 ++++++++++-----------
- Household invoice generator.ipynb                 |  62 +--
- MILP_horizon_comparison.ipynb                     | 331 ++++++-------
- Multi_household_baseline.ipynb                    |  27 +-
- Multuser_Battery_Size_Optimization.ipynb          | 412 +++++++---------
- No_battery_comparison.ipynb                       | 542 +++++++++++-----------
- RBC_vs_MILP_Comparison.ipynb                      | 253 +++++-----
- Skupnostna_Samooskrba_vs_Souporaba.ipynb          | 221 ++++-----
- 10 files changed, 1273 insertions(+), 1411 deletions(-)
+No_battery_comparison.ipynb                        |  11 +++-
+ .../catalogue_no_pv_bill_ranking/SOURCE.md         |  58 ++++++++++++-----
+ .../catalogue_no_pv_bill_ranking.pdf               | Bin 25016 -> 25016 bytes
+ .../catalogue_no_pv_bill_ranking/source.json       |  66 ++++++++++++-------
+ .../catalogue_no_pv_overpay_by_group/SOURCE.md     |  61 ++++++++++++-----
+ .../catalogue_no_pv_overpay_by_group.pdf           | Bin 83217 -> 83217 bytes
+ .../catalogue_no_pv_overpay_by_group/source.json   |  69 +++++++++++++-------
+ .../catalogue_with_pv_bill_ranking/SOURCE.md       |  64 +++++++++++++-----
+ .../catalogue_with_pv_bill_ranking.pdf             | Bin 24911 -> 24911 bytes
+ .../catalogue_with_pv_bill_ranking/source.json     |  72 ++++++++++++++-------
+ .../catalogue_with_pv_overpay_by_group.pdf         | Bin 84072 -> 84072 bytes
+ .../no_battery/export_right_by_group/SOURCE.md     |  57 +++++++++++-----
+ .../export_right_by_group.pdf                      | Bin 20105 -> 20105 bytes
+ .../no_battery/export_right_by_group/source.json   |  65 ++++++++++++-------
+ .../no_battery/export_right_worth/SOURCE.md        |  57 +++++++++++-----
+ .../export_right_worth/export_right_worth.pdf      | Bin 24115 -> 24115 bytes
+ .../no_battery/export_right_worth/source.json      |  65 ++++++++++++-------
+ .../no_battery/no_pv_bill_by_group/SOURCE.md       |  57 +++++++++++-----
+ .../Figures/no_battery/no_pv_bill_by_group/cell.py |   2 +-
+ .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    | Bin 17923 -> 17923 bytes
+ .../no_battery/no_pv_bill_by_group/source.json     |  65 ++++++++++++-------
+ .../no_battery/no_pv_overpay_by_group/SOURCE.md    |  57 +++++++++++-----
+ .../no_battery/no_pv_overpay_by_group/cell.py      |   2 +-
+ .../no_pv_overpay_by_group.pdf                     | Bin 74006 -> 74006 bytes
+ .../no_battery/no_pv_overpay_by_group/source.json  |  65 ++++++++++++-------
+ .../no_battery/pv_bill_composition/SOURCE.md       |  57 +++++++++++-----
+ .../pv_bill_composition/pv_bill_composition.pdf    | Bin 15260 -> 15260 bytes
+ .../no_battery/pv_bill_composition/source.json     |  65 ++++++++++++-------
+ .../Figures/no_battery/pv_bill_ranking/SOURCE.md   |  57 +++++++++++-----
+ .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf | Bin 19236 -> 19236 bytes
+ .../Figures/no_battery/pv_bill_ranking/source.json |  65 ++++++++++++-------
+ .../pv_nosale_bill_composition/SOURCE.md           |  57 +++++++++++-----
+ .../pv_nosale_bill_composition.pdf                 | Bin 18754 -> 18754 bytes
+ .../pv_nosale_bill_composition/source.json         |  65 ++++++++++++-------
+ .../no_battery/pv_nosale_bill_ranking/SOURCE.md    |  57 +++++++++++-----
+ .../pv_nosale_bill_ranking.pdf                     | Bin 19912 -> 19912 bytes
+ .../no_battery/pv_nosale_bill_ranking/source.json  |  65 ++++++++++++-------
+ .../pv_nosale_overpay_by_group/SOURCE.md           |  57 +++++++++++-----
+ .../pv_nosale_overpay_by_group.pdf                 | Bin 44407 -> 44407 bytes
+ .../pv_nosale_overpay_by_group/source.json         |  65 ++++++++++++-------
+ .../no_battery/pv_overpay_by_group/SOURCE.md       |  57 +++++++++++-----
+ .../pv_overpay_by_group/pv_overpay_by_group.pdf    | Bin 45177 -> 45177 bytes
+ .../no_battery/pv_overpay_by_group/source.json     |  65 ++++++++++++-------
+ 43 files changed, 1114 insertions(+), 511 deletions(-)
 ```
