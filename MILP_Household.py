@@ -334,7 +334,9 @@ def interval_rate_vectors(env, dates, smp_prices, pricing_options, interval_minu
             scheme=env.pricing_scheme,
             **pricing_options,
         )
-        export_rates.append(-export_res["variable_price_aud"])
+        # `+ 0.0` normalizes the -0.0 that negating a zero credit produces, so a
+        # no-buyback list reports a plain 0.0 export rate.
+        export_rates.append(-export_res["variable_price_aud"] + 0.0)
     return import_rates, export_rates, constant_costs
 
 

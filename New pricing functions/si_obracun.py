@@ -233,15 +233,33 @@ def dobava(market_price_mwh: float, total_consumed_kwh: float,
     """
     Prevzem iz omrežja brez lastne proizvodnje. Pokriva enotarifne, dvotarifne,
     4-tarifne (aktivne) in dinamične pakete — razlika je le v paket.tip_cene.
+
+    `total_consumed_kwh` je NETO stanje intervala, kot ga izmeri števec. Brez
+    proizvodnje je vedno >= 0 in se obračuna kot doslej. Negativna vrednost
+    pomeni, da je odjemalec v tem intervalu oddal v omrežje (na navadni dobavi
+    to zmore le baterija) — in oddaja NI negativen prevzem: obračuna se po
+    ceni oddaje iz paketa, ki je pri `tip_odkupa=NI` enaka 0,00 EUR/kWh, brez
+    omrežnine, brez dajatev in brez DDV. Ista logika kot v `samooskrba`.
+    Prej je negativen interval vrnil negativne postavke po polni dobavni ceni,
+    torej vračilo maloprodajne cene z omrežnino in DDV vred, česar noben
+    dobavni cenik ne priznava.
     """
     pravila = pravila or Pravila.privzeta(v_lokalni_cas(utc_date).date())
     ctx = _kontekst(utc_date, interval_minutes, pravila)
+
+    prevzem, oddaja = max(total_consumed_kwh, 0.0), max(-total_consumed_kwh, 0.0)
+
     cena = _cena_prevzema(paket, ctx, market_price_mwh, meritve_15min)
-    post = {"energija": total_consumed_kwh * cena,
-            "omreznina_energija": total_consumed_kwh
+    cena_odd = _cena_oddaje(paket, ctx, market_price_mwh, meritve_15min)
+
+    post = {"energija": prevzem * cena,
+            "omreznina_energija": prevzem
                                   * pravila.omreznina.energija[ctx["blok"]]}
-    post.update(_dajatve(total_consumed_kwh))
-    return _rezultat(ctx, total_consumed_kwh, post, cena_energije_eur_kwh=cena)
+    post.update(_dajatve(prevzem))
+    return _rezultat(ctx, prevzem, post,
+                     dobropis=oddaja * cena_odd,
+                     oddano_kwh=oddaja,
+                     cena_energije_eur_kwh=cena, cena_oddaje_eur_kwh=cena_odd)
 
 
 def samooskrba(market_price_mwh: float, total_consumed_kwh: float,

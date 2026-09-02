@@ -504,10 +504,11 @@ class HouseholdEnvironment(gym.Env):
         if self.pricing_scheme == "si_dobava" and self._has_pv:
             msg = (
                 "pricing_scheme='si_dobava' assumes no on-site production, but "
-                f"{self.generation_column} has nonzero values. si_dobava has no export-netting "
-                "logic and would mis-tax exported energy (full retail rate + network "
-                "charges + VAT applied to exported kWh). Use pricing_scheme="
-                "'si_samooskrba', or set pricing_validate_pv=False to bypass this check."
+                f"{self.generation_column} has nonzero values. si_dobava nets an export "
+                "correctly, but every plain-supply list carries tip_odkupa=NI, so every "
+                "exported kWh is credited 0.00 -- a product-eligibility error read as a "
+                "tariff result. Use pricing_scheme='si_samooskrba', or set "
+                "pricing_validate_pv=False to bypass this check."
             )
             if pricing_validate_pv:
                 raise ValueError(msg)
@@ -526,6 +527,9 @@ class HouseholdEnvironment(gym.Env):
         # peak in this environment is measured on the no-battery profile.
         self._achieved_power_kw = None
         self._forced_agreed_power = False
+        # The leading month's stand-in peaks, read off that no-battery profile
+        # and kept: see `_build_agreed_power_schedule`.
+        self._naive_bootstrap_kw = None
         self._block_arr, self._window_id_arr, self._peak_seed_history = (
             self._precompute_peak_seed_history()
         )
@@ -723,7 +727,25 @@ class HouseholdEnvironment(gym.Env):
         """
         if contracted_power_kw is None:
             peaks = self._monthly_top_peaks_by_block()
-            self._bootstrap_kw = self._bootstrap_peak_kw(peaks)
+            # The leading month has no predecessor in the data, so its contract
+            # is read from the meter history the household WALKED IN WITH --
+            # which predates the horizon and which no dispatch inside it can
+            # have caused. So the bootstrap is derived once, off the no-battery
+            # profile, and held across every re-roll.
+            #
+            # Recomputing it off the achieved draw instead lets a controller
+            # rewrite the first month's contract after the fact: with the
+            # "cyclic" bootstrap standing December in for the December before
+            # the horizon, a pack that empties itself over the winter peak
+            # re-agrees January down to a line no meter ever recorded. It is
+            # also the one term the endogenous MILP is not allowed to move
+            # (`add_endogenous_agreed_power` keeps the leading `lag` months
+            # constant and refuses to make them decisions), so a rule that does
+            # move it is billed under a contract the optimum could not choose --
+            # and can come in under a bound that is supposed to hold.
+            if self._achieved_power_kw is None or self._naive_bootstrap_kw is None:
+                self._naive_bootstrap_kw = self._bootstrap_peak_kw(peaks)
+            self._bootstrap_kw = self._naive_bootstrap_kw
             return mesecni_razpored_moci(
                 peaks,
                 minimalna_moc_kw=self.min_agreed_power_kw,

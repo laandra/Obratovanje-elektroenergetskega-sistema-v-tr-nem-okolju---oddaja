@@ -118,9 +118,12 @@ CONSUMPTION_COLUMN = "Consumption_Volume_kWh"
 #   Redni 1T   GENI_SAMO_REDNI      0.10290 flat in, 0.05390 flat out
 #   Redni 2T   GENI_REDNI           VT 0.11990 / MT 0.09790 in, no buyback at all
 #
-# Every list runs under `si_samooskrba`: intra-interval netting is physical, and
-# what the contract decides is only what a surplus is worth, read off the package
-# (`tip_odkupa=NI` on GENI_REDNI credits an export 0.00000).
+# Intra-interval netting is physical, so BOTH schemes do it; what the contract
+# decides is only what the resulting surplus is worth, read off the package
+# (`tip_odkupa=NI` on GENI_REDNI credits an export 0.00000). Until 2026-09-02
+# only `si_samooskrba` netted, and `si_dobava` booked a negative interval as a
+# negative PREVZEM -- refunding the full delivered rate, omreznina and DDV
+# included -- which turned a battery on Redni 2T into an unbounded money pump.
 #
 # NET metering is absent: closed to new contracts, settled once a year, so it is
 # not a list a household can choose into and not a baseline.
@@ -515,6 +518,34 @@ def no_battery_cost(env, n_steps):
         total += cost
         net_trace[idx] = net
     return total, net_trace
+
+
+def price_trace(env, net_trace, n_steps=None):
+    """Bill an executed meter trace under the contract currently on `env`.
+
+    `price_interval` in a loop, with the ratchet dropped on the same window
+    boundaries every strategy uses -- the settlement of a trajectory that is
+    already decided. A run prices itself as it goes, so this is for the one case
+    where the flows are final and the CONTRACT they are billed under has moved:
+    the agreed power is endogenous, and a caller that re-rolls it off these very
+    flows has to re-read the bill under the line they earned.
+
+    Returns `(cost, energy component, power component)` in EUR.
+    """
+    net_trace = np.asarray(net_trace, dtype=float)
+    n_steps = len(net_trace) if n_steps is None else int(n_steps)
+    windows = reset_windows(env, n_steps)
+    peak_state = {b: 0.0 for b in _BLOCKS}
+    cost = energy_cost = power_cost = 0.0
+    for idx in range(n_steps):
+        peak_state = _drop_peak_on_window_start(peak_state, windows, idx)
+        step_cost, e_part, p_part, peak_state = price_interval(
+            env, idx, float(net_trace[idx]), peak_state
+        )
+        cost += step_cost
+        energy_cost += e_part
+        power_cost += p_part
+    return cost, energy_cost, power_cost
 
 
 # ---------------------------------------------------------------------------

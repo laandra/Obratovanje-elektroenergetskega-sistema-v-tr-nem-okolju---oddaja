@@ -30,6 +30,22 @@ runner iterates to that fixed point; `Horizon_Comparison.run_strategy` decides i
 inside the LP for the MILP reference, so the reference is still an exact optimum
 and still a lower bound.
 
+For that bound to hold, the contract a rule is billed under has to be one the LP
+was free to choose, and two ends of the fixed point need closing to keep it so:
+
+    the leading month   its contract is the household's meter history from
+                        BEFORE the horizon, so no dispatch may re-roll it
+                        (`Environment._build_agreed_power_schedule` freezes the
+                        bootstrap on the no-battery profile). The LP holds the
+                        first `lag` months constant for the same reason.
+    a run that does     the iteration is capped, and a rule that runs out of
+    not converge        passes is otherwise reported under the CONTRACT OF THE
+                        PREVIOUS PASS. `_settle_under_own_peaks` re-reads the
+                        contract off the trajectory's own metered peaks and
+                        re-prices the year under it, which is how the operator
+                        settles and what makes the row a point the MILP could
+                        have chosen.
+
 Two asymmetries are handled explicitly rather than hidden:
 
     terminal SOC    every MILP strategy starts AND ends at 50 % of capacity, so
@@ -57,7 +73,7 @@ import pandas as pd
 
 import Horizon_Comparison as hc
 from Basic_Functions import max_charge_now, max_discharge_now
-from Environment import converge_agreed_power
+from Environment import _schedules_agree, converge_agreed_power
 from MILP_Household import (
     SOC_FRACTION,
     day_calendar,
@@ -79,6 +95,20 @@ RESULTS_DIR = Path(__file__).resolve().parent / "Results" / "RBC_Comparison"
 # both bounds without joining another table.
 NO_BATTERY = "no_battery"
 MILP_REFERENCE = "milp_full_period"
+
+# How a finished row was settled, stamped on every one of them. `Peak_Reset` and
+# `Agreed_Power` say what the OPERATOR does and are shared with every other
+# study; this one says how this runner closes the two things only it has to
+# close -- the contract a non-converged fixed point leaves the run billed under
+# (`_settle_under_own_peaks`), and the first month's bootstrap, which is the
+# household's pre-horizon meter history and which no rule may re-roll for
+# itself. Both were once left as the loop happened to leave them, and rows
+# written that way carry bills the perfect-foresight MILP is not a bound on. A
+# CSV holding a different tag is a different quantity, not an older one, so it
+# is dropped rather than resumed into.
+SETTLEMENT_TAG = "own_peaks+fixed_bootstrap"
+# What rows without the column were written under.
+LEGACY_SETTLEMENT_TAG = "as_converged"
 
 _BLOCKS = (1, 2, 3, 4, 5)
 _EPS = 1e-12
@@ -774,6 +804,19 @@ def run_policy(env, policy, n_steps=None, signals=None, keep_traces=False):
             return out, np.maximum(out["_net_trace"], 0.0) / hours
 
         out, info = converge_agreed_power(env, _dispatch)
+        # The loop is capped at `AGREED_POWER_MAX_ITER`, and the price rules on
+        # a two-tariff list do not always reach a fixed point inside it: the
+        # contract creeps up a fraction of a kW a pass and the cycle detector
+        # never trips. The run it hands back is then billed under the contract
+        # of the PREVIOUS pass, which for those households sits up to 0.8 kW
+        # under the line its own peaks agree to -- a network power charge the
+        # trajectory did not earn, and a bill the MILP cannot be a bound on,
+        # because the pair (dispatch, contract) is not one the LP may choose.
+        # So the flows are settled the way the operator settles them: the
+        # contract is re-read off this trajectory's own metered peaks and the
+        # year is re-priced under it. A converged run re-reads the contract it
+        # already held, and nothing moves.
+        out["Agreed_Power_Resettled"] = _settle_under_own_peaks(env, out, hours)
         # Every pass was work done to find this contract, not just the last.
         out["Runtime_s"] = spent["seconds"]
         out["Agreed_Power_Iters"] = info["iterations"]
@@ -790,7 +833,42 @@ def run_policy(env, policy, n_steps=None, signals=None, keep_traces=False):
     out.pop("_net_trace", None)
     out["Agreed_Power_Iters"] = 1
     out["Agreed_Power_Converged"] = True
+    out["Agreed_Power_Resettled"] = False
     return out
+
+
+def _settle_under_own_peaks(env, out, hours):
+    """Bill the finished trajectory under the contract ITS OWN peaks agree to.
+
+    `converge_agreed_power` leaves the environment holding the contract the run
+    it returns was billed under. That is the right answer only when the loop
+    reached a fixed point; when it ran out of iterations the two have parted,
+    and the row carries a bill nobody could be sent -- the peaks are one
+    profile's and the dogovorjena moc is another's.
+
+    The operator has no such ambiguity: the contract of a month is read from the
+    metered peaks of the months behind it, whatever the meter turned out to
+    hold. Applying that rule to the executed trace and re-pricing under the
+    result is that settlement, and it is also what makes the row comparable --
+    a trajectory billed under the contract its own peaks set is a point the
+    endogenous MILP was free to choose, so the optimum is a bound on it.
+
+    Mutates `out` in place and returns True when the bill moved.
+    """
+    billed = env.agreed_power_schedule
+    own = env.set_achieved_power_kw(np.maximum(out["_net_trace"], 0.0) / hours,
+                                    start_idx=0)
+    if _schedules_agree(billed, own):
+        return False
+
+    cost, energy_cost, power_cost = hc.price_trace(env, out["_net_trace"])
+    out["Cost_EUR"] = cost
+    out["Energy_EUR"] = energy_cost
+    out["Power_EUR"] = power_cost
+    # The terminal-SOC close is a volume valued at the mean import rate, so the
+    # contract does not touch it -- but the closed cost is built on the bill.
+    out["Cost_EUR_Closed"] = cost + out["Terminal_SOC_Adj_EUR"]
+    return True
 
 
 def _run_policy_once(env, policy, n_steps=None, signals=None, keep_traces=False):
@@ -1026,6 +1104,7 @@ def _tag_row(row, dataset, household_id, tariff, capacity_kwh, controller, causa
         Savings_EUR=float(baseline) - float(row["Cost_EUR_Closed"]),
         Peak_Reset=hc.PEAK_RESET_TAG,
         Agreed_Power=hc.AGREED_POWER_TAG,
+        Settlement=SETTLEMENT_TAG,
     )
     return row
 
@@ -1053,6 +1132,7 @@ def run_unit(dataset, household_id, tariff=hc.DEFAULT_TARIFF, capacities=None,
         fresh = (
             hc.peak_reset_tag(previous) == {hc.PEAK_RESET_TAG}
             and hc.agreed_power_tag(previous) == {hc.AGREED_POWER_TAG}
+            and settlement_tag(previous) == {SETTLEMENT_TAG}
         )
         if fresh:
             rows = previous.to_dict("records")
@@ -1060,7 +1140,8 @@ def run_unit(dataset, household_id, tariff=hc.DEFAULT_TARIFF, capacities=None,
         else:
             print(f"  [{dataset} {household_id} | {tariff}] checkpoint written under "
                   f"peak reset {sorted(hc.peak_reset_tag(previous))} / agreed power "
-                  f"{sorted(hc.agreed_power_tag(previous))}; recomputing from scratch",
+                  f"{sorted(hc.agreed_power_tag(previous))} / settlement "
+                  f"{sorted(settlement_tag(previous))}; recomputing from scratch",
                   flush=True)
 
     def flush():
@@ -1157,6 +1238,13 @@ def run_batch(jobs=None, capacities=None, n_steps=None, output_dir=RESULTS_DIR,
     return len(payload)
 
 
+def settlement_tag(df):
+    """The settlement rule(s) a result frame was written under, as a set."""
+    if "Settlement" not in df.columns:
+        return {LEGACY_SETTLEMENT_TAG}
+    return set(df["Settlement"].fillna(LEGACY_SETTLEMENT_TAG).astype(str))
+
+
 def collect_results(output_dir=RESULTS_DIR, require_current_tags=True):
     """Concatenate every per-(household, price list) CSV written so far.
 
@@ -1170,8 +1258,14 @@ def collect_results(output_dir=RESULTS_DIR, require_current_tags=True):
         return pd.DataFrame()
     out = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
     if require_current_tags:
+        # `Settlement` is absent from every row written before the runner
+        # settled one, so it is filled with the legacy tag rather than skipped:
+        # those rows ARE the stale ones.
+        if "Settlement" not in out.columns:
+            out["Settlement"] = LEGACY_SETTLEMENT_TAG
         for column, current in (("Peak_Reset", hc.PEAK_RESET_TAG),
-                                ("Agreed_Power", hc.AGREED_POWER_TAG)):
+                                ("Agreed_Power", hc.AGREED_POWER_TAG),
+                                ("Settlement", SETTLEMENT_TAG)):
             if column not in out.columns:
                 continue
             stale = out[column].astype(str) != current

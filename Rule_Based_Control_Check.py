@@ -18,6 +18,9 @@ What each check is for:
   8  the signal bundle is re-bindable  only the envelope depends on capacity
   9  foresight is worth something      the forward window beats the trailing one, on average
  10  the daily cycle cap binds         the same budget the MILP is held to
+ 11  the contract is earned            every rule is billed under the dogovorjena
+                                      moc its own meter set, the first month
+                                      included -- the precondition for check 6
 """
 
 from __future__ import annotations
@@ -313,6 +316,61 @@ def check_daily_cap_binds():
     print(f"   no local day exceeded {cap} usable-window cycles  OK")
 
 
+def check_contract_is_the_one_the_peaks_set(env, sig):
+    """11. Every rule is billed under the contract its own meter earned.
+
+    The precondition for check 6. The MILP chooses the contract inside its LP,
+    subject to `A >= the top-k mean of its own peaks`, so any (dispatch,
+    contract) pair obeying that rule is a point the LP could have picked and the
+    optimum is a bound on it. A rule billed under anything else is not being
+    compared -- it is being priced differently, and it can come in under a bound
+    that is supposed to hold.
+
+    Two ways that used to break, both asserted here:
+
+      the leading month  its contract predates the horizon, so it must be the
+                         one the household walked in with and not one the rule
+                         re-rolled off its own December.
+      every other month  the fixed-point loop is capped, and a rule that runs
+                         out of passes must still be settled on the peaks it
+                         actually made.
+    """
+    print("\n11. Every rule is billed under the contract its own peaks set")
+    from Environment import _schedules_agree
+
+    hours = env.interval_minutes / 60.0
+    first_month = int(min(env.agreed_power_schedule))
+    env.clear_achieved_power()
+    walked_in_with = dict(env.agreed_power_schedule[first_month])
+
+    print(f"   {'rule':32}{'resettled':>11}{'converged':>11}")
+    for name in rbc.POLICY_ORDER:
+        out = rbc.run_policy(env, rbc.make_policy(name), signals=sig, keep_traces=True)
+        billed = env.agreed_power_schedule
+        assert billed[first_month] == walked_in_with, (
+            f"{name} is billed a first month of {billed[first_month]} where the "
+            f"household walked in with {walked_in_with}: a rule re-rolled the "
+            f"contract of a month that predates the horizon"
+        )
+        net = sig.consumption[:sig.n_steps] - sig.generation[:sig.n_steps] + out["_setpoints"]
+        earned = env.set_achieved_power_kw(np.maximum(net, 0.0) / hours, start_idx=0)
+        env.apply_agreed_power_schedule(billed)
+        disagreement = [
+            (m, b, billed.get(m, {}).get(b, 0.0), earned.get(m, {}).get(b, 0.0))
+            for m in sorted(set(billed) | set(earned))
+            for b in sorted(set(billed.get(m, {})) | set(earned.get(m, {})))
+            if abs(billed.get(m, {}).get(b, 0.0) - earned.get(m, {}).get(b, 0.0)) > 1e-6
+        ]
+        assert not disagreement, (
+            f"{name} is billed under a contract its own peaks do not agree to, "
+            f"in {len(disagreement)} (month, block) entries; first is "
+            f"{disagreement[0]} as (month, block, billed kW, earned kW)"
+        )
+        print(f"   {name:32}{str(out['Agreed_Power_Resettled']):>11}"
+              f"{str(out['Agreed_Power_Converged']):>11}")
+    print("   every contract is the one the rule's own meter earned  OK")
+
+
 def main():
     horizon = "90 days" if QUICK else "the whole profile"
     print(f"Rule-based control check -- {DATASET} #{HOUSEHOLD}, {TARIFF}, "
@@ -332,6 +390,7 @@ def main():
     check_signals_rebind(env, sig)
     check_foresight_pays(env, sig)
     check_daily_cap_binds()
+    check_contract_is_the_one_the_peaks_set(env, sig)
 
     print("\nAll checks passed.")
 
