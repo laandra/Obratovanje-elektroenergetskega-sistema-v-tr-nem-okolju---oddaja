@@ -1,6 +1,6 @@
 ### Spread across households: one dot per household-unit, one panel per price list
 # pf.panel_grid scales the panel text to the FINAL panel width, which is what
-# keeps a row of four panels legible once it is squeezed to \\textwidth.
+# keeps a row of four panels legible once it is squeezed to \textwidth.
 fig, axes = pf.panel_grid(len(TARIFFS_READY), ncols=len(TARIFFS_READY),
                           panel=(4.0, 5.2), sharex=True, sharey=True)
 rng = np.random.default_rng(0)

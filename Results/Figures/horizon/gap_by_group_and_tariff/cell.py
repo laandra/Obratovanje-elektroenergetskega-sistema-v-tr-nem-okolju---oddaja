@@ -3,7 +3,7 @@ plot_cols = [s for s in STRAT_ORDER if s != "full_period_carry"]
 vmax = float(np.nanmax(by_group[[(t, s) for t in TARIFFS_READY for s in plot_cols]].to_numpy()))
 
 # Stacked rather than side by side: the panels share the strategy axis, and one
-# heatmap per row is still readable at \\textwidth.
+# heatmap per row is still readable at \textwidth.
 fig, axes = plt.subplots(len(TARIFFS_READY), 1, squeeze=False,
                          figsize=pf.figsize(ratio=0.36 * len(TARIFFS_READY)))
 

@@ -36,7 +36,7 @@ def draw_groups(ax, xmax):
 
 # One list usually dwarfs the rest, so the full scale is one figure and the
 # others get a zoom in a SECOND figure rather than a panel beside it: half of
-# \\textwidth is \\columnwidth, and neither of these reads at that width.
+# \textwidth is \columnwidth, and neither of these reads at that width.
 widest = max(TARIFFS_READY, key=lambda t: max(gap_of(t, s) for s in STRAT_ORDER))
 rest = [t for t in TARIFFS_READY if t != widest]
 zoom_max = max((gap_of(t, s) for t in rest for s in STRAT_ORDER), default=0.0) * 1.35

@@ -1,0 +1,101 @@
+{
+  "figure": "inverter_per_kw",
+  "created_utc": "2026-09-02T06:42:50+00:00",
+  "files": [
+    "inverter_per_kw.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      7.16,
+      3.938
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Extended_Multuser_Battery_Size_Optimization.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 55,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "13a96f887829200bcd1659b8ba56e381f9f992a1",
+    "commit_short": "13a96f8",
+    "branch": "Development",
+    "describe": "13a96f8-dirty",
+    "subject": "reruning the other notebook and fixing a bug",
+    "committed_at": "2026-09-01T21:50:57+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 51,
+    "dirty_files": [
+      "nergy_Community_Comparison.ipynb",
+      "Extended_Multuser_Battery_Size_Optimization.ipynb",
+      "\"Household invoice generator.ipynb\"",
+      "\"Household_local model.ipynb\"",
+      "MILP_horizon_comparison.ipynb",
+      "Multi_household_baseline.ipynb",
+      "Multuser_Battery_Size_Optimization.ipynb",
+      "No_battery_comparison.ipynb",
+      "RBC_vs_MILP_Comparison.ipynb",
+      "Results/Figures/horizon/achievable_saving/SOURCE.md",
+      "Results/Figures/horizon/achievable_saving/achievable_saving.pdf",
+      "Results/Figures/horizon/achievable_saving/source.json",
+      "Results/Figures/horizon/gap_by_consumer_type/SOURCE.md",
+      "Results/Figures/horizon/gap_by_consumer_type/gap_by_consumer_type.pdf",
+      "Results/Figures/horizon/gap_by_consumer_type/source.json",
+      "Results/Figures/horizon/gap_by_consumer_type_ratio/SOURCE.md",
+      "Results/Figures/horizon/gap_by_consumer_type_ratio/gap_by_consumer_type_ratio.pdf",
+      "Results/Figures/horizon/gap_by_consumer_type_ratio/source.json",
+      "Results/Figures/horizon/gap_by_group_and_tariff/SOURCE.md",
+      "Results/Figures/horizon/gap_by_group_and_tariff/cell.py",
+      "Results/Figures/horizon/gap_by_group_and_tariff/gap_by_group_and_tariff.pdf",
+      "Results/Figures/horizon/gap_by_group_and_tariff/source.json",
+      "Results/Figures/horizon/gap_means_all_tariffs/SOURCE.md",
+      "Results/Figures/horizon/gap_means_all_tariffs/gap_means_all_tariffs.pdf",
+      "Results/Figures/horizon/gap_means_all_tariffs/source.json",
+      "Results/Figures/horizon/gap_means_all_tariffs_zoom/SOURCE.md",
+      "Results/Figures/horizon/gap_means_all_tariffs_zoom/gap_means_all_tariffs_zoom.pdf",
+      "Results/Figures/horizon/gap_means_all_tariffs_zoom/source.json",
+      "Results/Figures/horizon/gap_spread_households/SOURCE.md",
+      "Results/Figures/horizon/gap_spread_households/cell.py",
+      "Results/Figures/horizon/gap_spread_households/gap_spread_households.pdf",
+      "Results/Figures/horizon/gap_spread_households/source.json",
+      "Results/Figures/horizon/horizon_gap_by_tariff/SOURCE.md",
+      "Results/Figures/horizon/horizon_gap_by_tariff/cell.py",
+      "Results/Figures/horizon/horizon_gap_by_tariff/horizon_gap_by_tariff.pdf",
+      "Results/Figures/horizon/horizon_gap_by_tariff/source.json",
+      "Results/Figures/horizon/horizon_gap_by_tariff_zoom/SOURCE.md",
+      "Results/Figures/horizon/horizon_gap_by_tariff_zoom/cell.py",
+      "Results/Figures/horizon/horizon_gap_by_tariff_zoom/horizon_gap_by_tariff_zoom.pdf",
+      "Results/Figures/horizon/horizon_gap_by_tariff_zoom/source.json",
+      "Results/Figures/horizon/runtime_vs_gap/SOURCE.md",
+      "Results/Figures/horizon/runtime_vs_gap/runtime_vs_gap.pdf",
+      "Results/Figures/horizon/runtime_vs_gap/source.json",
+      "Results/Figures/invoices/invoice_composition/SOURCE.md",
+      "Results/Figures/invoices/invoice_composition/invoice_composition.pdf",
+      "Results/Figures/invoices/invoice_composition/source.json",
+      "Results/Figures/multi_household_baseline/group_total_cost/SOURCE.md",
+      "Results/Figures/multi_household_baseline/group_total_cost/group_total_cost.pdf",
+      "Results/Figures/multi_household_baseline/group_total_cost/source.json",
+      "Skupnostna_Samooskrba_vs_Souporaba.ipynb"
+    ],
+    "dirty_stat": "Energy_Community_Comparison.ipynb                  |  107 +-\n Extended_Multuser_Battery_Size_Optimization.ipynb  |    3 +-\n Household invoice generator.ipynb                  |   74 +-\n Household_local model.ipynb                        |    6 +-\n MILP_horizon_comparison.ipynb                      | 1460 +++++++++++++++-----\n Multi_household_baseline.ipynb                     |   59 +-\n Multuser_Battery_Size_Optimization.ipynb           |    3 +-\n No_battery_comparison.ipynb                        |    2 +-\n RBC_vs_MILP_Comparison.ipynb                       |    2 +-\n .../Figures/horizon/achievable_saving/SOURCE.md    |   96 +-\n .../achievable_saving/achievable_saving.pdf        |  Bin 18168 -> 18168 bytes\n .../Figures/horizon/achievable_saving/source.json  |   25 +-\n .../Figures/horizon/gap_by_consumer_type/SOURCE.md |  124 +-\n .../gap_by_consumer_type/gap_by_consumer_type.pdf  |  Bin 41176 -> 41176 bytes\n .../horizon/gap_by_consumer_type/source.json       |   73 +-\n .../horizon/gap_by_consumer_type_ratio/SOURCE.md   |  127 +-\n .../gap_by_consumer_type_ratio.pdf                 |  Bin 16106 -> 16106 bytes\n .../horizon/gap_by_consumer_type_ratio/source.json |   79 +-\n .../horizon/gap_by_group_and_tariff/SOURCE.md      |  120 +-\n .../horizon/gap_by_group_and_tariff/cell.py        |    2 +-\n .../gap_by_group_and_tariff.pdf                    |  Bin 80946 -> 80946 bytes\n .../horizon/gap_by_group_and_tariff/source.json    |   65 +-\n .../horizon/gap_means_all_tariffs/SOURCE.md        |  111 +-\n .../gap_means_all_tariffs.pdf                      |  Bin 18381 -> 18381 bytes\n .../horizon/gap_means_all_tariffs/source.json      |   47 +-\n .../horizon/gap_means_all_tariffs_zoom/SOURCE.md   |  114 +-\n .../gap_means_all_tariffs_zoom.pdf                 |  Bin 15494 -> 15494 bytes\n .../horizon/gap_means_all_tariffs_zoom/source.json |   53 +-\n .../horizon/gap_spread_households/SOURCE.md        |  107 +-\n .../Figures/horizon/gap_spread_households/cell.py  |    2 +-\n .../gap_spread_households.pdf                      |  Bin 35145 -> 35145 bytes\n .../horizon/gap_spread_households/source.json      |   39 +-\n .../horizon/horizon_gap_by_tariff/SOURCE.md        |   97 +-\n .../Figures/horizon/horizon_gap_by_tariff/cell.py  |    2 +-\n .../horizon_gap_by_tariff.pdf                      |  Bin 14953 -> 14953 bytes\n .../horizon/horizon_gap_by_tariff/source.json      |   26 +-\n .../horizon/horizon_gap_by_tariff_zoom/SOURCE.md   |  103 +-\n .../horizon/horizon_gap_by_tariff_zoom/cell.py     |    2 +-\n .../horizon_gap_by_tariff_zoom.pdf                 |  Bin 11830 -> 11830 bytes\n .../horizon/horizon_gap_by_tariff_zoom/source.json |   32 +-\n Results/Figures/horizon/runtime_vs_gap/SOURCE.md   |  117 +-\n .../horizon/runtime_vs_gap/runtime_vs_gap.pdf      |  Bin 24287 -> 24287 bytes\n Results/Figures/horizon/runtime_vs_gap/source.json |   59 +-\n .../Figures/invoices/invoice_composition/SOURCE.md |   69 +-\n .../invoice_composition/invoice_composition.pdf    |  Bin 16447 -> 16447 bytes\n .../invoices/invoice_composition/source.json       |   64 +-\n .../group_total_cost/SOURCE.md                     |   66 +-\n .../group_total_cost/group_total_cost.pdf          |  Bin 11999 -> 11999 bytes\n .../group_total_cost/source.json                   |   61 +-\n Skupnostna_Samooskrba_vs_Souporaba.ipynb           | 1418 ++++++++++---------\n 50 files changed, 3120 insertions(+), 1896 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Cena na kW premakne tudi optimalno velikost — Moč je 0.5 kW na kWh do meje 11 kW, zato cena na kW vsaki kWh doda 0.5-kratnik te cene in zmanjša baterijo — 167 EUR/kWh pri enakovrednem znesku. Hramba je pri 250 EUR/kWh in brez fiksnega dela."
+  ]
+}

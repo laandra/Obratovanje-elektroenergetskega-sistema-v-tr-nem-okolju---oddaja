@@ -1,6 +1,6 @@
 # gap_by_household_type
 
-Exported 2026-09-01T17:39:22+00:00
+Exported 2026-09-02T07:35:32+00:00
 Files: gap_by_household_type.pdf
 Size: 7.16 x 3.3652 in @ 600 dpi (tight)
 
@@ -12,30 +12,90 @@ The title text for this figure, for the article's `\caption{...}`:
 
 ## Source
 
-- notebook: not detected
+- notebook: /Users/summerscholl/Documents/Andraz/Energy_Community/RBC_vs_MILP_Comparison.ipynb (via __vsc_ipynb_file__)
 - cell execution count: 14
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: 3c6b7c9f845a0f4987657e0f9fa0e4956f6c6cfd (Development)
-- subject: New ploting function
-- describe: 3c6b7c9-dirty
+- commit: 13a96f887829200bcd1659b8ba56e381f9f992a1 (Development)
+- subject: reruning the other notebook and fixing a bug
+- describe: 13a96f8-dirty
 
-**Working tree was DIRTY (16 files) — the commit above does NOT reproduce this figure on its own.**
+**Working tree was DIRTY (79 files) — the commit above does NOT reproduce this figure on its own.**
 See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-Battery_Size_Optimization.ipynb                   |   88 +-
- Energy_Community_Comparison.ipynb                 |  228 ++--
- Extended_Multuser_Battery_Size_Optimization.ipynb |  520 ++++----
- Household invoice generator.ipynb                 |  176 ++-
- MILP_horizon_comparison.ipynb                     |  331 +++--
- Multi_household_baseline.ipynb                    | 1451 ++++++++++++++++++++-
- Multuser_Battery_Size_Optimization.ipynb          |  412 +++---
- No_battery_comparison.ipynb                       |  542 ++++----
- RBC_vs_MILP_Comparison.ipynb                      |  253 ++--
- Skupnostna_Samooskrba_vs_Souporaba.ipynb          |  221 ++--
- 10 files changed, 2773 insertions(+), 1449 deletions(-)
+DQN/dqn_model                                      |  Bin 223465 -> 223465 bytes
+ Energy_Community_Comparison.ipynb                  |  920 ++++++++----
+ Extended_Multuser_Battery_Size_Optimization.ipynb  |  275 ++--
+ Household invoice generator.ipynb                  |   74 +-
+ Household_local model.ipynb                        |    6 +-
+ MILP_horizon_comparison.ipynb                      | 1460 +++++++++++++++-----
+ Multi_household_baseline.ipynb                     |   59 +-
+ Multuser_Battery_Size_Optimization.ipynb           |    3 +-
+ No_battery_comparison.ipynb                        |    2 +-
+ RBC_vs_MILP_Comparison.ipynb                       |    2 +-
+ .../community_annual_cost/SOURCE.md                |  124 +-
+ .../community_annual_cost.pdf                      |  Bin 23481 -> 23481 bytes
+ .../community_annual_cost/source.json              |  122 +-
+ .../Figures/horizon/achievable_saving/SOURCE.md    |   96 +-
+ .../achievable_saving/achievable_saving.pdf        |  Bin 18168 -> 18168 bytes
+ .../Figures/horizon/achievable_saving/source.json  |   25 +-
+ .../Figures/horizon/gap_by_consumer_type/SOURCE.md |  124 +-
+ .../gap_by_consumer_type/gap_by_consumer_type.pdf  |  Bin 41176 -> 41176 bytes
+ .../horizon/gap_by_consumer_type/source.json       |   73 +-
+ .../horizon/gap_by_consumer_type_ratio/SOURCE.md   |  127 +-
+ .../gap_by_consumer_type_ratio.pdf                 |  Bin 16106 -> 16106 bytes
+ .../horizon/gap_by_consumer_type_ratio/source.json |   79 +-
+ .../horizon/gap_by_group_and_tariff/SOURCE.md      |  120 +-
+ .../horizon/gap_by_group_and_tariff/cell.py        |    2 +-
+ .../gap_by_group_and_tariff.pdf                    |  Bin 80946 -> 80946 bytes
+ .../horizon/gap_by_group_and_tariff/source.json    |   65 +-
+ .../horizon/gap_means_all_tariffs/SOURCE.md        |  111 +-
+ .../gap_means_all_tariffs.pdf                      |  Bin 18381 -> 18381 bytes
+ .../horizon/gap_means_all_tariffs/source.json      |   47 +-
+ .../horizon/gap_means_all_tariffs_zoom/SOURCE.md   |  114 +-
+ .../gap_means_all_tariffs_zoom.pdf                 |  Bin 15494 -> 15494 bytes
+ .../horizon/gap_means_all_tariffs_zoom/source.json |   53 +-
+ .../horizon/gap_spread_households/SOURCE.md        |  107 +-
+ .../Figures/horizon/gap_spread_households/cell.py  |    2 +-
+ .../gap_spread_households.pdf                      |  Bin 35145 -> 35145 bytes
+ .../horizon/gap_spread_households/source.json      |   39 +-
+ .../horizon/horizon_gap_by_tariff/SOURCE.md        |   97 +-
+ .../Figures/horizon/horizon_gap_by_tariff/cell.py  |    2 +-
+ .../horizon_gap_by_tariff.pdf                      |  Bin 14953 -> 14953 bytes
+ .../horizon/horizon_gap_by_tariff/source.json      |   26 +-
+ .../horizon/horizon_gap_by_tariff_zoom/SOURCE.md   |  103 +-
+ .../horizon/horizon_gap_by_tariff_zoom/cell.py     |    2 +-
+ .../horizon_gap_by_tariff_zoom.pdf                 |  Bin 11830 -> 11830 bytes
+ .../horizon/horizon_gap_by_tariff_zoom/source.json |   32 +-
+ Results/Figures/horizon/runtime_vs_gap/SOURCE.md   |  117 +-
+ .../horizon/runtime_vs_gap/runtime_vs_gap.pdf      |  Bin 24287 -> 24287 bytes
+ Results/Figures/horizon/runtime_vs_gap/source.json |   59 +-
+ .../Figures/invoices/invoice_composition/SOURCE.md |   69 +-
+ .../invoice_composition/invoice_composition.pdf    |  Bin 16447 -> 16447 bytes
+ .../invoices/invoice_composition/source.json       |   64 +-
+ .../group_total_cost/SOURCE.md                     |   66 +-
+ .../group_total_cost/group_total_cost.pdf          |  Bin 11999 -> 11999 bytes
+ .../group_total_cost/source.json                   |   61 +-
+ .../gap_by_household_type.pdf                      |  Bin 37188 -> 37188 bytes
+ .../rbc_vs_milp/gap_by_price_list/SOURCE.md        |   85 +-
+ .../gap_by_price_list/gap_by_price_list.pdf        |  Bin 16277 -> 16277 bytes
+ .../rbc_vs_milp/gap_by_price_list/source.json      |   70 +-
+ Results/Figures/rbc_vs_milp/gap_by_rule/SOURCE.md  |   82 +-
+ .../rbc_vs_milp/gap_by_rule/gap_by_rule.pdf        |  Bin 16358 -> 16358 bytes
+ .../Figures/rbc_vs_milp/gap_by_rule/source.json    |   70 +-
+ .../Figures/rbc_vs_milp/gap_vs_capacity/SOURCE.md  |   88 +-
+ .../gap_vs_capacity/gap_vs_capacity.pdf            |  Bin 18510 -> 18510 bytes
+ .../rbc_vs_milp/gap_vs_capacity/source.json        |   70 +-
+ .../rbc_vs_milp/saving_vs_capacity/SOURCE.md       |   91 +-
+ .../saving_vs_capacity/saving_vs_capacity.pdf      |  Bin 19284 -> 19284 bytes
+ .../rbc_vs_milp/saving_vs_capacity/source.json     |   70 +-
+ Results/Figures/rbc_vs_milp/trace_day/SOURCE.md    |   79 +-
+ Results/Figures/rbc_vs_milp/trace_day/source.json  |   70 +-
+ .../Figures/rbc_vs_milp/trace_day/trace_day.pdf    |  Bin 31141 -> 31141 bytes
+ Skupnostna_Samooskrba_vs_Souporaba.ipynb           | 1418 ++++++++++---------
+ 70 files changed, 4571 insertions(+), 2551 deletions(-)
 ```
