@@ -883,12 +883,21 @@ def show(fig=None, name=None, *, save_pdf=None, png=False,
 
 def _git(*args, cwd=None):
     """Run one git command, returning stripped stdout or None if it failed."""
+    # encoding= rather than text=: text=True decodes with the LOCALE codec, and
+    # on a Windows box that is the ANSI codepage (cp1250 here), which cannot
+    # decode a diff carrying a U+2212 minus or any other non-Latin-2 character.
+    # The decode then blows up inside subprocess's reader THREAD, which leaves
+    # `out.stdout` as None on a returncode of 0 -- an AttributeError below
+    # rather than a caught failure. git speaks UTF-8, so say so.
     try:
         out = subprocess.run(("git", "-C", str(cwd or REPO_ROOT)) + args,
-                             capture_output=True, text=True, timeout=15)
+                             capture_output=True, timeout=15,
+                             encoding="utf-8", errors="replace")
     except (OSError, subprocess.SubprocessError):
         return None
-    return out.stdout.strip() if out.returncode == 0 else None
+    if out.returncode != 0 or out.stdout is None:
+        return None
+    return out.stdout.strip()
 
 
 def git_trace():

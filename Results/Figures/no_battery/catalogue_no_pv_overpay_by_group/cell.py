@@ -61,4 +61,4 @@ rel_no_pv = catalogue_figure(
     "Brez PV, oba kataloga: preplačilo glede na najcenejši cenik te skupine [%]",
     "catalogue_no_pv")
 
-rel_no_pv.round(2)
+anonymise(rel_no_pv).round(2)

@@ -34,4 +34,4 @@ overpay_heatmap(ax, by_group_rel, INK_2,
                 fig=fig, cell_fontsize=7.0)
 pf.show(fig, "no_pv_overpay_by_group")
 
-by_group_rel.round(2)
+anonymise(by_group_rel).round(2)

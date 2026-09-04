@@ -1,9 +1,5 @@
-### Aging: how the cycle limit's bite depends on battery size (illustrative --
-### the repo has no physical degradation model). Equivalent full cycles per
-### year fall as capacity grows (section 5's EFC/leto curve, plotted just
-### above), so this is that curve inverted into years-to-cycle-limit -- against
-### the flat BATTERY_LIFETIME_YEARS calendar limit and the shorter of the two
-### that actually governs the pack's service life.
+### Aging: how the cycle limit's bite depends on battery size illustrative
+
 cap_life = df_sizing.loc[df_sizing["Capacity_kWh"] > 0, "Capacity_kWh"].to_numpy()
 efc_life = df_sizing.loc[df_sizing["Capacity_kWh"] > 0, "Equivalent_Full_Cycles"].to_numpy()
 cycle_life_y = np.where(efc_life > 0, BATTERY_CYCLE_LIMIT_EFC / efc_life, np.inf)

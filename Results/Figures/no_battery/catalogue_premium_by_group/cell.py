@@ -68,7 +68,7 @@ for y, (supplier, row) in zip(ypos, supplier_premium.iterrows()):
 # Which two lists a row compares belongs in the row label: at 20 EUR/a apart the
 # two names would overlap under the dots.
 ax.set_yticks(ypos, [
-    f"{s}\ndobava: {short_list_name(r['Dobava_Option'])}\n"
+    f"{supplier_label(s)}\ndobava: {short_list_name(r['Dobava_Option'])}\n"
     + (f"samooskrba: {short_list_name(r['Samooskrba_Option'])}"
        if pd.notna(r["Samooskrba_Option"]) else "samooskrba: ni cenika")
     for s, r in supplier_premium.iterrows()], fontsize=8)
@@ -121,7 +121,8 @@ fig.colorbar(im, ax=ax, fraction=0.045, pad=0.02,
 pf.show(fig, "catalogue_premium_by_group")
 
 supplier_premium[["Dobava_EUR", "Samooskrba_EUR", "Premium_EUR",
-                  "Lists_Dobava", "Lists_Samooskrba"]].rename(columns={
+                  "Lists_Dobava", "Lists_Samooskrba"]].rename(
+    index=supplier_label).rename(columns={
     "Dobava_EUR": "najcenejša dobava [EUR/a]",
     "Samooskrba_EUR": "najcenejša samooskrba [EUR/a]",
     "Premium_EUR": "razlika [EUR/a]",

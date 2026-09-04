@@ -1,6 +1,6 @@
 # horizon_gap_by_tariff_zoom
 
-Exported 2026-09-02T16:22:20+00:00
+Exported 2026-09-04T09:11:45+00:00
 Files: horizon_gap_by_tariff_zoom.pdf
 Size: 7.16 x 4.4392 in @ 600 dpi (tight)
 
@@ -12,294 +12,160 @@ The title text for this figure, for the article's `\caption{...}`:
 
 ## Source
 
-- notebook: /Users/summerscholl/Documents/Andraz/Energy_Community/MILP_horizon_comparison.ipynb (via __vsc_ipynb_file__)
-- cell execution count: 28
+- notebook: not detected
+- cell execution count: 11
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: 7940b1377d833816b4278c4c3f71855080b2f016 (Development)
-- subject: Mostly rerun evrything and implemented new ploting function on the whole notebook.     An error remaining in RBC
-- describe: 7940b13-dirty
+- commit: 7d7dbc1e3272f9f1e0fcb3305e503472b8188cca (Development)
+- subject: Fixed a 2T bug and rerun the notebooks
+- describe: 7d7dbc1-dirty
 
-**Working tree was DIRTY (274 files) — the commit above does NOT reproduce this figure on its own.**
-See `uncommitted.diff` (truncated), which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
+**Working tree was DIRTY (141 files) — the commit above does NOT reproduce this figure on its own.**
+See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-Battery_Size_Optimization.ipynb                    |   10 +-
- DQN/dqn_model                                      |  Bin 223465 -> 223465 bytes
- Energy_Community_Comparison.ipynb                  |  457 +-
- Environment.py                                     |   32 +-
- Extended_Multuser_Battery_Size_Optimization.ipynb  |   59 +-
- Horizon_Comparison.py                              |   37 +-
- Household_local model.ipynb                        |  647 +-
- MILP_Household.py                                  |    4 +-
- Multuser_Battery_Size_Optimization.ipynb           |   38 +-
- .../__pycache__/si_obracun.cpython-314.pyc         |  Bin 49552 -> 50361 bytes
- New pricing functions/si_obracun.py                |   26 +-
- RBC_vs_MILP_Comparison.ipynb                       | 6742 ++++++++++++++++++--
- .../battery_effect_by_item/SOURCE.md               |   87 +-
+Battery_Size_Optimization.ipynb                    |  611 ++--
+ Energy_Community_Comparison.ipynb                  | 1003 +++----
+ Extended_Multuser_Battery_Size_Optimization.ipynb  |   52 +-
+ MILP_horizon_comparison.ipynb                      |   29 +-
+ Multi_household_baseline.ipynb                     |  511 ++--
+ Multuser_Battery_Size_Optimization.ipynb           |   42 +-
+ No_battery_comparison.ipynb                        | 2939 +++++++++++---------
+ Plotting_Functions.py                              |   13 +-
+ RBC_vs_MILP_Comparison.ipynb                       |    4 +-
+ Results/Community_Study/per_household.csv          |  210 +-
+ .../battery_sizing/cost_vs_capacity/SOURCE.md      |  114 +-
+ .../cost_vs_capacity/cost_vs_capacity.pdf          |  Bin 18668 -> 18668 bytes
+ .../battery_sizing/cost_vs_capacity/source.json    |   76 +-
+ .../energy_through_battery/SOURCE.md               |  123 +-
+ .../energy_through_battery.pdf                     |  Bin 12857 -> 12857 bytes
+ .../energy_through_battery/source.json             |   76 +-
+ .../equivalent_full_cycles/SOURCE.md               |  129 +-
+ .../equivalent_full_cycles.pdf                     |  Bin 11509 -> 11509 bytes
+ .../equivalent_full_cycles/source.json             |   76 +-
+ .../battery_sizing/marginal_value/SOURCE.md        |  117 +-
+ .../marginal_value/marginal_value.pdf              |  Bin 13939 -> 13939 bytes
+ .../battery_sizing/marginal_value/source.json      |   76 +-
+ .../battery_sizing/net_annual_benefit/SOURCE.md    |  119 +-
+ .../net_annual_benefit/net_annual_benefit.pdf      |  Bin 20475 -> 20475 bytes
+ .../battery_sizing/net_annual_benefit/source.json  |   75 +-
+ .../battery_sizing/peak_grid_import/SOURCE.md      |  126 +-
+ .../peak_grid_import/peak_grid_import.pdf          |  Bin 11663 -> 11663 bytes
+ .../battery_sizing/peak_grid_import/source.json    |   76 +-
+ .../Figures/battery_sizing/service_life/SOURCE.md  |  132 +-
+ .../Figures/battery_sizing/service_life/cell.py    |    8 +-
+ .../battery_sizing/service_life/service_life.pdf   |  Bin 14689 -> 14689 bytes
+ .../battery_sizing/service_life/source.json        |   76 +-
+ .../battery_effect_by_item/SOURCE.md               |  147 +-
  .../battery_effect_by_item.pdf                     |  Bin 23266 -> 23266 bytes
- .../battery_effect_by_item/source.json             |   80 +-
- .../battery_saving_by_segment/SOURCE.md            |   99 +-
- .../battery_saving_by_segment.pdf                  |  Bin 12677 -> 12677 bytes
- .../battery_saving_by_segment/source.json          |   92 +-
- .../bill_composition/SOURCE.md                     |   84 +-
+ .../battery_effect_by_item/source.json             |   78 +-
+ .../battery_saving_by_segment/SOURCE.md            |  171 +-
+ .../battery_saving_by_segment.pdf                  |  Bin 12677 -> 12673 bytes
+ .../battery_saving_by_segment/source.json          |   70 +-
+ .../bill_composition/SOURCE.md                     |  141 +-
  .../bill_composition/bill_composition.pdf          |  Bin 22190 -> 22190 bytes
- .../bill_composition/source.json                   |   77 +-
- .../community_annual_cost/SOURCE.md                |   79 +-
+ .../bill_composition/source.json                   |   81 +-
+ .../community_annual_cost/SOURCE.md                |  135 +-
  .../community_annual_cost.pdf                      |  Bin 23481 -> 23481 bytes
- .../community_annual_cost/source.json              |   78 +-
- .../household_cost_scatter/SOURCE.md               |   96 +-
- .../household_cost_scatter.pdf                     |  Bin 25359 -> 25359 bytes
- .../household_cost_scatter/source.json             |   89 +-
- .../import_duration_curve/SOURCE.md                |   90 +-
+ .../community_annual_cost/source.json              |   84 +-
+ .../household_cost_scatter/SOURCE.md               |  165 +-
+ .../household_cost_scatter.pdf                     |  Bin 25359 -> 25349 bytes
+ .../household_cost_scatter/source.json             |   69 +-
+ .../import_duration_curve/SOURCE.md                |  153 +-
  .../import_duration_curve.pdf                      |  Bin 30012 -> 30012 bytes
- .../import_duration_curve/source.json              |   83 +-
- .../import_duration_curve_zoom/SOURCE.md           |   93 +-
+ .../import_duration_curve/source.json              |   75 +-
+ .../import_duration_curve_zoom/SOURCE.md           |  159 +-
  .../import_duration_curve_zoom.pdf                 |  Bin 24231 -> 24231 bytes
- .../import_duration_curve_zoom/source.json         |   86 +-
- .../price_extreme_days/SOURCE.md                   |  105 +-
+ .../import_duration_curve_zoom/source.json         |   72 +-
+ .../price_extreme_days/SOURCE.md                   |  183 +-
  .../price_extreme_days/price_extreme_days.pdf      |  Bin 36454 -> 36454 bytes
- .../price_extreme_days/source.json                 |   98 +-
- .../souporaba_shared_vs_forfeited/SOURCE.md        |  102 +-
+ .../price_extreme_days/source.json                 |   76 +-
+ .../souporaba_shared_vs_forfeited/SOURCE.md        |  177 +-
  .../souporaba_shared_vs_forfeited.pdf              |  Bin 11890 -> 11890 bytes
- .../souporaba_shared_vs_forfeited/source.json      |   95 +-
- .../Figures/horizon/achievable_saving/SOURCE.md    |  264 +-
- .../achievable_saving/achievable_saving.pdf        |  Bin 18168 -> 17857 bytes
- .../Figures/horizon/achievable_saving/source.json  |  108 +-
- .../horizon/horizon_gap_by_tariff/SOURCE.md        |  270 +-
- .../horizon_gap_by_tariff.pdf                      |  Bin 14953 -> 14949 bytes
- .../horizon/horizon_gap_by_tariff/source.json      |  105 +-
- .../horizon_gap_by_tariff_zoom.pdf                 |  Bin 11830 -> 11825 bytes
- .../achievable_by_household_type/SOURCE.md         |  309 +-
- .../achievable_by_household_type.pdf               |  Bin 11582 -> 11582 bytes
- .../achievable_by_household_type/source.json       |  102 +-
- .../Figures/rbc_vs_milp/battery_earnings/SOURCE.md |  315 +-
- .../battery_earnings/battery_earnings.pdf          |  Bin 16299 -> 16298 bytes
- .../rbc_vs_milp/battery_earnings/source.json       |  102 +-
- .../rbc_vs_milp/excess_power_charge/SOURCE.md      |  333 +-
- .../excess_power_charge/excess_power_charge.pdf    |  Bin 15872 -> 15801 bytes
- .../rbc_vs_milp/excess_power_charge/source.json    |  102 +-
- .../rbc_vs_milp/gap_by_household_type/SOURCE.md    |  303 +-
- .../gap_by_household_type.pdf                      |  Bin 37188 -> 37483 bytes
- .../rbc_vs_milp/gap_by_household_type/source.json  |  102 +-
- .../rbc_vs_milp/gap_by_price_list/SOURCE.md        |  285 +-
- .../gap_by_price_list/gap_by_price_list.pdf        |  Bin 16277 -> 16280 bytes
- .../rbc_vs_milp/gap_by_price_list/source.json      |  102 +-
- Results/Figures/rbc_vs_milp/gap_by_rule/SOURCE.md  |  279 +-
- .../rbc_vs_milp/gap_by_rule/gap_by_rule.pdf        |  Bin 16358 -> 16418 bytes
- .../Figures/rbc_vs_milp/gap_by_rule/source.json    |  102 +-
- .../Figures/rbc_vs_milp/gap_vs_capacity/SOURCE.md  |  291 +-
- .../gap_vs_capacity/gap_vs_capacity.pdf            |  Bin 18510 -> 18510 bytes
- .../rbc_vs_milp/gap_vs_capacity/source.json        |  102 +-
- .../rbc_vs_milp/grid_charged_share/SOURCE.md       |  321 +-
- .../grid_charged_share/grid_charged_share.pdf      |  Bin 16244 -> 16245 bytes
- .../rbc_vs_milp/grid_charged_share/source.json     |  102 +-
- .../Figures/rbc_vs_milp/peak_grid_import/SOURCE.md |  327 +-
- .../peak_grid_import/peak_grid_import.pdf          |  Bin 15789 -> 15789 bytes
- .../rbc_vs_milp/peak_grid_import/source.json       |  102 +-
- .../rbc_vs_milp/saving_vs_capacity/SOURCE.md       |  297 +-
- .../saving_vs_capacity/saving_vs_capacity.pdf      |  Bin 19284 -> 19279 bytes
- .../rbc_vs_milp/saving_vs_capacity/source.json     |  102 +-
- Results/Figures/rbc_vs_milp/trace_day/SOURCE.md    |  108 +-
- Results/Figures/rbc_vs_milp/trace_day/source.json  |   95 +-
- .../Figures/rbc_vs_milp/trace_day/trace_day.pdf    |  Bin 31141 -> 31149 bytes
- .../Fluvius_EV_user_001_redni2t.csv                |   10 +-
- .../Fluvius_EV_user_002_redni2t.csv                |   10 +-
- .../Fluvius_EV_user_003_redni2t.csv                |   10 +-
- .../Fluvius_EV_user_004_redni2t.csv                |   10 +-
- .../Fluvius_EV_user_005_redni2t.csv                |   10 +-
- .../Fluvius_HP_EV_user_001_redni2t.csv             |   10 +-
- .../Fluvius_HP_EV_user_002_redni2t.csv             |   10 +-
- .../Fluvius_HP_EV_user_003.csv                     |    2 +-
- .../Fluvius_HP_EV_user_003_redni2t.csv             |   10 +-
- .../Fluvius_HP_EV_user_004_redni2t.csv             |   10 +-
- .../Fluvius_HP_EV_user_005_redni2t.csv             |   10 +-
- .../Fluvius_HP_user_001_redni2t.csv                |   10 +-
- .../Fluvius_HP_user_002_redni2t.csv                |   10 +-
- .../Fluvius_HP_user_003_redni2t.csv                |   10 +-
- .../Fluvius_HP_user_004_redni2t.csv                |   10 +-
- .../Fluvius_HP_user_005_redni2t.csv                |   10 +-
- .../Fluvius_PV_EV_user_003.csv                     |    2 +-
- .../Fluvius_PV_EV_user_005_redni1t.csv             |    2 +-
- .../Fluvius_PV_HP_EV_user_001.csv                  |   10 +-
- .../Fluvius_PV_HP_EV_user_001_aktivni.csv          |   10 +-
- .../Fluvius_PV_HP_EV_user_001_redni1t.csv          |    6 +-
- .../Fluvius_PV_HP_EV_user_002.csv                  |   10 +-
- .../Fluvius_PV_HP_EV_user_002_aktivni.csv          |   10 +-
- .../Fluvius_PV_HP_EV_user_002_redni1t.csv          |   10 +-
- .../Fluvius_PV_HP_EV_user_003.csv                  |   10 +-
- .../Fluvius_PV_HP_EV_user_003_aktivni.csv          |    8 +-
- .../Fluvius_PV_HP_EV_user_003_redni1t.csv          |    8 +-
- .../Fluvius_PV_HP_EV_user_004.csv                  |    6 +-
- .../Fluvius_PV_HP_EV_user_004_aktivni.csv          |   10 +-
- .../Fluvius_PV_HP_EV_user_004_redni1t.csv          |   10 +-
- .../Fluvius_PV_HP_EV_user_005.csv                  |   10 +-
- .../Fluvius_PV_HP_EV_user_005_aktivni.csv          |   10 +-
- .../Fluvius_PV_HP_EV_user_005_redni1t.csv          |    6 +-
- .../Fluvius_PV_HP_user_001_aktivni.csv             |    2 +-
- .../Fluvius_PV_HP_user_002_aktivni.csv             |    2 +-
- .../Fluvius_PV_HP_user_002_redni1t.csv             |    8 +-
- .../Fluvius_PV_HP_user_003.csv                     |    6 +-
- .../Fluvius_PV_HP_user_003_aktivni.csv             |    6 +-
- .../Fluvius_PV_HP_user_003_redni1t.csv             |    6 +-
- .../Fluvius_PV_HP_user_004.csv                     |    8 +-
- .../Fluvius_PV_HP_user_004_aktivni.csv             |    4 +-
- .../Fluvius_PV_HP_user_004_redni1t.csv             |    8 +-
- .../Fluvius_PV_HP_user_005.csv                     |    8 +-
- .../Fluvius_PV_HP_user_005_aktivni.csv             |    8 +-
- .../Fluvius_PV_HP_user_005_redni1t.csv             |    8 +-
- .../Fluvius_PV_user_002.csv                        |    2 +-
- .../Fluvius_PV_user_004_redni1t.csv                |    2 +-
- .../Fluvius_user_001_redni2t.csv                   |   10 +-
- .../Fluvius_user_002_redni2t.csv                   |   10 +-
- .../Fluvius_user_003_redni2t.csv                   |   10 +-
- .../Fluvius_user_004_redni2t.csv                   |   10 +-
- .../Fluvius_user_005_redni2t.csv                   |   10 +-
- Results/RBC_Comparison/Fluvius_EV_user_001.csv     |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_001_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_001_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_001_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_EV_user_002.csv     |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_002_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_002_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_002_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_EV_user_003.csv     |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_003_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_003_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_003_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_EV_user_004.csv     |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_004_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_004_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_004_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_EV_user_005.csv     |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_005_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_005_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_EV_user_005_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_HP_EV_user_001.csv  |   82 +-
- .../Fluvius_HP_EV_user_001_aktivni.csv             |   82 +-
- .../Fluvius_HP_EV_user_001_redni1t.csv             |   82 +-
- .../Fluvius_HP_EV_user_001_redni2t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_HP_EV_user_002.csv  |   82 +-
- .../Fluvius_HP_EV_user_002_aktivni.csv             |   82 +-
- .../Fluvius_HP_EV_user_002_redni1t.csv             |   82 +-
- .../Fluvius_HP_EV_user_002_redni2t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_HP_EV_user_003.csv  |   82 +-
- .../Fluvius_HP_EV_user_003_aktivni.csv             |   82 +-
- .../Fluvius_HP_EV_user_003_redni1t.csv             |   82 +-
- .../Fluvius_HP_EV_user_003_redni2t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_HP_EV_user_004.csv  |   82 +-
- .../Fluvius_HP_EV_user_004_aktivni.csv             |   82 +-
- .../Fluvius_HP_EV_user_004_redni1t.csv             |   82 +-
- .../Fluvius_HP_EV_user_004_redni2t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_HP_EV_user_005.csv  |   82 +-
- .../Fluvius_HP_EV_user_005_aktivni.csv             |   82 +-
- .../Fluvius_HP_EV_user_005_redni1t.csv             |   82 +-
- .../Fluvius_HP_EV_user_005_redni2t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_HP_user_001.csv     |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_001_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_001_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_001_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_HP_user_002.csv     |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_002_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_002_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_002_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_HP_user_003.csv     |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_003_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_003_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_003_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_HP_user_004.csv     |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_004_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_004_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_004_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_HP_user_005.csv     |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_005_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_005_redni1t.csv |   82 +-
- .../RBC_Comparison/Fluvius_HP_user_005_redni2t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_PV_EV_user_001.csv  |   82 +-
- .../Fluvius_PV_EV_user_001_aktivni.csv             |   82 +-
- .../Fluvius_PV_EV_user_001_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_EV_user_002.csv  |   82 +-
- .../Fluvius_PV_EV_user_002_aktivni.csv             |   82 +-
- .../Fluvius_PV_EV_user_002_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_EV_user_003.csv  |   82 +-
- .../Fluvius_PV_EV_user_003_aktivni.csv             |   82 +-
- .../Fluvius_PV_EV_user_003_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_EV_user_004.csv  |   82 +-
- .../Fluvius_PV_EV_user_004_aktivni.csv             |   82 +-
- .../Fluvius_PV_EV_user_004_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_EV_user_005.csv  |   82 +-
- .../Fluvius_PV_EV_user_005_aktivni.csv             |   82 +-
- .../Fluvius_PV_EV_user_005_redni1t.csv             |   82 +-
- .../RBC_Comparison/Fluvius_PV_HP_EV_user_001.csv   |   82 +-
- .../Fluvius_PV_HP_EV_user_001_aktivni.csv          |   82 +-
- .../Fluvius_PV_HP_EV_user_001_redni1t.csv          |   82 +-
- .../RBC_Comparison/Fluvius_PV_HP_EV_user_002.csv   |   82 +-
- .../Fluvius_PV_HP_EV_user_002_aktivni.csv          |   82 +-
- .../Fluvius_PV_HP_EV_user_002_redni1t.csv          |   82 +-
- .../RBC_Comparison/Fluvius_PV_HP_EV_user_003.csv   |   82 +-
- .../Fluvius_PV_HP_EV_user_003_aktivni.csv          |   82 +-
- .../Fluvius_PV_HP_EV_user_003_redni1t.csv          |   82 +-
- .../RBC_Comparison/Fluvius_PV_HP_EV_user_004.csv   |   82 +-
- .../Fluvius_PV_HP_EV_user_004_aktivni.csv          |   82 +-
- .../Fluvius_PV_HP_EV_user_004_redni1t.csv          |   82 +-
- .../RBC_Comparison/Fluvius_PV_HP_EV_user_005.csv   |   82 +-
- .../Fluvius_PV_HP_EV_user_005_aktivni.csv          |   82 +-
- .../Fluvius_PV_HP_EV_user_005_redni1t.csv          |   82 +-
- Results/RBC_Comparison/Fluvius_PV_HP_user_001.csv  |   82 +-
- .../Fluvius_PV_HP_user_001_aktivni.csv             |   82 +-
- .../Fluvius_PV_HP_user_001_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_HP_user_002.csv  |   82 +-
- .../Fluvius_PV_HP_user_002_aktivni.csv             |   82 +-
- .../Fluvius_PV_HP_user_002_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_HP_user_003.csv  |   82 +-
- .../Fluvius_PV_HP_user_003_aktivni.csv             |   82 +-
- .../Fluvius_PV_HP_user_003_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_HP_user_004.csv  |   82 +-
- .../Fluvius_PV_HP_user_004_aktivni.csv             |   82 +-
- .../Fluvius_PV_HP_user_004_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_HP_user_005.csv  |   82 +-
- .../Fluvius_PV_HP_user_005_aktivni.csv             |   82 +-
- .../Fluvius_PV_HP_user_005_redni1t.csv             |   82 +-
- Results/RBC_Comparison/Fluvius_PV_user_001.csv     |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_001_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_001_redni1t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_PV_user_002.csv     |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_002_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_002_redni1t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_PV_user_003.csv     |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_003_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_003_redni1t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_PV_user_004.csv     |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_004_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_004_redni1t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_PV_user_005.csv     |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_005_aktivni.csv |   82 +-
- .../RBC_Comparison/Fluvius_PV_user_005_redni1t.csv |   82 +-
- Results/RBC_Comparison/Fluvius_user_001.csv        |   82 +-
- .../RBC_Comparison/Fluvius_user_001_aktivni.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_001_redni1t.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_001_redni2t.csv    |   82 +-
- Results/RBC_Comparison/Fluvius_user_002.csv        |   82 +-
- .../RBC_Comparison/Fluvius_user_002_aktivni.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_002_redni1t.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_002_redni2t.csv    |   82 +-
- Results/RBC_Comparison/Fluvius_user_003.csv        |   82 +-
- .../RBC_Comparison/Fluvius_user_003_aktivni.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_003_redni1t.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_003_redni2t.csv    |   82 +-
- Results/RBC_Comparison/Fluvius_user_004.csv        |   82 +-
- .../RBC_Comparison/Fluvius_user_004_aktivni.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_004_redni1t.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_004_redni2t.csv    |   82 +-
- Results/RBC_Comparison/Fluvius_user_005.csv        |   82 +-
- .../RBC_Comparison/Fluvius_user_005_aktivni.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_005_redni1t.csv    |   82 +-
- .../RBC_Comparison/Fluvius_user_005_redni2t.csv    |   82 +-
- Rule_Based_Control.py                              |  100 +-
- Rule_Based_Control_Check.py                        |   59 +
- __pycache__/Environment.cpython-314.pyc            |  Bin 82365 -> 82599 bytes
- 274 files changed, 17218 insertions(+), 9534 deletions(-)
+ .../souporaba_shared_vs_forfeited/source.json      |   73 +-
+ .../Figures/horizon/achievable_saving/SOURCE.md    |  406 +--
+ .../achievable_saving/achievable_saving.pdf        |  Bin 17857 -> 17857 bytes
+ .../Figures/horizon/achievable_saving/source.json  |   84 +-
+ .../horizon/horizon_gap_by_tariff/SOURCE.md        |  412 +--
+ .../horizon_gap_by_tariff.pdf                      |  Bin 14949 -> 14949 bytes
+ .../horizon/horizon_gap_by_tariff/source.json      |   84 +-
+ .../horizon_gap_by_tariff_zoom.pdf                 |  Bin 11825 -> 11825 bytes
+ .../group_total_cost/SOURCE.md                     |  139 +-
+ .../group_total_cost/group_total_cost.pdf          |  Bin 11999 -> 11240 bytes
+ .../group_total_cost/source.json                   |  100 +-
+ .../catalogue_all_bill_ranking/SOURCE.md           |  111 +-
+ .../catalogue_all_bill_ranking.pdf                 |  Bin 24983 -> 27460 bytes
+ .../no_battery/catalogue_all_bill_ranking/cell.py  |    2 +-
+ .../catalogue_all_bill_ranking/source.json         |   40 +-
+ .../catalogue_all_overpay_by_group/SOURCE.md       |  118 +-
+ .../catalogue_all_overpay_by_group.pdf             |  Bin 114684 -> 107977 bytes
+ .../catalogue_all_overpay_by_group/cell.py         |    2 +-
+ .../catalogue_all_overpay_by_group/source.json     |   43 +-
+ .../catalogue_no_pv_bill_ranking/SOURCE.md         |   83 +-
+ .../catalogue_no_pv_bill_ranking.pdf               |  Bin 25016 -> 27528 bytes
+ .../catalogue_no_pv_bill_ranking/cell.py           |    2 +-
+ .../catalogue_no_pv_bill_ranking/source.json       |   31 +-
+ .../catalogue_no_pv_overpay_by_group/SOURCE.md     |   90 +-
+ .../catalogue_no_pv_overpay_by_group.pdf           |  Bin 83217 -> 76824 bytes
+ .../catalogue_no_pv_overpay_by_group/cell.py       |    2 +-
+ .../catalogue_no_pv_overpay_by_group/source.json   |   32 +-
+ .../catalogue_premium_by_group/SOURCE.md           |  132 +-
+ .../catalogue_premium_by_group.pdf                 |  Bin 59177 -> 60174 bytes
+ .../no_battery/catalogue_premium_by_group/cell.py  |    5 +-
+ .../catalogue_premium_by_group/source.json         |   44 +-
+ .../catalogue_premium_by_supplier/SOURCE.md        |  125 +-
+ .../catalogue_premium_by_supplier.pdf              |  Bin 28390 -> 27076 bytes
+ .../catalogue_premium_by_supplier/cell.py          |    5 +-
+ .../catalogue_premium_by_supplier/source.json      |   44 +-
+ .../catalogue_with_pv_bill_ranking/SOURCE.md       |   97 +-
+ .../catalogue_with_pv_bill_ranking.pdf             |  Bin 24911 -> 27416 bytes
+ .../catalogue_with_pv_bill_ranking/cell.py         |    2 +-
+ .../catalogue_with_pv_bill_ranking/source.json     |   33 +-
+ .../catalogue_with_pv_overpay_by_group/SOURCE.md   |  104 +-
+ .../catalogue_with_pv_overpay_by_group.pdf         |  Bin 84072 -> 77049 bytes
+ .../catalogue_with_pv_overpay_by_group/cell.py     |    2 +-
+ .../catalogue_with_pv_overpay_by_group/source.json |   37 +-
+ .../no_battery/export_right_by_group/SOURCE.md     |   81 +-
+ .../export_right_by_group.pdf                      |  Bin 20105 -> 20105 bytes
+ .../no_battery/export_right_by_group/source.json   |   35 +-
+ .../no_battery/export_right_worth/SOURCE.md        |   78 +-
+ .../export_right_worth/export_right_worth.pdf      |  Bin 24115 -> 26945 bytes
+ .../no_battery/export_right_worth/source.json      |   36 +-
+ .../no_battery/no_pv_bill_by_group/SOURCE.md       |   65 +-
+ .../Figures/no_battery/no_pv_bill_by_group/cell.py |    2 +-
+ .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    |  Bin 17923 -> 16664 bytes
+ .../no_battery/no_pv_bill_by_group/source.json     |   41 +-
+ .../no_battery/no_pv_overpay_by_group/SOURCE.md    |   58 +-
+ .../no_battery/no_pv_overpay_by_group/cell.py      |    2 +-
+ .../no_pv_overpay_by_group.pdf                     |  Bin 74006 -> 64336 bytes
+ .../no_battery/no_pv_overpay_by_group/source.json  |   48 +-
+ .../no_battery/pv_bill_composition/SOURCE.md       |   58 +-
+ .../Figures/no_battery/pv_bill_composition/cell.py |    2 +-
+ .../pv_bill_composition/pv_bill_composition.pdf    |  Bin 15260 -> 17919 bytes
+ .../no_battery/pv_bill_composition/source.json     |   48 +-
+ .../Figures/no_battery/pv_bill_ranking/SOURCE.md   |   58 +-
+ Results/Figures/no_battery/pv_bill_ranking/cell.py |    2 +-
+ .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf |  Bin 19236 -> 21771 bytes
+ .../Figures/no_battery/pv_bill_ranking/source.json |   48 +-
+ .../pv_nosale_bill_composition/SOURCE.md           |   70 +-
+ .../no_battery/pv_nosale_bill_composition/cell.py  |    2 +-
+ .../pv_nosale_bill_composition.pdf                 |  Bin 18754 -> 17691 bytes
+ .../pv_nosale_bill_composition/source.json         |   40 +-
+ .../no_battery/pv_nosale_bill_ranking/SOURCE.md    |   66 +-
+ .../no_battery/pv_nosale_bill_ranking/cell.py      |    2 +-
+ .../pv_nosale_bill_ranking.pdf                     |  Bin 19912 -> 22461 bytes
+ .../no_battery/pv_nosale_bill_ranking/source.json  |   42 +-
+ .../pv_nosale_overpay_by_group/SOURCE.md           |   74 +-
+ .../no_battery/pv_nosale_overpay_by_group/cell.py  |    2 +-
+ .../pv_nosale_overpay_by_group.pdf                 |  Bin 44407 -> 42949 bytes
+ .../pv_nosale_overpay_by_group/source.json         |   38 +-
+ .../no_battery/pv_overpay_by_group/SOURCE.md       |   62 +-
+ .../Figures/no_battery/pv_overpay_by_group/cell.py |    2 +-
+ .../pv_overpay_by_group/pv_overpay_by_group.pdf    |  Bin 45177 -> 46157 bytes
+ .../no_battery/pv_overpay_by_group/source.json     |   46 +-
+ Skupnostna_Samooskrba_vs_Souporaba.ipynb           |   25 +-
+ 140 files changed, 7147 insertions(+), 5319 deletions(-)
 ```

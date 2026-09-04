@@ -7,4 +7,4 @@ rel_pv = catalogue_figure(
     "S PV, presežki po 0 EUR: preplačilo glede na najcenejši cenik te skupine [%]",
     "catalogue_with_pv")
 
-rel_pv.round(2)
+anonymise(rel_pv).round(2)

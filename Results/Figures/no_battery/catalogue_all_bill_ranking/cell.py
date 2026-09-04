@@ -12,4 +12,4 @@ rel_all = catalogue_figure(
     "Vseh 40 gospodinjstev: preplačilo glede na najcenejši cenik te skupine [%]",
     "catalogue_all")
 
-rel_all.round(1)
+anonymise(rel_all).round(1)

@@ -44,4 +44,4 @@ overpay_heatmap(ax, by_group_pv_rel, REGIME_COLOR["credited"],
                 fig=fig)
 pf.show(fig, "pv_overpay_by_group")
 
-by_group_pv_rel.round(2)
+anonymise(by_group_pv_rel).round(2)

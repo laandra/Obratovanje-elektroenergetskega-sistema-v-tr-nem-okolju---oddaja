@@ -47,4 +47,4 @@ overpay_heatmap(ax, by_group_pv0_rel, REGIME_COLOR["nosale"],
                 "Brez odkupa presežkov: preplačilo po tipu gospodinjstva [%]", fig=fig)
 pf.show(fig, "pv_nosale_overpay_by_group")
 
-by_group_pv0_rel.round(2)
+anonymise(by_group_pv0_rel).round(2)
