@@ -85,7 +85,7 @@ for i, regime in enumerate(("credited", "nosale")):
     for x, v, base in zip(xpos + (i - 0.5) * (bar_w + 0.02),
                           by_group_regime[regime], credited_values):
         pct = v / base * 100 if base else 0
-        ax.text(x, v - by_group_regime.to_numpy().max() * 0.015,
+        ax.text(x, v - by_group_regime.to_numpy().max() * 0.035,
                 f"{v:.0f}\n({pct:.1f}%)", ha="center",
                 va="top", fontsize=8, color=SURFACE)
 # The delta is written above the pair, with a dedicated band clear of the

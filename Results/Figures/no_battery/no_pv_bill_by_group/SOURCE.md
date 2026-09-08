@@ -1,6 +1,6 @@
 # no_pv_bill_by_group
 
-Exported 2026-09-08T07:33:07+00:00
+Exported 2026-09-08T07:50:54+00:00
 Files: no_pv_bill_by_group.pdf
 Size: 7.16 x 8.5 in @ 600 dpi (tight)
 
@@ -13,21 +13,20 @@ The title text for this figure, for the article's `\caption{...}`:
 ## Source
 
 - notebook: C:\Users\HP\Documents\JupyterNotebook\Energy_Community\No_battery_comparison.ipynb (via __vsc_ipynb_file__)
-- cell execution count: 13
+- cell execution count: 37
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: 1b43677d1afb3f2de4e6ca23fc165a66c2ed9249 (Development)
-- subject: Anonimized the electricity providers
-- describe: 1b43677-dirty
+- commit: 852db8eac56c334ec35615c47ba7f50a83e664f2 (Development)
+- subject: Updated graphic
+- describe: 852db8e-dirty
 
-**Working tree was DIRTY (2 files) — the commit above does NOT reproduce this figure on its own.**
+**Working tree was DIRTY (1 files) — the commit above does NOT reproduce this figure on its own.**
 See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-No_battery_comparison.ipynb                        | 2849 ++++++++++----------
- .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    |  Bin 16664 -> 16664 bytes
- 2 files changed, 1425 insertions(+), 1424 deletions(-)
+.../no_pv_bill_by_group/no_pv_bill_by_group.pdf     | Bin 16664 -> 16664 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
 ```

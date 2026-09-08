@@ -1,6 +1,6 @@
 {
   "figure": "no_pv_bill_by_group",
-  "created_utc": "2026-09-08T07:33:07+00:00",
+  "created_utc": "2026-09-08T07:50:54+00:00",
   "files": [
     "no_pv_bill_by_group.pdf"
   ],
@@ -20,27 +20,26 @@
   "source": {
     "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\No_battery_comparison.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 13,
+    "cell_execution_count": 37,
     "caller": "<frozen runpy>:198",
     "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "1b43677d1afb3f2de4e6ca23fc165a66c2ed9249",
-    "commit_short": "1b43677",
+    "commit": "852db8eac56c334ec35615c47ba7f50a83e664f2",
+    "commit_short": "852db8e",
     "branch": "Development",
-    "describe": "1b43677-dirty",
-    "subject": "Anonimized the electricity providers",
-    "committed_at": "2026-09-04T14:24:40+02:00",
+    "describe": "852db8e-dirty",
+    "subject": "Updated graphic",
+    "committed_at": "2026-09-08T09:46:23+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 2,
+    "dirty_file_count": 1,
     "dirty_files": [
-      "o_battery_comparison.ipynb",
-      "Results/Figures/no_battery/no_pv_bill_by_group/no_pv_bill_by_group.pdf"
+      "esults/Figures/no_battery/no_pv_bill_by_group/no_pv_bill_by_group.pdf"
     ],
-    "dirty_stat": "No_battery_comparison.ipynb                        | 2849 ++++++++++----------\n .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    |  Bin 16664 -> 16664 bytes\n 2 files changed, 1425 insertions(+), 1424 deletions(-)",
+    "dirty_stat": ".../no_pv_bill_by_group/no_pv_bill_by_group.pdf     | Bin 16664 -> 16664 bytes\n 1 file changed, 0 insertions(+), 0 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [

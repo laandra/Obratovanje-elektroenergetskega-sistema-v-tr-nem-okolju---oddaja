@@ -1,6 +1,6 @@
 {
   "figure": "no_pv_overpay_by_group",
-  "created_utc": "2026-09-08T07:33:13+00:00",
+  "created_utc": "2026-09-08T07:50:59+00:00",
   "files": [
     "no_pv_overpay_by_group.pdf"
   ],
@@ -20,30 +20,29 @@
   "source": {
     "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\No_battery_comparison.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 13,
+    "cell_execution_count": 37,
     "caller": "<frozen runpy>:198",
     "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "1b43677d1afb3f2de4e6ca23fc165a66c2ed9249",
-    "commit_short": "1b43677",
+    "commit": "852db8eac56c334ec35615c47ba7f50a83e664f2",
+    "commit_short": "852db8e",
     "branch": "Development",
-    "describe": "1b43677-dirty",
-    "subject": "Anonimized the electricity providers",
-    "committed_at": "2026-09-04T14:24:40+02:00",
+    "describe": "852db8e-dirty",
+    "subject": "Updated graphic",
+    "committed_at": "2026-09-08T09:46:23+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 5,
+    "dirty_file_count": 4,
     "dirty_files": [
-      "o_battery_comparison.ipynb",
-      "Results/Figures/no_battery/no_pv_bill_by_group/SOURCE.md",
+      "esults/Figures/no_battery/no_pv_bill_by_group/SOURCE.md",
       "Results/Figures/no_battery/no_pv_bill_by_group/no_pv_bill_by_group.pdf",
       "Results/Figures/no_battery/no_pv_bill_by_group/source.json",
       "Results/Figures/no_battery/no_pv_overpay_by_group/no_pv_overpay_by_group.pdf"
     ],
-    "dirty_stat": "No_battery_comparison.ipynb                        | 2849 ++++++++++----------\n .../no_battery/no_pv_bill_by_group/SOURCE.md       |   38 +-\n .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    |  Bin 16664 -> 16664 bytes\n .../no_battery/no_pv_bill_by_group/source.json     |   40 +-\n .../no_pv_overpay_by_group.pdf                     |  Bin 64336 -> 64336 bytes\n 5 files changed, 1444 insertions(+), 1483 deletions(-)",
+    "dirty_stat": ".../no_battery/no_pv_bill_by_group/SOURCE.md       |  17 ++++++++---------\n .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    | Bin 16664 -> 16664 bytes\n .../no_battery/no_pv_bill_by_group/source.json     |  21 ++++++++++-----------\n .../no_pv_overpay_by_group.pdf                     | Bin 64336 -> 64336 bytes\n 4 files changed, 18 insertions(+), 20 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [
