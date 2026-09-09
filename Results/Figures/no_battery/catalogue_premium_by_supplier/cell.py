@@ -75,7 +75,7 @@ ax.set_yticks(ypos, [
 ax.set_xlim(lo_x - span * 0.22, hi_x + span * 0.30)
 ax.set_ylim(-0.75, len(supplier_premium) - 0.35)
 finish(ax, title="Najboljša ponudba istega dobavitelja, s samooskrbo in brez",
-       xlabel="Letni račun s PV, brez odkupa presežkov [EUR/a]")
+       xlabel="Letni račun s PV, brez odkupa [EUR/a]")
 ax.grid(axis="x")
 ax.spines["left"].set_visible(False)
 key_below(ax,
@@ -117,7 +117,7 @@ for r in range(values.shape[0]):
 finish(ax, title="Koliko dražji je samooskrbni cenik od najcenejšega cenika za dobavo "
                  "[EUR/a]")
 fig.colorbar(im, ax=ax, fraction=0.045, pad=0.02,
-             label="EUR/a  (zeleno: samooskrba je cenejša)")
+             label="EUR/a  (zeleno: samooskrba cenejša)")
 pf.show(fig, "catalogue_premium_by_group")
 
 supplier_premium[["Dobava_EUR", "Samooskrba_EUR", "Premium_EUR",

@@ -13,7 +13,7 @@ base_hours = (np.arange(len(base_sorted)) + 1) * interval_hours
 def duration_curves(ax):
     """The baseline and the four scenarios, sorted descending, on one axes."""
     ax.plot(base_hours, base_sorted, color=MUTED, linewidth=3.2, zorder=1,
-            label="brez baterij (enako v vseh scenarijih)")
+            label="brez baterij (enako povsod)")
     for scenario in SCEN_ORDER:
         profile = RESULTS[scenario]["community_profile"]["community_import_kw"]
         sorted_kw = np.sort(profile.to_numpy(dtype=float))[::-1]

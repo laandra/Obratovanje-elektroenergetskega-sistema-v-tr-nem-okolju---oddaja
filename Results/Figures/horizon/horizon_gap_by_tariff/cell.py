@@ -44,7 +44,7 @@ zoom_max = max((gap_of(t, s) for t in rest for s in STRAT_ORDER), default=0.0) *
 fig, ax = plt.subplots(figsize=pf.figsize(ratio=0.62))
 draw_groups(ax, max(float(summary["Gap_pct"].max()) * 1.16, 1.0))
 finish(ax, title="Koliko stane krajši horizont načrtovanja, po cenikih",
-       xlabel="Opuščeni delež dosegljivega prihranka tega cenika [%]   (0 = celoletni optimum)")
+       xlabel="Opuščeni delež prihranka [%]   (0 = celoletni optimum)")
 leg = tariff_legend(ax, where="lower right", title="Cenik")
 if soc_mode_legend(ax, kind="patch", where="center right", title="Način SOC"):
     ax.add_artist(leg)

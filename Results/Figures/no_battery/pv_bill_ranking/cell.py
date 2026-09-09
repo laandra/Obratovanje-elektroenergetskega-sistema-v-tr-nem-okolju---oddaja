@@ -16,7 +16,7 @@ ypos = np.arange(len(pv_summary))[::-1]
 imp = pv_summary["Import_EUR"].to_numpy()
 cred = pv_summary["Export_Credit_EUR"].to_numpy()
 ax.barh(ypos, imp, height=0.68, color=pf.mix(REGIME_COLOR["credited"], "#ffffff", 0.55),
-        label="prevzem (energija, omrežnina, dajatve, DDV)")
+        label="prevzem (z omrežnino in dajatvami)")
 ax.barh(ypos, -cred, height=0.68, color=REGIME_COLOR["credited"],
         label="dobropis za oddane presežke")
 ax.axvline(0, color=INK_2, lw=1.0, zorder=4)
@@ -31,8 +31,8 @@ finish(ax, title="S PV: iz česa je sestavljen energijski del računa",
        xlabel="EUR/a  (levo od ničle: dobropis)")
 key_below(ax, [Patch(facecolor=pf.mix(REGIME_COLOR["credited"], "#ffffff", 0.55)),
                Patch(facecolor=REGIME_COLOR["credited"])],
-          ["prevzem (energija, omrežnina, dajatve, DDV)",
-           "dobropis za oddane presežke"], ncol=2)
+          ["prevzem (z omrežnino in dajatvami)",
+           "dobropis za presežke"], ncol=2)
 ax.grid(axis="x")
 ax.spines["left"].set_visible(False)
 pf.show(fig, "pv_bill_composition")

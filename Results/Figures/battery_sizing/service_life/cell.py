@@ -16,7 +16,7 @@ ax.plot(cap_life, cycle_life_y, color=MUTED, lw=1.3, ls=":", marker="o", ms=4,
         mfc=SURFACE, mew=1.4, label="samo cikli (EFC limit)")
 ax.axhline(BATTERY_LIFETIME_YEARS, color=MUTED, lw=1.3, ls="--", label="samo starost (koledarsko)")
 ax.plot(cap_life, service_life_y, color=SERIES[2], lw=2.4,
-        label="dejanska življenjska doba (nižje od obeh)")
+        label="dejanska doba (nižje od obeh)")
 
 size_C_life = float(np.interp(size_C, cap_life, service_life_y))
 ax.scatter([size_C], [size_C_life], color=INK_2, zorder=5, s=45)

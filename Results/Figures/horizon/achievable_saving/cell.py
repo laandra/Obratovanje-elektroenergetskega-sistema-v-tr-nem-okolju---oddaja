@@ -12,6 +12,6 @@ for y, v in zip(ypos, vals):
 ax.set_yticks(ypos, TARIFFS_READY)
 ax.set_xlim(0, max(vals) * 1.28)
 finish(ax, title="Imenovalec vseh spodnjih odstotkov",
-       xlabel="Prihranek celoletnega optimuma glede na isto gospodinjstvo brez baterije [EUR/a]")
+       xlabel="Prihranek optimuma proti stanju brez baterije [EUR/a]")
 ax.grid(axis="y", visible=False)
 pf.show(fig, "achievable_saving")

@@ -34,8 +34,8 @@ key_below(
      Patch(facecolor=pf.mix(REGIME_COLOR["nosale"], "#ffffff", 0.58), edgecolor="none"),
      Patch(facecolor=MUTED, edgecolor="none")],
     ["prevzem -- konkurenčni del",
-     "fiksni del (dogovorjena moč, prispevki, nadomestilo)",
-     f"presežna moč -- {exc0.mean():.0f} EUR/a, na vseh cenikih enaka"],
+     "fiksni del (moč, prispevki, nadomestilo)",
+     f"presežna moč -- {exc0.mean():.0f} EUR/a, povsod enaka"],
     ncol=1)
 ax.grid(axis="x")
 ax.spines["left"].set_visible(False)

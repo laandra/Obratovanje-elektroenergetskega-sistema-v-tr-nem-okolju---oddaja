@@ -44,7 +44,7 @@ zoom_max = max((float(summary.loc[(t, s), "Gap_pct"]) for t in rest for s in STR
 fig, ax = plt.subplots(figsize=pf.figsize(ratio=0.62))
 draw_means(ax, max(float(summary["Worst_Gap_pct"].max()) * 1.06, 1.0))
 finish(ax, title="Povprečje vseh cenikov na eni osi",
-       xlabel="Povprečna vrzel [%]   (0 = celoletni optimum tega cenika)")
+       xlabel="Povprečna vrzel [%]   (0 = celoletni optimum)")
 leg = tariff_legend(ax, where="lower right", title="Cenik")
 if soc_mode_legend(ax, kind="marker", where="center right", title="Način SOC"):
     ax.add_artist(leg)
