@@ -50,7 +50,7 @@ ax1.axvline(CAPEX_FIXED_EUR, color=MUTED, lw=1.1, ls=(0, (5, 4)), zorder=2)
 vline_note(ax1, CAPEX_FIXED_EUR, f"privzeto\n{CAPEX_FIXED_EUR:,.0f} EUR",
            float(INVERTER_FIXED_FINE_EUR[-1]))
 finish(ax1, xlabel="Enkratni strošek razsmernika in montaže [EUR]",
-       ylabel=f"Gospodinjstva, od {len(LABEL_ORDER)}", yfmt=PLAIN)
+       ylabel="Število gospodinjstev", yfmt=PLAIN)
 ax1.set_ylim(-0.5, len(LABEL_ORDER) + 0.5)
 # A count of households is a whole number; the default locator puts ticks at 2.5
 # gospodinjstva. Step chosen to keep roughly eight ticks whatever the panel size.

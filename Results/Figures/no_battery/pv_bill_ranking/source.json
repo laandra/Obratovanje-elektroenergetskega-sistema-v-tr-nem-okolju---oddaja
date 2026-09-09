@@ -1,6 +1,6 @@
 {
   "figure": "pv_bill_ranking",
-  "created_utc": "2026-09-08T10:43:05+00:00",
+  "created_utc": "2026-09-09T15:41:06+00:00",
   "files": [
     "pv_bill_ranking.pdf"
   ],
@@ -15,36 +15,47 @@
       4.4
     ],
     "matplotlib": "3.11.1",
-    "python": "3.11.14"
+    "python": "3.14.3"
   },
   "source": {
     "notebook": null,
     "notebook_detected_by": null,
-    "cell_execution_count": 9,
+    "cell_execution_count": 10,
     "caller": "<frozen runpy>:198",
-    "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "e27b8705358a3c54beba1329067f42f895d682fd",
-    "commit_short": "e27b870",
+    "commit": "07aae07e717328104ffbc6c5a04c3fd8d9e7df4f",
+    "commit_short": "07aae07",
     "branch": "Development",
-    "describe": "e27b870-dirty",
-    "subject": "Update Slovenian graphics",
-    "committed_at": "2026-09-08T11:49:51+02:00",
+    "describe": "07aae07-dirty",
+    "subject": "Multiuser_Battery_Size_Optimization.ipynb run is saved. The figure I want is set to central.",
+    "committed_at": "2026-09-09T16:11:38+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 18,
+    "dirty_file_count": 29,
     "dirty_files": [
       "attery_Size_Optimization.ipynb",
       "Energy_Community_Comparison.ipynb",
       "Extended_Multuser_Battery_Size_Optimization.ipynb",
+      "\"Household invoice generator.ipynb\"",
       "\"Household_local model.ipynb\"",
       "MILP_horizon_comparison.ipynb",
+      "Multi_household_baseline.ipynb",
       "Multuser_Battery_Size_Optimization.ipynb",
       "No_battery_comparison.ipynb",
+      "PLOTTING_GUIDE.txt",
+      "Plotting_Functions.py",
       "RBC_vs_MILP_Comparison.ipynb",
+      "Results/Figures/invoices/invoice_composition/SOURCE.md",
+      "Results/Figures/invoices/invoice_composition/cell.py",
+      "Results/Figures/invoices/invoice_composition/invoice_composition.pdf",
+      "Results/Figures/invoices/invoice_composition/source.json",
+      "Results/Figures/multi_household_baseline/group_total_cost/SOURCE.md",
+      "Results/Figures/multi_household_baseline/group_total_cost/group_total_cost.pdf",
+      "Results/Figures/multi_household_baseline/group_total_cost/source.json",
       "Results/Figures/no_battery/no_pv_bill_by_group/SOURCE.md",
       "Results/Figures/no_battery/no_pv_bill_by_group/cell.py",
       "Results/Figures/no_battery/no_pv_bill_by_group/no_pv_bill_by_group.pdf",
@@ -56,7 +67,7 @@
       "Results/Figures/no_battery/pv_bill_ranking/pv_bill_ranking.pdf",
       "Skupnostna_Samooskrba_vs_Souporaba.ipynb"
     ],
-    "dirty_stat": "Battery_Size_Optimization.ipynb                    |   2 +-\n Energy_Community_Comparison.ipynb                  |   2 +-\n Extended_Multuser_Battery_Size_Optimization.ipynb  |  10 +++---\n Household_local model.ipynb                        |   2 +-\n MILP_horizon_comparison.ipynb                      |  12 +++----\n Multuser_Battery_Size_Optimization.ipynb           |   6 ++--\n No_battery_comparison.ipynb                        |  20 ++++++------\n RBC_vs_MILP_Comparison.ipynb                       |   2 +-\n .../no_battery/no_pv_bill_by_group/SOURCE.md       |  27 ++++++++++------\n .../Figures/no_battery/no_pv_bill_by_group/cell.py |   2 +-\n .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    | Bin 16664 -> 16668 bytes\n .../no_battery/no_pv_bill_by_group/source.json     |  33 ++++++++++++-------\n .../no_battery/no_pv_overpay_by_group/SOURCE.md    |  32 +++++++++++-------\n .../no_battery/no_pv_overpay_by_group/cell.py      |   2 +-\n .../no_pv_overpay_by_group.pdf                     | Bin 64336 -> 64336 bytes\n .../no_battery/no_pv_overpay_by_group/source.json  |  36 +++++++++++++--------\n .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf | Bin 21771 -> 21771 bytes\n Skupnostna_Samooskrba_vs_Souporaba.ipynb           |   5 ++-\n 18 files changed, 115 insertions(+), 78 deletions(-)",
+    "dirty_stat": "Battery_Size_Optimization.ipynb                    |   4 +-\n Energy_Community_Comparison.ipynb                  |  22 ++---\n Extended_Multuser_Battery_Size_Optimization.ipynb  |  14 +--\n Household invoice generator.ipynb                  | 100 +++++++++----------\n Household_local model.ipynb                        |  12 +--\n MILP_horizon_comparison.ipynb                      |  16 +--\n Multi_household_baseline.ipynb                     |  70 ++++++-------\n Multuser_Battery_Size_Optimization.ipynb           |  10 +-\n No_battery_comparison.ipynb                        |  18 ++--\n PLOTTING_GUIDE.txt                                 |  12 ++-\n Plotting_Functions.py                              |  63 ++++++++++--\n RBC_vs_MILP_Comparison.ipynb                       |  34 ++++---\n .../Figures/invoices/invoice_composition/SOURCE.md |  78 +++++----------\n .../Figures/invoices/invoice_composition/cell.py   |   2 +-\n .../invoice_composition/invoice_composition.pdf    | Bin 16447 -> 16678 bytes\n .../invoices/invoice_composition/source.json       |  58 +++--------\n .../group_total_cost/SOURCE.md                     | 110 ++++-----------------\n .../group_total_cost/group_total_cost.pdf          | Bin 11240 -> 11241 bytes\n .../group_total_cost/source.json                   |  67 +++----------\n .../no_battery/no_pv_bill_by_group/SOURCE.md       |  45 +++++----\n .../Figures/no_battery/no_pv_bill_by_group/cell.py |   2 +-\n .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    | Bin 16668 -> 16432 bytes\n .../no_battery/no_pv_bill_by_group/source.json     |  33 ++++---\n .../no_battery/no_pv_overpay_by_group/SOURCE.md    |  51 ++++++----\n .../no_battery/no_pv_overpay_by_group/cell.py      |   2 +-\n .../no_pv_overpay_by_group.pdf                     | Bin 64336 -> 65385 bytes\n .../no_battery/no_pv_overpay_by_group/source.json  |  33 ++++---\n .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf | Bin 21771 -> 21771 bytes\n Skupnostna_Samooskrba_vs_Souporaba.ipynb           |  12 ++-\n 29 files changed, 403 insertions(+), 465 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [

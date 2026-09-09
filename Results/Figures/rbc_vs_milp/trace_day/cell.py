@@ -18,7 +18,7 @@ ax.plot(hours, trace_sig.export_credit[day], lw=2, color=MUTED, ls="--", label="
 ax.margins(y=0.30)                       # headroom, so the legend never sits on a line
 ax.legend(loc="upper left", ncols=2)
 panel_label(ax, "The price signal every rule is deciding against")
-ax.set_ylabel("EUR / kWh")
+ax.set_ylabel("Price [EUR/kWh]")
 
 # --- the household ---------------------------------------------------------
 ax = axes[1]
@@ -29,7 +29,7 @@ ax.margins(y=0.30)
 ax.set_ylim(bottom=0)                    # a negative kW here would be a drawing artefact
 ax.legend(loc="upper left", ncols=2)
 panel_label(ax, "The household the rules are controlling")
-ax.set_ylabel("kW")
+ax.set_ylabel("Power [kW]")
 
 # --- where the charge sits -------------------------------------------------
 ax = axes[2]
@@ -41,8 +41,8 @@ ax.plot(hours, traces["milp_full_period"]["soc"][day], lw=2.2, ls="--", color=IN
 ax.set_ylim(0, TRACE_CAPACITY_KWH * 1.02)
 ax.set_xticks(range(0, 25, 3))
 panel_label(ax, "State of charge — dashed = perfect foresight")
-ax.set_xlabel("hour of the local day")
-ax.set_ylabel("kWh stored")
+ax.set_xlabel("Hour of the local day [h]")
+ax.set_ylabel("State of charge [kWh]")
 
 # Ten traces will not fit beside the data, so the keys go under the figure --
 # chart_frame measures the rows they need before it lays the axes out.

@@ -278,14 +278,22 @@ def figsize(ratio=STANDARD_RATIO, preset=None):
 
 
 # --- formatters ------------------------------------------------------------
-# These existed five times over, in two spellings for the percentage. Both
-# spellings are kept: one is signed and one is not, and silently unifying them
-# would change what several figures claim.
+# TICK LABELS CARRY NO UNIT. The unit belongs to the axis label, once, where a
+# reader looks for it; repeating it on every tick prints it eight times and, on
+# an axis already labelled "... [%]", says percent twice. So PCT no longer draws
+# a "%" and PCT_SIGNED no longer draws a " %" -- the axis label does that, and
+# every axis these two are used on carries [%] in its label.
+#
+# That leaves PCT rendering exactly like PLAIN, and it still keeps its own name:
+# the name is what a cell says about its axis, and a percentage axis that stops
+# being marked as one is how the unit goes missing again the next time somebody
+# changes a formatter. PCT_SIGNED remains genuinely different -- it forces the
+# sign, which is what a "change against the baseline" axis needs.
 EUR = FuncFormatter(lambda v, _: f"{v:,.0f}")
 PLAIN = FuncFormatter(lambda v, _: f"{v:,.0f}")
 KW = FuncFormatter(lambda v, _: f"{v:,.1f}")
-PCT = FuncFormatter(lambda v, _: f"{v:,.0f}%")
-PCT_SIGNED = FuncFormatter(lambda v, _: f"{v:+,.0f} %")
+PCT = FuncFormatter(lambda v, _: f"{v:,.0f}")
+PCT_SIGNED = FuncFormatter(lambda v, _: f"{v:+,.0f}")
 YEARS = FuncFormatter(lambda v, _: f"{v:.0f}")
 
 
@@ -598,13 +606,54 @@ def _scale_panel_text(fig):
 GLOSSARY = {
     # axes
     "Kapaciteta baterije [kWh]": "Battery capacity [kWh]",
+    "Kapaciteta na gospodinjstvo [kWh]": "Capacity per household [kWh]",
     "Letni strošek [EUR/a]": "Annual cost [EUR/a]",
-    "Mejna vrednost [EUR/kWh/a]": "Marginal value [EUR/kWh/a]",
+    "Mejna vrednost kapacitete [EUR/kWh/a]": "Marginal value of capacity [EUR/kWh/a]",
     "Neto korist [EUR/a]": "Net benefit [EUR/a]",
     "Energija [kWh/a]": "Energy [kWh/a]",
     "Konica odjema [kW]": "Peak import [kW]",
-    "EFC/leto": "EFC/year",
+    "Sprememba konice odjema [%]": "Change in peak import [%]",
+    "Ekvivalentni polni cikli [1/a]": "Equivalent full cycles [1/a]",
     "Življenjska doba [let]": "Service life [years]",
+    # axes -- the bill
+    "Letni račun [EUR/a]": "Annual bill [EUR/a]",
+    "Povprečni letni račun [EUR/a]": "Mean annual bill [EUR/a]",
+    "Letni račun skupnosti [EUR/a]": "Community annual bill [EUR/a]",
+    "Letni račun gospodinjstva [EUR/a]": "Household annual bill [EUR/a]",
+    "Neto letna korist skupnosti [EUR/a]": "Community net annual benefit [EUR/a]",
+    "Sprememba letnega računa [EUR/a]": "Change in the annual bill [EUR/a]",
+    "Učinek na letni račun [EUR/a]": "Effect on the annual bill [EUR/a]",
+    "Energijski del letnega računa [EUR/a]": "Energy part of the annual bill [EUR/a]",
+    "Prihranek [EUR/a]": "Saving [EUR/a]",
+    "Dosegljivi prihranek [EUR/a]": "Achievable saving [EUR/a]",
+    "Prihranek proti stanju brez delitve [EUR/a]": "Saving against no sharing [EUR/a]",
+    "Delež bruto računa [%]": "Share of the gross bill [%]",
+    "Razlika [EUR/a]": "Difference [EUR/a]",
+    "Preplačilo [%]": "Overpayment [%]",
+    "Diskontirani ROI [%]": "Discounted ROI [%]",
+    # axes -- the horizon study
+    "Vrzel [%]": "Gap [%]",
+    "Povprečna vrzel [%]": "Mean gap [%]",
+    "Vrzel skupine / povprečje algoritma [–]": "Group gap / algorithm mean [-]",
+    "Čas reševalnika [s/(gospodinjstvo·leto)]": "Solver time [s/(household*year)]",
+    # axes -- the community study
+    "Trajanje [h/a]": "Duration [h/a]",
+    "Odjem skupnosti [kW]": "Community import [kW]",
+    "Neto moč skupnosti [kW]": "Community net power [kW]",
+    "Cena SMP [EUR/MWh]": "Day-ahead price [EUR/MWh]",
+    "Deljena energija [kWh]": "Shared energy [kWh]",
+    "Pogodbeni delež deljene energije [%]": "Contracted share of shared energy [%]",
+    "Značilni primer priključitve": "Connection case",
+    "Ura dneva [h]": "Hour of the day [h]",
+    "Mesec": "Month",
+    "Cenik": "Price list",
+    "Tip gospodinjstva": "Household type",
+    "Število gospodinjstev": "Number of households",
+    # axes -- the inverter sweep
+    "Enkratni strošek razsmernika in montaže [EUR]":
+        "One-off inverter and installation cost [EUR]",
+    "Cena razsmernika [EUR/kW]": "Inverter price [EUR/kW]",
+    "Mediana optimalne kapacitete [kWh]": "Median optimal capacity [kWh]",
     # titles
     "Letni strošek elektrike ob popolnem predvidevanju pada z velikostjo baterije":
         "Annual electricity cost under perfect foresight falls with battery size",

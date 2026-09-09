@@ -19,8 +19,10 @@ labels = [CONTROLLER_LABEL[c] for c in grid_share.index]
 # One figure each: these two axes have different units and different stories,
 # and side by side neither survives \columnwidth.
 for frame, title, formatter, unit, export in (
-    (saving, "What the battery earns", EUR, "EUR/a", "battery_earnings"),
-    (grid_share, "How much of it was bought from the grid", PCT, "%", "grid_charged_share"),
+    (saving, "What the battery earns", EUR, "Saving vs no battery [EUR/a]",
+     "battery_earnings"),
+    (grid_share, "How much of it was bought from the grid", PCT,
+     "Share of charge bought from the grid [%]", "grid_charged_share"),
 ):
     fig, ax = plt.subplots(figsize=pf.figsize(ratio=0.55))
     height = 0.8 / len(TARIFF_ORDER)

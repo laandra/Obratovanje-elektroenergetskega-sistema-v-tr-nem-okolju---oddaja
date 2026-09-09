@@ -17,8 +17,8 @@ for name in POLICIES:
     ax.plot(gap_by_cap.index, gap_by_cap[name], marker="o", ms=5, lw=2,
             color=controller_color(name), label=CONTROLLER_LABEL[name])
 ax.set_xticks(CAPACITIES_KWH)
-finish(ax, title="The gap widens with the pack", xlabel="nameplate capacity [kWh]",
-       ylabel="gap to the MILP  [%]", yfmt=PCT)
+finish(ax, title="The gap widens with the pack", xlabel="Nameplate capacity [kWh]",
+       ylabel="Gap to the MILP [%]", yfmt=PCT)
 pf.key_legend(ax, CONTROLLER_KEYS, ncol=3, fontsize=9)
 pf.show(fig, "gap_vs_capacity")
 
@@ -30,8 +30,8 @@ ax.plot(milp_saving.index, milp_saving, lw=2.2, ls="--", color=INK, marker="D", 
         label=CONTROLLER_LABEL["milp_full_period"])
 ax.axhline(0, color=MUTED, lw=1)
 ax.set_xticks(CAPACITIES_KWH)
-finish(ax, title="What each rule actually earns", xlabel="nameplate capacity [kWh]",
-       ylabel="saving vs no battery [EUR/a]", yfmt=EUR)
+finish(ax, title="What each rule actually earns", xlabel="Nameplate capacity [kWh]",
+       ylabel="Saving vs no battery [EUR/a]", yfmt=EUR)
 pf.key_legend(ax, CONTROLLER_KEYS
               + [Line2D([], [], color=INK, lw=2.2, ls="--", marker="D", ms=5,
                         label=CONTROLLER_LABEL["milp_full_period"])],

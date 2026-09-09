@@ -12,9 +12,9 @@ totals = (
 axes = {}
 for value, title, ylabel, export in [
     ("Cost_EUR", f"Skupni letni račun za elektriko, vseh {len(LABEL_ORDER)} gospodinjstev",
-     "Skupnost skupaj [EUR/a]", "community_total_bill"),
+     "Letni račun skupnosti [EUR/a]", "community_total_bill"),
     ("Net_Annual_EUR", "Skupna neto letna korist baterij",
-     "Skupnost skupaj [EUR/a]", "community_net_benefit"),
+     "Neto letna korist skupnosti [EUR/a]", "community_net_benefit"),
 ]:
     fig, ax = plt.subplots(figsize=pf.figsize(ratio=0.52))
     axes[value] = (fig, ax, title, ylabel, export)

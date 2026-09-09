@@ -25,7 +25,7 @@ for battery in SWEEP_BATTERIES:
                 xytext=(0, 4), textcoords="offset points", color=MUTED, fontsize=8)
     ax.grid(axis="y", linewidth=0.6)
     ax.set_axisbelow(True)
-    finish(ax, xlabel="Pogodbeni delež deljene energije", ylabel="Energija [kWh/a]",
+    finish(ax, xlabel="Pogodbeni delež deljene energije [%]", ylabel="Energija [kWh/a]",
            yfmt=PLAIN, xfmt=SHARE)
     pf.chart_frame(fig, f"Koliko energije shema res prestavi — {battery}", SUBTITLE,
                    handles=handles, ncol=2)

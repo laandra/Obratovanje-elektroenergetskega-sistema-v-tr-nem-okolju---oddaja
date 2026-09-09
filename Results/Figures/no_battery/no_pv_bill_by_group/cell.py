@@ -16,7 +16,7 @@ for i, g in enumerate(groups):
             height=bar_h * 0.86, color=GROUP_SHADE[i], label=group_label(g))
 ax.set_yticks(ypos, [short_list_name(p) for p in by_group_cost.index], fontsize=8)
 finish(ax, title="Brez PV, brez baterije: edini vzvod je pogodba",
-       xlabel="Letni račun, brez PV in baterije [EUR/a]")
+       xlabel="Povprečni letni račun [EUR/a]")
 key_below(ax, [Patch(facecolor=c) for c in GROUP_SHADE],
           [group_label(g) for g in groups], ncol=4,
           title="tip gospodinjstva", title_fontsize=8)

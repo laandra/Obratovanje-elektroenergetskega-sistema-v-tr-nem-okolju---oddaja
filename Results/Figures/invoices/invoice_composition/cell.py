@@ -41,7 +41,7 @@ ax_price.annotate(f"{prices[-1]:.3f}", (len(labels) - 1, prices[-1]),
                   textcoords="offset points", xytext=(6, 0), va="center",
                   fontsize=8.5, color=INK)
 ax_price.grid(axis="y")
-finish(ax_price, ylabel="Povprečna cena [EUR/kWh]")
+finish(ax_price, xlabel="Mesec", ylabel="Povprečna cena [EUR/kWh]")
 ax_price.set_xticks(list(x))
 ax_price.set_xticklabels(labels, rotation=45, ha="right")
 ax_price.margins(x=0.04)

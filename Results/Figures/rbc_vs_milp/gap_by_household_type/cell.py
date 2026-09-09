@@ -22,6 +22,6 @@ for i in range(values.shape[0]):
             continue
         ax.text(j, i, f"{v:.0f}", ha="center", va="center", fontsize=9,
                 color=SURFACE if v > mid else INK)
-fig.colorbar(image, ax=ax, label="gap to the MILP [%]", pad=0.02)
+fig.colorbar(image, ax=ax, label="Gap to the MILP [%]", pad=0.02)
 finish(ax, title="Gap to the MILP by household type")
 pf.show(fig, "gap_by_household_type")

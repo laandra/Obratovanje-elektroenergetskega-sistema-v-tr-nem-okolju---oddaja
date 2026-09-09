@@ -22,7 +22,7 @@ ax.text(floor_kw, len(order) - 0.3, "  no battery", color=INK, fontsize=9, va="c
 ax.set_yticks(y, [CONTROLLER_LABEL[c] for c in order])
 bar_labels(ax, bars, list(peak.loc[order, "Peak_kW"]), fmt="{:.2f}")
 finish(ax, title="Peak grid import — what the ratchet is measured on",
-       xlabel="kW, mean over units")
+       xlabel="Peak grid import [kW]")
 pf.show(fig, "peak_grid_import")
 
 fig, ax = plt.subplots(figsize=pf.figsize(ratio=0.52))
@@ -33,7 +33,7 @@ ax.text(floor_eur, len(order) - 0.3, "  no battery", color=INK, fontsize=9, va="
 ax.set_yticks(y, [CONTROLLER_LABEL[c] for c in order])
 bar_labels(ax, bars, list(peak.loc[order, "Power_EUR"]), fmt="{:.2f}")
 finish(ax, title="Excess-power charge — the part a kW meter alone can attack",
-       xlabel="EUR/a, mean over units", xfmt=EUR)
+       xlabel="Excess-power charge [EUR/a]", xfmt=EUR)
 pf.show(fig, "excess_power_charge")
 
 display(peak.round(2))

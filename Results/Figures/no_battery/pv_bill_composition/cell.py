@@ -28,7 +28,7 @@ for y, i, c in zip(ypos, imp, cred):
             va="center", ha="right", fontsize=8, color=INK_2)
 ax.set_xlim(-imp.max() * 0.42, imp.max() * 1.16)
 finish(ax, title="S PV: iz česa je sestavljen energijski del računa",
-       xlabel="EUR/a  (levo od ničle: dobropis)")
+       xlabel="Energijski del letnega računa [EUR/a]")
 key_below(ax, [Patch(facecolor=pf.mix(REGIME_COLOR["credited"], "#ffffff", 0.55)),
                Patch(facecolor=REGIME_COLOR["credited"])],
           ["prevzem (z omrežnino in dajatvami)",

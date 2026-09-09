@@ -13,6 +13,6 @@ for k, tariff in enumerate(TARIFF_ORDER):
 ax.set_xticks(x, [CONTROLLER_LABEL[c] for c in POLICIES], rotation=30, ha="right")
 ax.legend(loc="upper left", ncols=len(TARIFF_ORDER), title="price list")
 finish(ax, title="The gap depends on what the price signal offers",
-       ylabel="gap to the MILP  [%]", yfmt=PCT)
+       ylabel="Gap to the MILP [%]", yfmt=PCT)
 pf.show(fig, "gap_by_price_list")
 display(table.round(1))

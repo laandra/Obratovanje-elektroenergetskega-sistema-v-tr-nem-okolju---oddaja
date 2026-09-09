@@ -242,8 +242,16 @@ ramp(hue)                                        light-to-hue colormap
 figsize(ratio=0.615)                             standard width, chosen height
 
 Formatters: EUR, PLAIN, KW, PCT, PCT_SIGNED, YEARS.
-    PCT is "12%" and PCT_SIGNED is "+12 %". Both exist because both were in use
-    and they say different things — do not unify them.
+    NONE of them draws a unit. The unit belongs to the axis label, once — an
+    axis labelled "Vrzel [%]" whose ticks also read "12%" says percent twice,
+    and the label is where a reader looks. So PCT is "12" and PCT_SIGNED is
+    "+12": PCT renders like PLAIN and keeps its own name anyway, because the
+    name is what the cell says about its axis. PCT_SIGNED forces the sign,
+    which is what a "change against the baseline" axis needs — do not unify
+    the two.
+
+    The rule is the axis label's, not the formatter's: an axis on one of the
+    percent formatters MUST carry [%] in its label, or the unit is nowhere.
 
 Tokens: INK, INK_2, MUTED, SURFACE, GRID, BASELINE, SERIES (4 categorical hues).
 

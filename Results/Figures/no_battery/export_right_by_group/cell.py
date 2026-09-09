@@ -103,7 +103,7 @@ finish(ax,
        title=(f"{short_list_name(pv_best)} z odkupom in brez, po tipu gospodinjstva"
               if pv_best == pv0_best else
               "Na najcenejšem ceniku vsake možnosti, po tipu gospodinjstva"),
-       ylabel="EUR/a", yfmt=EUR)
+       ylabel="Letni račun [EUR/a]", yfmt=EUR)
 ax.legend(fontsize=8.5, loc="upper left")
 ax.grid(axis="y")
 pf.show(fig, "export_right_by_group")

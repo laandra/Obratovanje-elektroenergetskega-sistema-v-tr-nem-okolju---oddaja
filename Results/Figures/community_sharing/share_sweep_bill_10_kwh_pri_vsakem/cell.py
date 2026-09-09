@@ -32,7 +32,7 @@ for battery in SWEEP_BATTERIES:
                     color=color, fontsize=8.5, fontweight="bold")
     ax.grid(axis="y", linewidth=0.6)
     ax.set_axisbelow(True)
-    finish(ax, xlabel="Pogodbeni delež deljene energije",
+    finish(ax, xlabel="Pogodbeni delež deljene energije [%]",
            ylabel="Letni račun skupnosti [EUR/a]", yfmt=EUR, xfmt=SHARE)
     pf.chart_frame(fig, f"Optimalni delež deljene energije — {battery}", SUBTITLE,
                    handles=scheme_keys((ccm.SCHEME_SOUPORABA, ccm.SCHEME_SKUPNOST)), ncol=2)

@@ -37,7 +37,7 @@ for battery in BATTERY_SCENARIOS:
     ax.set_xticklabels(configs)
     ax.grid(axis="y", linewidth=0.6)
     ax.set_axisbelow(True)
-    finish(ax, ylabel="Letni račun skupnosti [EUR/a]", yfmt=EUR)
+    finish(ax, xlabel="Cenik", ylabel="Letni račun skupnosti [EUR/a]", yfmt=EUR)
     pf.chart_frame(fig, f"Letni račun šestnajstih gospodinjstev, po shemi in ceniku — {battery}",
                    SUBTITLE, handles=[Patch(facecolor=SCHEME_COLOR[s], label=SCHEME_LABEL[s])
                                       for s in order], ncol=3)

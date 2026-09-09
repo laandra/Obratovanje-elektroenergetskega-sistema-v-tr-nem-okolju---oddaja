@@ -6,7 +6,7 @@ by_group_pv0_rel = 100.0 * (by_group_pv0 / by_group_pv0.min() - 1.0)
 fig, ax = plt.subplots(figsize=pf.figsize(ratio=rows_ratio(len(pv0_summary))))
 ranked_bill_panel(ax, pv0_summary, REGIME_COLOR["nosale"],
                   "Brez odkupa presežkov: odloča samo še prevzemna cena",
-                  "Povprečni letni račun, s PV, brez odkupa presežkov [EUR/a]")
+                  "Povprečni letni račun [EUR/a]")
 pf.show(fig, "pv_nosale_bill_ranking")
 
 # With the credit gone the bill is import + fixed + excess, and only the first
@@ -25,7 +25,7 @@ ax.barh(ypos, exc0, left=imp0 + fix0, color=MUTED, **seg)
 ax.set_yticks(ypos, [short_list_name(p) for p in pv0_summary.index], fontsize=8.5)
 bar_labels(ax, ypos, (imp0 + fix0 + exc0))
 ax.set_xlim(0, (imp0 + fix0 + exc0).max() * 1.14)
-finish(ax, title="Kaj cenik še lahko premakne in kaj ne", xlabel="EUR/a")
+finish(ax, title="Kaj cenik še lahko premakne in kaj ne", xlabel="Letni račun [EUR/a]")
 # Explicit handles: the bars' SURFACE edge would read as a hollow swatch at
 # legend size.
 key_below(

@@ -13,6 +13,6 @@ bars = ax.bar(x, prize["Achievable_EUR"], width=0.6,
 ax.set_xticks(x, [group_label(g) for g in prize.index], rotation=20, ha="right")
 bar_labels(ax, bars, list(prize["Achievable_EUR"]), fmt="{:,.0f}", horizontal=False)
 finish(ax, title="What perfect foresight is worth to each household type",
-       ylabel="achievable saving [EUR/a]", yfmt=EUR)
+       ylabel="Achievable saving [EUR/a]", yfmt=EUR)
 pf.show(fig, "achievable_by_household_type")
 display(prize.round(0))

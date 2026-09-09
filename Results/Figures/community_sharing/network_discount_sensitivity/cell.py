@@ -23,7 +23,7 @@ ax.set_xticks(ZNACILNI_PRIMER_GRID)
 ax.grid(axis="y", linewidth=0.6)
 ax.set_axisbelow(True)
 ax.legend(loc="upper right", fontsize=8.5, title="skupnostna samooskrba", title_fontsize=8.5)
-finish(ax, xlabel="Značilni primer priključitve (1 = ista TP, 4 = brez znižanja)",
+finish(ax, xlabel="Značilni primer priključitve",
        ylabel="Prihranek proti stanju brez delitve [EUR/a]", yfmt=EUR)
 pf.chart_frame(fig, "Prednost skupnostne samooskrbe je znižana distribucijska postavka",
       "Pri značilnem primeru 4 je skupnostna distribucijska postavka praktično enaka polni "

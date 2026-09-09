@@ -21,5 +21,5 @@ for row, value in zip(y, gap[order]):
 # Outside the axes: inside, the legend's sample dot reads as a data point.
 ax.legend(loc="lower right", bbox_to_anchor=(1.0, 1.0))
 finish(ax, title="How much of the achievable saving each rule gives up",
-       xlabel="gap to the whole-year MILP  [% of achievable]", xfmt=PCT)
+       xlabel="Gap to the whole-year MILP [%]", xfmt=PCT)
 pf.show(fig, "gap_by_rule")

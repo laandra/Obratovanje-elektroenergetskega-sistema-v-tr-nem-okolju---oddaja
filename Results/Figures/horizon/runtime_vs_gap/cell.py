@@ -26,8 +26,8 @@ ax.set_xscale("log")
 ax.set_xlim(float(summary["Runtime_s"].min()) / 2.4, float(summary["Runtime_s"].max()) * 8.0)
 ax.axhline(0, color=MUTED, lw=1.1, ls="--")
 finish(ax, title="Porabljen računski čas proti prihranjenemu denarju",
-       xlabel="Čas reševalnika [s na gospodinjstvo-leto, log]",
-       ylabel="Opuščeni delež prihranka [%]")
+       xlabel="Čas reševalnika [s/(gospodinjstvo·leto)]",
+       ylabel="Vrzel [%]")
 leg = tariff_legend(ax, where="upper right", title="Cenik")
 if soc_mode_legend(ax, kind="marker", where="center right", title="Način SOC"):
     ax.add_artist(leg)

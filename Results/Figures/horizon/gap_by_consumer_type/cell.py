@@ -76,7 +76,7 @@ for y in flat_rows:
                 fontsize=8, color=MUTED)
 ax.set_yticks(base, [LABEL[s] for s in STRAT_ORDER])
 finish(ax, title="Tip odjemalca proti kakovosti MILP: krog = s PV, kvadrat = brez PV",
-       xlabel="Vrzel skupine / povprečje algoritma  (1,0 = povprečje)")
+       xlabel="Vrzel skupine / povprečje algoritma [–]")
 ax.grid(axis="y", visible=False)
 pf.key_legend(ax, [plt.Line2D([], [], marker="o" if pv_mask[i] else "s", ls="", ms=7,
                               color=GROUP_SHADE[i]) for i in range(len(GROUPS))],

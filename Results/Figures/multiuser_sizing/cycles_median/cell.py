@@ -34,7 +34,7 @@ for contract in CONTRACT_ORDER:
 ax.set_ylim(bottom=0)
 ax.margins(x=0.02)
 finish(ax, xlabel="Kapaciteta baterije [kWh]",
-       ylabel="Ekvivalentni polni cikli [1/leto]", yfmt=PLAIN)
+       ylabel="Ekvivalentni polni cikli [1/a]", yfmt=PLAIN)
 
 # Two results stated in the subtitle, both of which otherwise read as a bug:
 #
