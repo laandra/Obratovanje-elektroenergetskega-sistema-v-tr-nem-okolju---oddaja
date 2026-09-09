@@ -1,0 +1,101 @@
+{
+  "figure": "headline_roi",
+  "created_utc": "2026-09-09T12:47:10+00:00",
+  "files": [
+    "headline_roi.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      7.16,
+      15.48
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Multuser_Battery_Size_Optimization.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 26,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "586530e0e06e4c329f2341bc378502fd21980e9e",
+    "commit_short": "586530e",
+    "branch": "Development",
+    "describe": "586530e-dirty",
+    "subject": "Adding a missing file",
+    "committed_at": "2026-09-09T09:00:12+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 52,
+    "dirty_files": [
+      "ulti_household_baseline.ipynb",
+      "Results/Figures/extended_multiuser_sizing/community_net_benefit/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/community_net_benefit/cell.py",
+      "Results/Figures/extended_multiuser_sizing/community_net_benefit/community_net_benefit.pdf",
+      "Results/Figures/extended_multiuser_sizing/community_net_benefit/source.json",
+      "Results/Figures/extended_multiuser_sizing/community_total_bill/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/community_total_bill/cell.py",
+      "Results/Figures/extended_multiuser_sizing/community_total_bill/community_total_bill.pdf",
+      "Results/Figures/extended_multiuser_sizing/community_total_bill/source.json",
+      "Results/Figures/extended_multiuser_sizing/cost_vs_capacity_panels/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/cost_vs_capacity_panels/cost_vs_capacity_panels.pdf",
+      "Results/Figures/extended_multiuser_sizing/cost_vs_capacity_panels/source.json",
+      "Results/Figures/extended_multiuser_sizing/curtailed/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/curtailed/curtailed.pdf",
+      "Results/Figures/extended_multiuser_sizing/curtailed/source.json",
+      "Results/Figures/extended_multiuser_sizing/cycles_panels/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/cycles_panels/cycles_panels.pdf",
+      "Results/Figures/extended_multiuser_sizing/cycles_panels/source.json",
+      "Results/Figures/extended_multiuser_sizing/grid_charged/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/grid_charged/grid_charged.pdf",
+      "Results/Figures/extended_multiuser_sizing/grid_charged/source.json",
+      "Results/Figures/extended_multiuser_sizing/headline_net_benefit/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/headline_net_benefit/headline_net_benefit.pdf",
+      "Results/Figures/extended_multiuser_sizing/headline_net_benefit/source.json",
+      "Results/Figures/extended_multiuser_sizing/headline_roi/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/headline_roi/headline_roi.pdf",
+      "Results/Figures/extended_multiuser_sizing/headline_roi/source.json",
+      "Results/Figures/extended_multiuser_sizing/inverter_fixed_fee/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/inverter_fixed_fee/cell.py",
+      "Results/Figures/extended_multiuser_sizing/inverter_fixed_fee/inverter_fixed_fee.pdf",
+      "Results/Figures/extended_multiuser_sizing/inverter_fixed_fee/source.json",
+      "Results/Figures/extended_multiuser_sizing/inverter_per_kw/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/inverter_per_kw/cell.py",
+      "Results/Figures/extended_multiuser_sizing/inverter_per_kw/inverter_per_kw.pdf",
+      "Results/Figures/extended_multiuser_sizing/inverter_per_kw/source.json",
+      "Results/Figures/extended_multiuser_sizing/marginal_value/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/marginal_value/marginal_value.pdf",
+      "Results/Figures/extended_multiuser_sizing/marginal_value/source.json",
+      "Results/Figures/extended_multiuser_sizing/net_benefit_panels/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/net_benefit_panels/net_benefit_panels.pdf",
+      "Results/Figures/extended_multiuser_sizing/net_benefit_panels/source.json",
+      "Results/Figures/extended_multiuser_sizing/peak_change_pct/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/peak_change_pct/peak_change_pct.pdf",
+      "Results/Figures/extended_multiuser_sizing/peak_change_pct/source.json",
+      "Results/Figures/extended_multiuser_sizing/peak_import_median/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/peak_import_median/peak_import_median.pdf",
+      "Results/Figures/extended_multiuser_sizing/peak_import_median/source.json",
+      "Results/Figures/extended_multiuser_sizing/peak_import_panels/SOURCE.md",
+      "Results/Figures/extended_multiuser_sizing/peak_import_panels/peak_import_panels.pdf",
+      "Results/Figures/extended_multiuser_sizing/peak_import_panels/source.json"
+    ],
+    "dirty_stat": "Multi_household_baseline.ipynb                     |  445 +--\n .../community_net_benefit/SOURCE.md                |   69 +-\n .../community_net_benefit/cell.py                  |    4 +-\n .../community_net_benefit.pdf                      |  Bin 17942 -> 17924 bytes\n .../community_net_benefit/source.json              |   73 +-\n .../community_total_bill/SOURCE.md                 |   65 +-\n .../community_total_bill/cell.py                   |    4 +-\n .../community_total_bill/community_total_bill.pdf  |  Bin 16820 -> 16798 bytes\n .../community_total_bill/source.json               |   69 +-\n .../cost_vs_capacity_panels/SOURCE.md              |   73 +-\n .../cost_vs_capacity_panels.pdf                    |  Bin 43185 -> 43185 bytes\n .../cost_vs_capacity_panels/source.json            |   77 +-\n .../extended_multiuser_sizing/curtailed/SOURCE.md  |  102 +-\n .../curtailed/curtailed.pdf                        |  Bin 15033 -> 15033 bytes\n .../curtailed/source.json                          |  106 +-\n .../cycles_panels/SOURCE.md                        |   90 +-\n .../cycles_panels/cycles_panels.pdf                |  Bin 42213 -> 42213 bytes\n .../cycles_panels/source.json                      |   94 +-\n .../grid_charged/SOURCE.md                         |   99 +-\n .../grid_charged/grid_charged.pdf                  |  Bin 15806 -> 15806 bytes\n .../grid_charged/source.json                       |  103 +-\n .../headline_net_benefit/SOURCE.md                 |   93 +-\n .../headline_net_benefit/headline_net_benefit.pdf  |  Bin 19421 -> 19421 bytes\n .../headline_net_benefit/source.json               |   97 +-\n .../headline_roi/SOURCE.md                         |   96 +-\n .../headline_roi/headline_roi.pdf                  |  Bin 19619 -> 19619 bytes\n .../headline_roi/source.json                       |  100 +-\n .../inverter_fixed_fee/SOURCE.md                   |   82 +-\n .../inverter_fixed_fee/cell.py                     |    4 +-\n .../inverter_fixed_fee/inverter_fixed_fee.pdf      |  Bin 20262 -> 20260 bytes\n .../inverter_fixed_fee/source.json                 |   86 +-\n .../inverter_per_kw/SOURCE.md                      |   86 +-\n .../inverter_per_kw/cell.py                        |    4 +-\n .../inverter_per_kw/inverter_per_kw.pdf            |  Bin 20653 -> 20196 bytes\n .../inverter_per_kw/source.json                    |   90 +-\n .../marginal_value/SOURCE.md                       |   79 +-\n .../marginal_value/marginal_value.pdf              |  Bin 21829 -> 21829 bytes\n .../marginal_value/source.json                     |   83 +-\n .../net_benefit_panels/SOURCE.md                   |   76 +-\n .../net_benefit_panels/net_benefit_panels.pdf      |  Bin 63809 -> 63809 bytes\n .../net_benefit_panels/source.json                 |   80 +-\n .../peak_change_pct/SOURCE.md                      |  108 +-\n .../peak_change_pct/peak_change_pct.pdf            |  Bin 17017 -> 17017 bytes\n .../peak_change_pct/source.json                    |  112 +-\n .../peak_import_median/SOURCE.md                   |  105 +-\n .../peak_import_median/peak_import_median.pdf      |  Bin 16362 -> 16362 bytes\n .../peak_import_median/source.json                 |  109 +-\n .../peak_import_panels/SOURCE.md                   |  111 +-\n .../peak_import_panels/peak_import_panels.pdf      |  Bin 34551 -> 34551 bytes\n .../peak_import_panels/source.json                 |  115 +-\n Results/multiuser_battery_sizing.csv               | 3860 ++++++++++----------\n 51 files changed, 3151 insertions(+), 3898 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": true,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Pri kateri pogodbi se nakup baterije izplača — donos na vloženi kapital čez življenjsko dobo — Vsako gospodinjstvo pri svoji najboljši velikosti na vsaki pogodbi. Stolpci levo od ničle pri 250 EUR/kWh + 1,000 EUR pomenijo izgubo. Vsak produkt nastopa dvakrat, enkrat v obliki samooskrba in enkrat brez odkupa; par si deli barvo. Sivi stolpec je zaprta pogodba NET meritve, za gospodinjstva, ki jo že imajo — ni med paketi v ponudbi, gospodinjstva brez proizvodnje pa zanjo nimajo stolpca. Vrednosti so v tabeli 8.2."
+  ]
+}

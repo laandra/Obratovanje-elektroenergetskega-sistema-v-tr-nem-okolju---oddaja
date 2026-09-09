@@ -54,7 +54,7 @@ pf.edge_label(ax, best_no_batt,
               f"{best_no_batt:,.0f} EUR/a")
 # No `title=` here: chart_frame carries the figure's one title, and a second
 # one on the axes would be the same caption twice.
-finish(ax, xlabel="Kapaciteta baterije na gospodinjstvo [kWh]", ylabel=ylabel, yfmt=EUR)
+finish(ax, xlabel="Kapaciteta na gospodinjstvo [kWh]", ylabel=ylabel, yfmt=EUR)
 pf.chart_frame(fig, title,
       f"Vsota po vseh {len(LABEL_ORDER)} gospodinjstvih, vsa na isti pogodbi in isti "
       f"kapaciteti. Črtkana črta je znesek, ki ga skupnost plača brez baterij, če vsako "
@@ -71,7 +71,7 @@ win_contract, (win_cap, win_net) = max(peaks.items(), key=lambda kv: kv[1][1])
 ax.annotate(f"{win_contract}, po {win_cap:g} kWh: {win_net:+,.0f} EUR/a",
             xy=(win_cap, win_net), xytext=(10, 12), textcoords="offset points",
             ha="left", va="bottom", fontsize=8.5, color=INK_2, zorder=5)
-finish(ax, xlabel="Kapaciteta baterije na gospodinjstvo [kWh]", ylabel=ylabel, yfmt=EUR)
+finish(ax, xlabel="Kapaciteta na gospodinjstvo [kWh]", ylabel=ylabel, yfmt=EUR)
 pf.chart_frame(fig, title,
       f"Skupna neto korist pri {CAPEX_EUR_PER_KWH:,.0f} EUR/kWh + {CAPEX_FIXED_EUR:,.0f} EUR "
       f"fiksno na gospodinjstvo, označena pri velikosti, ki je optimalna za skupnost — pri tej "
