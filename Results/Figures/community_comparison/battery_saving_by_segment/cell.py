@@ -18,5 +18,5 @@ ax.set_xticklabels(saving.index)
 ax.legend(ncol=2, loc="upper left")
 finish(ax, title="Letni prihranek s 30 kWh baterijo",
        subtitle="isto gospodinjstvo, obračunano brez baterije, vse drugo nespremenjeno",
-       ylabel="prihranek [EUR / leto]", yfmt=EUR)
+       ylabel="Prihranek [EUR/a]", yfmt=EUR)
 pf.show(fig, "battery_saving_by_segment")

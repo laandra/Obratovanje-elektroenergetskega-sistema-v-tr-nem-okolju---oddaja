@@ -1,6 +1,6 @@
 # price_extreme_days
 
-Exported 2026-09-08T15:03:25+00:00
+Exported 2026-09-09T17:16:21+00:00
 Files: price_extreme_days.pdf
 Size: 7.16 x 3.4368 in @ 600 dpi (exact figure size)
 
@@ -13,244 +13,144 @@ The title text for this figure, for the article's `\caption{...}`:
 ## Source
 
 - notebook: not detected
-- cell execution count: 24
+- cell execution count: 25
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: e27b8705358a3c54beba1329067f42f895d682fd (Development)
-- subject: Update Slovenian graphics
-- describe: e27b870-dirty
+- commit: c946279b7af58519c80f4c1da1d35a4dc4c0b426 (Development)
+- subject: Rerun after some graph fixes
+- describe: c946279-dirty
 
-**Working tree was DIRTY (226 files) — the commit above does NOT reproduce this figure on its own.**
-See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
+**Working tree was DIRTY (125 files) — the commit above does NOT reproduce this figure on its own.**
+See `uncommitted.diff` (truncated), which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-Battery_Size_Optimization.ipynb                    |    8 +-
- Energy_Community_Comparison.ipynb                  |    2 +-
- Extended_Multuser_Battery_Size_Optimization.ipynb  |   10 +-
- Household_local model.ipynb                        |    2 +-
- MILP_horizon_comparison.ipynb                      |   22 +-
- Multuser_Battery_Size_Optimization.ipynb           |    6 +-
- No_battery_comparison.ipynb                        | 2341 +++----
- RBC_vs_MILP_Comparison.ipynb                       | 6420 +-------------------
- .../battery_sizing/cost_vs_capacity/SOURCE.md      |  267 +-
- .../cost_vs_capacity/cost_vs_capacity.pdf          |  Bin 18668 -> 18668 bytes
- .../battery_sizing/cost_vs_capacity/source.json    |  102 +-
- .../energy_through_battery/SOURCE.md               |  279 +-
- .../energy_through_battery.pdf                     |  Bin 12857 -> 12857 bytes
- .../energy_through_battery/source.json             |   84 +-
- .../equivalent_full_cycles/SOURCE.md               |  287 +-
- .../equivalent_full_cycles.pdf                     |  Bin 11509 -> 11509 bytes
- .../equivalent_full_cycles/source.json             |   72 +-
- .../battery_sizing/marginal_value/SOURCE.md        |  271 +-
- .../marginal_value/marginal_value.pdf              |  Bin 13939 -> 13939 bytes
- .../battery_sizing/marginal_value/source.json      |   96 +-
- .../battery_sizing/net_annual_benefit/SOURCE.md    |  275 +-
- .../net_annual_benefit/net_annual_benefit.pdf      |  Bin 20475 -> 20475 bytes
- .../battery_sizing/net_annual_benefit/source.json  |   90 +-
- .../battery_sizing/peak_grid_import/SOURCE.md      |  283 +-
- .../peak_grid_import/peak_grid_import.pdf          |  Bin 11663 -> 11663 bytes
- .../battery_sizing/peak_grid_import/source.json    |   78 +-
- .../Figures/battery_sizing/service_life/SOURCE.md  |  293 +-
- .../Figures/battery_sizing/service_life/cell.py    |    2 +-
- .../battery_sizing/service_life/service_life.pdf   |  Bin 14689 -> 14688 bytes
- .../battery_sizing/service_life/source.json        |   66 +-
- .../battery_effect_by_item/SOURCE.md               |  308 +-
- .../battery_effect_by_item.pdf                     |  Bin 23266 -> 23266 bytes
- .../battery_effect_by_item/source.json             |   44 +-
- .../battery_saving_by_segment/SOURCE.md            |  334 +-
- .../battery_saving_by_segment.pdf                  |  Bin 12673 -> 12673 bytes
- .../battery_saving_by_segment/source.json          |   22 +-
- .../bill_composition/SOURCE.md                     |  304 +-
- .../bill_composition/bill_composition.pdf          |  Bin 22190 -> 22190 bytes
- .../bill_composition/source.json                   |   50 +-
- .../community_annual_cost/SOURCE.md                |  300 +-
- .../community_annual_cost.pdf                      |  Bin 23481 -> 23481 bytes
- .../community_annual_cost/source.json              |   56 +-
- .../household_cost_scatter/SOURCE.md               |  328 +-
- .../household_cost_scatter.pdf                     |  Bin 25349 -> 25349 bytes
- .../household_cost_scatter/source.json             |   26 +-
- .../import_duration_curve/SOURCE.md                |  314 +-
- .../import_duration_curve/cell.py                  |    2 +-
- .../import_duration_curve.pdf                      |  Bin 30012 -> 29907 bytes
- .../import_duration_curve/source.json              |   38 +-
- .../import_duration_curve_zoom/SOURCE.md           |  321 +-
- .../import_duration_curve_zoom/cell.py             |    2 +-
- .../import_duration_curve_zoom.pdf                 |  Bin 24231 -> 24146 bytes
- .../import_duration_curve_zoom/source.json         |   32 +-
- .../price_extreme_days/price_extreme_days.pdf      |  Bin 36454 -> 36454 bytes
- .../souporaba_shared_vs_forfeited/SOURCE.md        |  338 +-
- .../souporaba_shared_vs_forfeited.pdf              |  Bin 11890 -> 11890 bytes
- .../souporaba_shared_vs_forfeited/source.json      |   24 +-
- .../SOURCE.md                                      |  341 +-
- .../community_bill_by_scheme_10_kwh_pri_vsakem.pdf |  Bin 12167 -> 12167 bytes
- .../source.json                                    |  104 +-
- .../SOURCE.md                                      |  339 +-
- .../community_bill_by_scheme_brez_baterije.pdf     |  Bin 12225 -> 12225 bytes
- .../source.json                                    |  104 +-
- .../SOURCE.md                                      |  340 +-
- ...community_bill_by_scheme_optimalna_baterija.pdf |  Bin 11861 -> 11861 bytes
- .../source.json                                    |  104 +-
- .../member_bill_change_10_kwh_pri_vsakem/SOURCE.md |  343 +-
- .../member_bill_change_10_kwh_pri_vsakem.pdf       |  Bin 14178 -> 14178 bytes
- .../source.json                                    |  104 +-
- .../member_bill_change_brez_baterije/SOURCE.md     |  342 +-
- .../member_bill_change_brez_baterije.pdf           |  Bin 14113 -> 14113 bytes
- .../member_bill_change_brez_baterije/source.json   |  104 +-
- .../network_discount_sensitivity/SOURCE.md         |  346 +-
- .../network_discount_sensitivity/cell.py           |    5 +-
- .../network_discount_sensitivity.pdf               |  Bin 14247 -> 13565 bytes
- .../network_discount_sensitivity/source.json       |  104 +-
- .../share_sweep_bill_10_kwh_pri_vsakem/SOURCE.md   |  336 +-
- .../share_sweep_bill_10_kwh_pri_vsakem.pdf         |  Bin 18726 -> 18726 bytes
- .../share_sweep_bill_10_kwh_pri_vsakem/source.json |  104 +-
- .../share_sweep_bill_brez_baterije/SOURCE.md       |  335 +-
- .../share_sweep_bill_brez_baterije.pdf             |  Bin 18806 -> 18806 bytes
- .../share_sweep_bill_brez_baterije/source.json     |  104 +-
- .../share_sweep_energy_10_kwh_pri_vsakem/SOURCE.md |  338 +-
- .../share_sweep_energy_10_kwh_pri_vsakem.pdf       |  Bin 13125 -> 13125 bytes
- .../source.json                                    |  104 +-
- .../share_sweep_energy_brez_baterije/SOURCE.md     |  337 +-
- .../share_sweep_energy_brez_baterije.pdf           |  Bin 12983 -> 12983 bytes
- .../share_sweep_energy_brez_baterije/source.json   |  104 +-
- .../Figures/horizon/achievable_saving/SOURCE.md    |  216 +-
- .../achievable_saving/achievable_saving.pdf        |  Bin 17857 -> 17606 bytes
- Results/Figures/horizon/achievable_saving/cell.py  |    2 +-
- .../Figures/horizon/achievable_saving/source.json  |  104 +-
- .../Figures/horizon/gap_by_consumer_type/SOURCE.md |  260 +-
- .../Figures/horizon/gap_by_consumer_type/cell.py   |    2 +-
- .../gap_by_consumer_type/gap_by_consumer_type.pdf  |  Bin 41176 -> 41176 bytes
- .../horizon/gap_by_consumer_type/source.json       |  104 +-
- .../horizon/gap_by_consumer_type_ratio/SOURCE.md   |  267 +-
- .../horizon/gap_by_consumer_type_ratio/cell.py     |    2 +-
- .../gap_by_consumer_type_ratio.pdf                 |  Bin 16106 -> 16074 bytes
- .../horizon/gap_by_consumer_type_ratio/source.json |  104 +-
- .../horizon/gap_by_group_and_tariff/SOURCE.md      |  256 +-
- .../gap_by_group_and_tariff.pdf                    |  Bin 80938 -> 80938 bytes
- .../horizon/gap_by_group_and_tariff/source.json    |  104 +-
- .../horizon/gap_means_all_tariffs/SOURCE.md        |  239 +-
- .../Figures/horizon/gap_means_all_tariffs/cell.py  |    2 +-
- .../gap_means_all_tariffs.pdf                      |  Bin 18394 -> 18190 bytes
- .../horizon/gap_means_all_tariffs/source.json      |  104 +-
- .../horizon/gap_means_all_tariffs_zoom/SOURCE.md   |  244 +-
- .../horizon/gap_means_all_tariffs_zoom/cell.py     |    2 +-
- .../gap_means_all_tariffs_zoom.pdf                 |  Bin 15499 -> 15499 bytes
- .../horizon/gap_means_all_tariffs_zoom/source.json |  104 +-
- .../horizon/gap_spread_households/SOURCE.md        |  233 +-
- .../gap_spread_households.pdf                      |  Bin 35136 -> 35136 bytes
- .../horizon/gap_spread_households/source.json      |  104 +-
- .../horizon/horizon_gap_by_tariff/SOURCE.md        |  223 +-
- .../Figures/horizon/horizon_gap_by_tariff/cell.py  |    2 +-
- .../horizon_gap_by_tariff.pdf                      |  Bin 14949 -> 14634 bytes
- .../horizon/horizon_gap_by_tariff/source.json      |  104 +-
- .../horizon/horizon_gap_by_tariff_zoom/SOURCE.md   |  228 +-
- .../horizon/horizon_gap_by_tariff_zoom/cell.py     |    2 +-
- .../horizon_gap_by_tariff_zoom.pdf                 |  Bin 11825 -> 11825 bytes
- .../horizon/horizon_gap_by_tariff_zoom/source.json |  104 +-
- Results/Figures/horizon/runtime_vs_gap/SOURCE.md   |  251 +-
- Results/Figures/horizon/runtime_vs_gap/cell.py     |    4 +-
- .../horizon/runtime_vs_gap/runtime_vs_gap.pdf      |  Bin 24286 -> 24148 bytes
- Results/Figures/horizon/runtime_vs_gap/source.json |  104 +-
- .../catalogue_all_bill_ranking/SOURCE.md           |  105 +-
- .../catalogue_all_bill_ranking.pdf                 |  Bin 27460 -> 27354 bytes
- .../catalogue_all_bill_ranking/source.json         |   49 +-
- .../catalogue_all_overpay_by_group/SOURCE.md       |  107 +-
- .../catalogue_all_overpay_by_group.pdf             |  Bin 107977 -> 107977 bytes
- .../catalogue_all_overpay_by_group/source.json     |   50 +-
- .../catalogue_no_pv_bill_ranking/SOURCE.md         |   85 +-
- .../catalogue_no_pv_bill_ranking.pdf               |  Bin 27528 -> 27406 bytes
- .../catalogue_no_pv_bill_ranking/source.json       |   45 +-
- .../catalogue_no_pv_overpay_by_group/SOURCE.md     |   89 +-
- .../catalogue_no_pv_overpay_by_group.pdf           |  Bin 76824 -> 76824 bytes
- .../catalogue_no_pv_overpay_by_group/source.json   |   42 +-
- .../catalogue_premium_by_group/SOURCE.md           |  122 +-
- .../catalogue_premium_by_group.pdf                 |  Bin 60174 -> 60170 bytes
- .../no_battery/catalogue_premium_by_group/cell.py  |    4 +-
- .../catalogue_premium_by_group/source.json         |   50 +-
- .../catalogue_premium_by_supplier/SOURCE.md        |  115 +-
- .../catalogue_premium_by_supplier.pdf              |  Bin 27076 -> 26985 bytes
- .../catalogue_premium_by_supplier/cell.py          |    4 +-
- .../catalogue_premium_by_supplier/source.json      |   50 +-
- .../catalogue_with_pv_bill_ranking/SOURCE.md       |   95 +-
- .../catalogue_with_pv_bill_ranking.pdf             |  Bin 27416 -> 27296 bytes
- .../catalogue_with_pv_bill_ranking/source.json     |   45 +-
- .../catalogue_with_pv_overpay_by_group/SOURCE.md   |   99 +-
- .../catalogue_with_pv_overpay_by_group.pdf         |  Bin 77049 -> 77049 bytes
- .../catalogue_with_pv_overpay_by_group/source.json |   46 +-
- .../no_battery/export_right_by_group/SOURCE.md     |   78 +-
- .../export_right_by_group.pdf                      |  Bin 20116 -> 20116 bytes
- .../no_battery/export_right_by_group/source.json   |   44 +-
- .../no_battery/export_right_worth/SOURCE.md        |   73 +-
- .../export_right_worth/export_right_worth.pdf      |  Bin 26945 -> 26945 bytes
- .../no_battery/export_right_worth/source.json      |   43 +-
- .../no_battery/no_pv_bill_by_group/SOURCE.md       |   27 +-
- .../Figures/no_battery/no_pv_bill_by_group/cell.py |    2 +-
- .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    |  Bin 16664 -> 16668 bytes
- .../no_battery/no_pv_bill_by_group/source.json     |   33 +-
- .../no_battery/no_pv_overpay_by_group/SOURCE.md    |   32 +-
- .../no_battery/no_pv_overpay_by_group/cell.py      |    2 +-
- .../no_pv_overpay_by_group.pdf                     |  Bin 64336 -> 64336 bytes
- .../no_battery/no_pv_overpay_by_group/source.json  |   36 +-
- .../no_battery/pv_bill_composition/SOURCE.md       |   44 +-
- .../Figures/no_battery/pv_bill_composition/cell.py |    6 +-
- .../pv_bill_composition/pv_bill_composition.pdf    |  Bin 17919 -> 17423 bytes
- .../no_battery/pv_bill_composition/source.json     |   38 +-
- .../Figures/no_battery/pv_bill_ranking/SOURCE.md   |   37 +-
- Results/Figures/no_battery/pv_bill_ranking/cell.py |    6 +-
- .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf |  Bin 21771 -> 21771 bytes
- .../Figures/no_battery/pv_bill_ranking/source.json |   37 +-
- .../pv_nosale_bill_composition/SOURCE.md           |   61 +-
- .../no_battery/pv_nosale_bill_composition/cell.py  |    4 +-
- .../pv_nosale_bill_composition.pdf                 |  Bin 17691 -> 17343 bytes
- .../pv_nosale_bill_composition/source.json         |   41 +-
- .../no_battery/pv_nosale_bill_ranking/SOURCE.md    |   54 +-
- .../no_battery/pv_nosale_bill_ranking/cell.py      |    4 +-
- .../pv_nosale_bill_ranking.pdf                     |  Bin 22461 -> 22461 bytes
- .../no_battery/pv_nosale_bill_ranking/source.json  |   40 +-
- .../pv_nosale_overpay_by_group/SOURCE.md           |   66 +-
- .../no_battery/pv_nosale_overpay_by_group/cell.py  |    4 +-
- .../pv_nosale_overpay_by_group.pdf                 |  Bin 42949 -> 42949 bytes
- .../pv_nosale_overpay_by_group/source.json         |   42 +-
- .../no_battery/pv_overpay_by_group/SOURCE.md       |   49 +-
- .../Figures/no_battery/pv_overpay_by_group/cell.py |    6 +-
- .../pv_overpay_by_group/pv_overpay_by_group.pdf    |  Bin 46157 -> 46157 bytes
- .../no_battery/pv_overpay_by_group/source.json     |   39 +-
- .../achievable_by_household_type/SOURCE.md         |  367 +-
- .../achievable_by_household_type.pdf               |  Bin 11582 -> 11582 bytes
- .../achievable_by_household_type/source.json       |  116 +-
- .../Figures/rbc_vs_milp/battery_earnings/SOURCE.md |  373 +-
- .../battery_earnings/battery_earnings.pdf          |  Bin 16298 -> 16298 bytes
- .../rbc_vs_milp/battery_earnings/source.json       |  116 +-
- .../rbc_vs_milp/excess_power_charge/SOURCE.md      |  391 +-
- .../excess_power_charge/excess_power_charge.pdf    |  Bin 15801 -> 15801 bytes
- .../rbc_vs_milp/excess_power_charge/source.json    |  116 +-
- .../rbc_vs_milp/gap_by_household_type/SOURCE.md    |  363 +-
- .../gap_by_household_type.pdf                      |  Bin 37483 -> 37483 bytes
- .../rbc_vs_milp/gap_by_household_type/source.json  |  118 +-
- .../rbc_vs_milp/gap_by_price_list/SOURCE.md        |  345 +-
- .../gap_by_price_list/gap_by_price_list.pdf        |  Bin 16280 -> 16280 bytes
- .../rbc_vs_milp/gap_by_price_list/source.json      |  118 +-
- Results/Figures/rbc_vs_milp/gap_by_rule/SOURCE.md  |  338 +-
- Results/Figures/rbc_vs_milp/gap_by_rule/cell.py    |    2 +-
- .../rbc_vs_milp/gap_by_rule/gap_by_rule.pdf        |  Bin 16418 -> 16411 bytes
- .../Figures/rbc_vs_milp/gap_by_rule/source.json    |  118 +-
- .../Figures/rbc_vs_milp/gap_vs_capacity/SOURCE.md  |  351 +-
- .../gap_vs_capacity/gap_vs_capacity.pdf            |  Bin 18510 -> 18510 bytes
- .../rbc_vs_milp/gap_vs_capacity/source.json        |  118 +-
- .../rbc_vs_milp/grid_charged_share/SOURCE.md       |  379 +-
- .../grid_charged_share/grid_charged_share.pdf      |  Bin 16245 -> 16245 bytes
- .../rbc_vs_milp/grid_charged_share/source.json     |  116 +-
- .../Figures/rbc_vs_milp/peak_grid_import/SOURCE.md |  385 +-
- .../peak_grid_import/peak_grid_import.pdf          |  Bin 15789 -> 15789 bytes
- .../rbc_vs_milp/peak_grid_import/source.json       |  116 +-
- .../rbc_vs_milp/saving_vs_capacity/SOURCE.md       |  357 +-
- .../saving_vs_capacity/saving_vs_capacity.pdf      |  Bin 19279 -> 19277 bytes
- .../rbc_vs_milp/saving_vs_capacity/source.json     |  118 +-
- Results/Figures/rbc_vs_milp/trace_day/SOURCE.md    |  167 +-
- Results/Figures/rbc_vs_milp/trace_day/source.json  |  111 +-
- .../Figures/rbc_vs_milp/trace_day/trace_day.pdf    |  Bin 31149 -> 31149 bytes
- Skupnostna_Samooskrba_vs_Souporaba.ipynb           |   21 +-
- 225 files changed, 11838 insertions(+), 17548 deletions(-)
+Battery_Size_Optimization.ipynb                    | 755 +++++++++++----------
+ RBC_vs_MILP_Comparison.ipynb                       | 178 ++---
+ .../battery_sizing/cost_vs_capacity/SOURCE.md      | 192 +-----
+ .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 18668 -> 18668 bytes
+ .../battery_sizing/cost_vs_capacity/source.json    |  73 +-
+ .../energy_through_battery/SOURCE.md               | 211 +-----
+ .../energy_through_battery.pdf                     | Bin 12857 -> 12857 bytes
+ .../energy_through_battery/source.json             |  67 +-
+ .../equivalent_full_cycles/SOURCE.md               | 223 +-----
+ .../battery_sizing/equivalent_full_cycles/cell.py  |   2 +-
+ .../equivalent_full_cycles.pdf                     | Bin 11509 -> 11644 bytes
+ .../equivalent_full_cycles/source.json             |  61 +-
+ .../battery_sizing/marginal_value/SOURCE.md        | 198 +-----
+ .../Figures/battery_sizing/marginal_value/cell.py  |   2 +-
+ .../marginal_value/marginal_value.pdf              | Bin 13939 -> 13952 bytes
+ .../battery_sizing/marginal_value/source.json      |  72 +-
+ .../battery_sizing/net_annual_benefit/SOURCE.md    | 205 +-----
+ .../net_annual_benefit/net_annual_benefit.pdf      | Bin 20475 -> 20475 bytes
+ .../battery_sizing/net_annual_benefit/source.json  |  70 +-
+ .../battery_sizing/peak_grid_import/SOURCE.md      | 217 +-----
+ .../peak_grid_import/peak_grid_import.pdf          | Bin 11663 -> 11663 bytes
+ .../battery_sizing/peak_grid_import/source.json    |  64 +-
+ .../Figures/battery_sizing/service_life/SOURCE.md  | 230 +------
+ .../battery_sizing/service_life/service_life.pdf   | Bin 14688 -> 14688 bytes
+ .../battery_sizing/service_life/source.json        |  59 +-
+ .../battery_effect_by_item/SOURCE.md               | 322 +++------
+ .../battery_effect_by_item.pdf                     | Bin 23266 -> 23272 bytes
+ .../battery_effect_by_item/cell.py                 |  11 +-
+ .../battery_effect_by_item/source.json             |  40 +-
+ .../battery_saving_by_segment/SOURCE.md            | 352 ++++------
+ .../battery_saving_by_segment.pdf                  | Bin 12673 -> 12410 bytes
+ .../battery_saving_by_segment/cell.py              |   2 +-
+ .../battery_saving_by_segment/source.json          |  40 +-
+ .../bill_composition/SOURCE.md                     | 315 +++------
+ .../bill_composition/bill_composition.pdf          | Bin 22190 -> 22332 bytes
+ .../community_comparison/bill_composition/cell.py  |  11 +-
+ .../bill_composition/source.json                   |  40 +-
+ .../community_annual_cost/SOURCE.md                | 308 +++------
+ .../community_annual_cost/cell.py                  |   2 +-
+ .../community_annual_cost.pdf                      | Bin 23481 -> 24166 bytes
+ .../community_annual_cost/source.json              |  42 +-
+ .../household_cost_scatter/SOURCE.md               | 345 ++++------
+ .../household_cost_scatter/cell.py                 |   2 +-
+ .../household_cost_scatter.pdf                     | Bin 25349 -> 25951 bytes
+ .../household_cost_scatter/source.json             |  40 +-
+ .../import_duration_curve/SOURCE.md                | 329 +++------
+ .../import_duration_curve/cell.py                  |   4 +-
+ .../import_duration_curve.pdf                      | Bin 29907 -> 29943 bytes
+ .../import_duration_curve/source.json              |  40 +-
+ .../import_duration_curve_zoom/SOURCE.md           | 337 ++++-----
+ .../import_duration_curve_zoom/cell.py             |   4 +-
+ .../import_duration_curve_zoom.pdf                 | Bin 24146 -> 24699 bytes
+ .../import_duration_curve_zoom/source.json         |  40 +-
+ .../price_extreme_days/price_extreme_days.pdf      | Bin 36454 -> 36036 bytes
+ .../souporaba_shared_vs_forfeited/SOURCE.md        | 359 ++++------
+ .../souporaba_shared_vs_forfeited/cell.py          |   2 +-
+ .../souporaba_shared_vs_forfeited.pdf              | Bin 11890 -> 12907 bytes
+ .../souporaba_shared_vs_forfeited/source.json      |  38 +-
+ .../SOURCE.md                                      | 356 +++-------
+ .../community_bill_by_scheme_10_kwh_pri_vsakem.pdf | Bin 12326 -> 12326 bytes
+ .../source.json                                    |  70 +-
+ .../SOURCE.md                                      | 344 +++-------
+ .../community_bill_by_scheme_brez_baterije.pdf     | Bin 12385 -> 12385 bytes
+ .../source.json                                    |  84 +--
+ .../SOURCE.md                                      | 349 +++-------
+ ...community_bill_by_scheme_optimalna_baterija.pdf | Bin 12029 -> 12029 bytes
+ .../source.json                                    |  76 +--
+ .../member_bill_change_10_kwh_pri_vsakem/SOURCE.md | 369 +++-------
+ .../member_bill_change_10_kwh_pri_vsakem.pdf       | Bin 14178 -> 14178 bytes
+ .../source.json                                    |  64 +-
+ .../member_bill_change_brez_baterije/SOURCE.md     | 363 +++-------
+ .../member_bill_change_brez_baterije.pdf           | Bin 14113 -> 14113 bytes
+ .../member_bill_change_brez_baterije/source.json   |  64 +-
+ .../network_discount_sensitivity/SOURCE.md         | 375 +++-------
+ .../network_discount_sensitivity.pdf               | Bin 12764 -> 12764 bytes
+ .../network_discount_sensitivity/source.json       |  64 +-
+ .../share_sweep_bill_10_kwh_pri_vsakem/SOURCE.md   | 322 ++-------
+ .../share_sweep_bill_10_kwh_pri_vsakem/cell.py     |   3 +-
+ .../share_sweep_bill_10_kwh_pri_vsakem.pdf         | Bin 18734 -> 18461 bytes
+ .../share_sweep_bill_10_kwh_pri_vsakem/source.json | 104 +--
+ .../share_sweep_bill_brez_baterije/SOURCE.md       | 314 ++-------
+ .../share_sweep_bill_brez_baterije/cell.py         |   3 +-
+ .../share_sweep_bill_brez_baterije.pdf             | Bin 18810 -> 18528 bytes
+ .../share_sweep_bill_brez_baterije/source.json     | 112 +--
+ .../share_sweep_energy_10_kwh_pri_vsakem/SOURCE.md | 337 +++------
+ .../share_sweep_energy_10_kwh_pri_vsakem.pdf       | Bin 13133 -> 13133 bytes
+ .../source.json                                    |  90 +--
+ .../share_sweep_energy_brez_baterije/SOURCE.md     | 330 ++-------
+ .../share_sweep_energy_brez_baterije.pdf           | Bin 12993 -> 12993 bytes
+ .../share_sweep_energy_brez_baterije/source.json   |  96 +--
+ .../achievable_by_household_type/SOURCE.md         | 277 ++------
+ .../achievable_by_household_type.pdf               | Bin 11820 -> 11820 bytes
+ .../achievable_by_household_type/source.json       | 110 ++-
+ .../Figures/rbc_vs_milp/battery_earnings/SOURCE.md | 284 ++------
+ .../battery_earnings/battery_earnings.pdf          | Bin 16771 -> 16771 bytes
+ .../rbc_vs_milp/battery_earnings/source.json       | 113 ++-
+ .../rbc_vs_milp/excess_power_charge/SOURCE.md      | 305 ++-------
+ .../excess_power_charge/excess_power_charge.pdf    | Bin 16156 -> 16156 bytes
+ .../rbc_vs_milp/excess_power_charge/source.json    | 116 ++--
+ .../rbc_vs_milp/gap_by_household_type/SOURCE.md    | 270 ++------
+ .../gap_by_household_type.pdf                      | Bin 37618 -> 37618 bytes
+ .../rbc_vs_milp/gap_by_household_type/source.json  | 107 ++-
+ .../rbc_vs_milp/gap_by_price_list/SOURCE.md        | 249 ++-----
+ .../gap_by_price_list/gap_by_price_list.pdf        | Bin 16455 -> 16455 bytes
+ .../rbc_vs_milp/gap_by_price_list/source.json      |  98 ++-
+ Results/Figures/rbc_vs_milp/gap_by_rule/SOURCE.md  | 241 +------
+ Results/Figures/rbc_vs_milp/gap_by_rule/cell.py    |   2 +-
+ .../rbc_vs_milp/gap_by_rule/gap_by_rule.pdf        | Bin 16543 -> 16542 bytes
+ .../Figures/rbc_vs_milp/gap_by_rule/source.json    |  94 +--
+ .../Figures/rbc_vs_milp/gap_vs_capacity/SOURCE.md  | 256 ++-----
+ .../gap_vs_capacity/gap_vs_capacity.pdf            | Bin 18786 -> 18786 bytes
+ .../rbc_vs_milp/gap_vs_capacity/source.json        | 101 ++-
+ .../rbc_vs_milp/grid_charged_share/SOURCE.md       | 291 ++------
+ .../grid_charged_share/grid_charged_share.pdf      | Bin 16740 -> 16740 bytes
+ .../rbc_vs_milp/grid_charged_share/source.json     | 116 ++--
+ .../Figures/rbc_vs_milp/peak_grid_import/SOURCE.md | 298 ++------
+ .../peak_grid_import/peak_grid_import.pdf          | Bin 16124 -> 16124 bytes
+ .../rbc_vs_milp/peak_grid_import/source.json       | 116 ++--
+ .../rbc_vs_milp/saving_vs_capacity/SOURCE.md       | 263 ++-----
+ .../saving_vs_capacity/saving_vs_capacity.pdf      | Bin 19402 -> 19402 bytes
+ .../rbc_vs_milp/saving_vs_capacity/source.json     | 104 ++-
+ Results/Figures/rbc_vs_milp/trace_day/SOURCE.md    | 234 +------
+ Results/Figures/rbc_vs_milp/trace_day/source.json  |  91 +--
+ .../Figures/rbc_vs_milp/trace_day/trace_day.pdf    | Bin 31670 -> 31670 bytes
+ Skupnostna_Samooskrba_vs_Souporaba.ipynb           | 236 +++----
+ 125 files changed, 4209 insertions(+), 10356 deletions(-)
 ```

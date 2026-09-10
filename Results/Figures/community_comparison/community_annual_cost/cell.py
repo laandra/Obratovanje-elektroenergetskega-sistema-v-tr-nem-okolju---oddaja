@@ -64,7 +64,7 @@ ax.margins(y=0.14)
 ax.legend(ncol=3, loc="upper left", bbox_to_anchor=(0, -0.20))
 finish(ax, title="Kolikšen je letni strošek skupnosti",
        subtitle=f"{len(MEMBERS)} gospodinjstev, z DDV; postavke nad črto, dobropis pod njo",
-       ylabel="EUR / leto", yfmt=EUR)
+       ylabel="Letni strošek skupnosti [EUR/a]", yfmt=EUR)
 pf.show(fig, "community_annual_cost")
 
 pd.DataFrame({

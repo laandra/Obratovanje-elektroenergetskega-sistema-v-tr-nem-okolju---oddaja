@@ -15,5 +15,5 @@ for capex in CAPEX_SCENARIOS_EUR_PER_KWH:
 
 ax.set_ylim(bottom=0)
 finish(ax, title="Kje se naslednja kWh hrambe ne izplača več",
-       xlabel="Kapaciteta baterije [kWh]", ylabel="Mejna vrednost [EUR/kWh/a]", yfmt=EUR)
+       xlabel="Kapaciteta baterije [kWh]", ylabel="Mejna vrednost kapacitete [EUR/kWh/a]", yfmt=EUR)
 pf.show(fig, "marginal_value")

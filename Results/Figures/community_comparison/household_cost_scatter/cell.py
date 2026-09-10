@@ -47,7 +47,7 @@ ax.set_xticklabels([LABEL[s] for s in SCEN_ORDER])
 ax.legend(ncol=4, loc="upper left", bbox_to_anchor=(0, -0.10), fontsize=9)
 finish(ax, title="Vsako gospodinjstvo, vsak scenarij",
        subtitle="obroč je isto gospodinjstvo brez baterij; skrajna primera sta označena",
-       ylabel="EUR / leto", yfmt=EUR)
+       ylabel="Letni račun gospodinjstva [EUR/a]", yfmt=EUR)
 pf.show(fig, "household_cost_scatter")
 
 # What the ten batteries moved, on their own bills and on everybody else's.

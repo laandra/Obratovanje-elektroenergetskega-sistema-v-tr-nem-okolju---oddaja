@@ -50,16 +50,17 @@ for col, label, color in COST_PARTS:
             color=color, edgecolor=SURFACE, linewidth=2)
     for xi, val, base in zip(x, vals, bottom):
         if val > 6:
-            axL.annotate(f"{val:.0f} %", (xi, base + val / 2), ha="center",
+            # The y axis already says [%]; the in-slice number is the value.
+            axL.annotate(f"{val:.0f}", (xi, base + val / 2), ha="center",
                          va="center", fontsize=8.5,
                          color=SURFACE if color in BLUES[4:] else INK)
     bottom += vals
 axL.bar(x, credit_share, width=0.56, color=CREDIT_PART[2], edgecolor=SURFACE,
         linewidth=2, label=CREDIT_PART[1])
 for xi, val, net in zip(x, credit_share, net_share):
-    axL.annotate(f"{val:.0f} %", (xi, val), xytext=(0, -12),
+    axL.annotate(f"{val:.0f}", (xi, val), xytext=(0, -12),
                  textcoords="offset points", ha="center", fontsize=8.5, color=INK_2)
-    axL.annotate(f"neto {net:.0f} %", (xi, 0.99), xycoords=axL.get_xaxis_transform(),
+    axL.annotate(f"neto {net:.0f}", (xi, 0.99), xycoords=axL.get_xaxis_transform(),
                  ha="center", va="top", fontsize=9.5, fontweight="semibold", color=INK)
 
 axL.axhline(0, color=MUTED, linewidth=0.8)
@@ -69,7 +70,7 @@ axL.tick_params(axis="x", length=0)
 axL.margins(y=0.12)
 finish(axL, title="Iz česa je račun sestavljen",
        subtitle="delež bruto računa, z baterijami",
-       ylabel="delež bruto računa", yfmt=PCT)
+       ylabel="Delež bruto računa [%]", yfmt=PCT)
 pf.key_legend(axL, [Patch(facecolor=c, label=l) for _, l, c in PARTS], ncol=3)
 pf.show(fig, "bill_composition")
 
@@ -104,7 +105,7 @@ axR.set_xticklabels(TOTALS["Scenario"], fontsize=10.5, fontweight="semibold")
 axR.tick_params(axis="x", length=0)
 finish(axR, title="Kaj baterija premakne po postavkah",
        subtitle="razlika proti istemu letu brez baterij; nad črto postavka račun zniža",
-       ylabel="učinek na letni račun [EUR]", yfmt=EUR)
+       ylabel="Učinek na letni račun [EUR/a]", yfmt=EUR)
 pf.key_legend(axR, [Patch(facecolor=c, label=l) for _, l, c in PARTS], ncol=3)
 pf.show(fig, "battery_effect_by_item")
 

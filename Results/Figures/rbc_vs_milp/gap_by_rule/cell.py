@@ -16,7 +16,7 @@ ax.set_yticks(y, [CONTROLLER_LABEL[c] for c in order])
 label_x = float(gap.max()) * 1.04
 ax.set_xlim(0, label_x * 1.10)
 for row, value in zip(y, gap[order]):
-    ax.text(label_x, row, f"{value:.0f}%", va="center", ha="left",
+    ax.text(label_x, row, f"{value:.0f}", va="center", ha="left",
             fontsize=9, color=INK_2)
 # Outside the axes: inside, the legend's sample dot reads as a data point.
 ax.legend(loc="lower right", bbox_to_anchor=(1.0, 1.0))

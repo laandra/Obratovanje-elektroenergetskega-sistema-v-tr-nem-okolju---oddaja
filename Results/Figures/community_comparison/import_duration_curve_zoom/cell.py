@@ -33,7 +33,7 @@ ax.set_xticks(np.arange(0, 8785, 2000))
 ax.legend(loc="upper right")
 finish(ax, title="Kako pogosto skupnost odjema kolikšno moč",
        subtitle="neto odjem vseh 50 gospodinjstev, urejen padajoče; siva je leto brez baterij",
-       xlabel="ur na leto pri tej moči ali več", ylabel="kW")
+       xlabel="Trajanje [h/a]", ylabel="Odjem skupnosti [kW]")
 pf.show(fig, "import_duration_curve")
 
 fig, axz = plt.subplots(figsize=pf.figsize(ratio=0.46))
@@ -50,7 +50,7 @@ axz.set_xlim(0, ZOOM_HOURS)
 axz.set_xticks(np.arange(0, ZOOM_HOURS + 1, 200))
 axz.legend(loc="upper right")
 finish(axz, title=f"Najvišjih {ZOOM_HOURS} ur, kjer se scenariji razidejo",
-       xlabel="ur na leto pri tej moči ali več", ylabel="kW")
+       xlabel="Trajanje [h/a]", ylabel="Odjem skupnosti [kW]")
 pf.show(fig, "import_duration_curve_zoom")
 
 # The power exceeded 1, 10, 100 and 800 hours a year.

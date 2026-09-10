@@ -27,7 +27,8 @@ for battery in SWEEP_BATTERIES:
         best = sub.loc[sub["Community_cost_EUR"].idxmin()]
         ax.plot([best["share"]], [best["Community_cost_EUR"]], marker="o", markersize=8,
                 color=color, zorder=4)
-        ax.annotate(f"{best['share']:.0%}", (best["share"], best["Community_cost_EUR"]),
+        # The x axis already says [%]; the callout is the value, not the unit.
+        ax.annotate(f"{best['share'] * 100:.0f}", (best["share"], best["Community_cost_EUR"]),
                     xytext=(0, -13), textcoords="offset points", ha="center",
                     color=color, fontsize=8.5, fontweight="bold")
     ax.grid(axis="y", linewidth=0.6)

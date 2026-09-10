@@ -20,5 +20,5 @@ ax.set_xticks(range(1, 13))
 ax.legend(ncol=2, loc="upper left")
 finish(ax, title="Koliko deljene energije dejansko pride do prejemnikov",
        subtitle="oznaka je delež neizrabljene energije",
-       xlabel="mesec", ylabel="kWh")
+       xlabel="Mesec", ylabel="Deljena energija [kWh]")
 pf.show(fig, "souporaba_shared_vs_forfeited")

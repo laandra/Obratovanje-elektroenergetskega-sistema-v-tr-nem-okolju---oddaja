@@ -66,15 +66,15 @@ for col, (label, day) in enumerate(picks):
                  f"povprečje {row['mean']:.0f}, od {row['min']:.0f} do "
                  f"{row['max']:.0f} EUR/MWh", fontsize=10)
     if col == 0:
-        ax.set_ylabel("neto moč skupnosti [kW]")
+        ax.set_ylabel("Neto moč skupnosti [kW]")
 
     axp.plot(hours, smp.loc[mask].to_numpy(dtype=float), color=INK_2, linewidth=1.6)
     axp.axhline(0, color=MUTED, linewidth=0.8)
     axp.set_xlim(0, 24)
     axp.set_xticks([0, 6, 12, 18, 24])
-    axp.set_xlabel(f"ura dneva {day:%Y-%m-%d} UTC")
+    axp.set_xlabel("Ura dneva [h]")
     if col == 0:
-        axp.set_ylabel("SMP [EUR/MWh]")
+        axp.set_ylabel("Cena SMP [EUR/MWh]")
 
 # Figure-level header and keys: these panels are full from top to bottom, and
 # chart_frame measures both bands before it lays the axes out.
