@@ -1,0 +1,82 @@
+{
+  "figure": "share_sweep_bill",
+  "created_utc": "2026-09-11T06:49:39+00:00",
+  "files": [
+    "share_sweep_bill.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      7.16,
+      4.4392
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.11.14"
+  },
+  "source": {
+    "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\Skupnostna_Samooskrba_vs_Souporaba.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 69,
+    "caller": "<frozen runpy>:198",
+    "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "0fef101d50d00202fc772cba156d8f1b8497ce5e",
+    "commit_short": "0fef101",
+    "branch": "Development",
+    "describe": "0fef101-dirty",
+    "subject": "Saving before KCUI after last graph update",
+    "committed_at": "2026-09-11T07:42:09+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 30,
+    "dirty_files": [
+      "xtended_Multuser_Battery_Size_Optimization.ipynb",
+      "Results/Figures/community_sharing/community_bill_by_scheme_10_kwh_pri_vsakem/SOURCE.md",
+      "Results/Figures/community_sharing/community_bill_by_scheme_10_kwh_pri_vsakem/community_bill_by_scheme_10_kwh_pri_vsakem.pdf",
+      "Results/Figures/community_sharing/community_bill_by_scheme_10_kwh_pri_vsakem/source.json",
+      "Results/Figures/community_sharing/community_bill_by_scheme_brez_baterije/SOURCE.md",
+      "Results/Figures/community_sharing/community_bill_by_scheme_brez_baterije/community_bill_by_scheme_brez_baterije.pdf",
+      "Results/Figures/community_sharing/community_bill_by_scheme_brez_baterije/source.json",
+      "Results/Figures/community_sharing/community_bill_by_scheme_optimalna_baterija/SOURCE.md",
+      "Results/Figures/community_sharing/community_bill_by_scheme_optimalna_baterija/community_bill_by_scheme_optimalna_baterija.pdf",
+      "Results/Figures/community_sharing/community_bill_by_scheme_optimalna_baterija/source.json",
+      "Results/Figures/community_sharing/member_bill_change_10_kwh_pri_vsakem/SOURCE.md",
+      "Results/Figures/community_sharing/member_bill_change_10_kwh_pri_vsakem/member_bill_change_10_kwh_pri_vsakem.pdf",
+      "Results/Figures/community_sharing/member_bill_change_10_kwh_pri_vsakem/source.json",
+      "Results/Figures/community_sharing/member_bill_change_brez_baterije/SOURCE.md",
+      "Results/Figures/community_sharing/member_bill_change_brez_baterije/member_bill_change_brez_baterije.pdf",
+      "Results/Figures/community_sharing/member_bill_change_brez_baterije/source.json",
+      "Results/Figures/community_sharing/network_discount_sensitivity/SOURCE.md",
+      "Results/Figures/community_sharing/network_discount_sensitivity/network_discount_sensitivity.pdf",
+      "Results/Figures/community_sharing/network_discount_sensitivity/source.json",
+      "Results/Figures/community_sharing/share_sweep_bill_10_kwh_pri_vsakem/SOURCE.md",
+      "Results/Figures/community_sharing/share_sweep_bill_10_kwh_pri_vsakem/share_sweep_bill_10_kwh_pri_vsakem.pdf",
+      "Results/Figures/community_sharing/share_sweep_bill_10_kwh_pri_vsakem/source.json",
+      "Results/Figures/community_sharing/share_sweep_bill_brez_baterije/SOURCE.md",
+      "Results/Figures/community_sharing/share_sweep_bill_brez_baterije/share_sweep_bill_brez_baterije.pdf",
+      "Results/Figures/community_sharing/share_sweep_bill_brez_baterije/source.json",
+      "Skupnostna_Samooskrba_vs_Souporaba.ipynb",
+      "\"Claude outputs/\"",
+      "Results/Figures/community_sharing/share_sweep_10_kwh_pri_vsakem/",
+      "Results/Figures/community_sharing/share_sweep_bill/",
+      "Results/Figures/community_sharing/share_sweep_brez_baterije/"
+    ],
+    "dirty_stat": "Extended_Multuser_Battery_Size_Optimization.ipynb  |    2 +-\n .../SOURCE.md                                      |  266 +-\n .../community_bill_by_scheme_10_kwh_pri_vsakem.pdf |  Bin 27728 -> 31364 bytes\n .../source.json                                    |   78 +-\n .../SOURCE.md                                      |  254 +-\n .../community_bill_by_scheme_brez_baterije.pdf     |  Bin 27283 -> 30239 bytes\n .../source.json                                    |   84 +-\n .../SOURCE.md                                      |  260 +-\n ...community_bill_by_scheme_optimalna_baterija.pdf |  Bin 27256 -> 30543 bytes\n .../source.json                                    |   81 +-\n .../member_bill_change_10_kwh_pri_vsakem/SOURCE.md |  278 +-\n .../member_bill_change_10_kwh_pri_vsakem.pdf       |  Bin 31086 -> 35560 bytes\n .../source.json                                    |   72 +-\n .../member_bill_change_brez_baterije/SOURCE.md     |  272 +-\n .../member_bill_change_brez_baterije.pdf           |  Bin 31026 -> 35500 bytes\n .../member_bill_change_brez_baterije/source.json   |   75 +-\n .../network_discount_sensitivity/SOURCE.md         |  284 +-\n .../network_discount_sensitivity.pdf               |  Bin 28732 -> 32555 bytes\n .../network_discount_sensitivity/source.json       |   69 +-\n .../share_sweep_bill_10_kwh_pri_vsakem/SOURCE.md   |  266 +-\n .../share_sweep_bill_10_kwh_pri_vsakem.pdf         |  Bin 40647 -> 45530 bytes\n .../share_sweep_bill_10_kwh_pri_vsakem/source.json |   97 +-\n .../share_sweep_bill_brez_baterije/SOURCE.md       |  260 +-\n .../share_sweep_bill_brez_baterije.pdf             |  Bin 40645 -> 45547 bytes\n .../share_sweep_bill_brez_baterije/source.json     |  100 +-\n Skupnostna_Samooskrba_vs_Souporaba.ipynb           | 5916 +++++++++++++-------\n 26 files changed, 4161 insertions(+), 4553 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Optimalni delež deljene energije — Cenik Redni, 16 gospodinjstev, celo leto 2024, interna cena 0.050 EUR/kWh, značilni primer 2. Polna črta = pogodbeni (statični) delež. Oznaka = delež z najnižjim računom skupnosti. Barva = shema, slog črte = baterijski scenarij."
+  ],
+  "note": "IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt)"
+}

@@ -1,0 +1,278 @@
+% =============================================================================
+%  PLAKAT LOEE -- Evolucija.AI 2026
+%  Format 70 x 100 cm (pokoncno), ena stran.
+%
+%  Prevod:   pdflatex plakat-loee.tex        (po potrebi dvakrat)
+%            ali:  latexmk -pdf plakat-loee.tex
+%
+%  Datoteka je samostojna: preambula (mere, barve, pisave, pomozni ukazi) in
+%  vsebina sta v isti datoteki. Kazalo:
+%     [1] PAKETI IN MERE      -- velikost lista, robovi, sirine stolpcev
+%     [2] BARVE               -- celotna paleta
+%     [3] VELIKOSTI PISAVE    -- vse velikosti na enem mestu
+%     [4] POMOZNI UKAZI       -- \sekcija, \podnapis, \objava ...
+%     [5] VSEBINA             -- besedilo in slike plakata
+%
+%  Slike so v mapi ./slike/ in so vektorske (PDF).
+% =============================================================================
+\documentclass[final]{article}
+
+% ------------------------------------------------------------ [1] PAKETI IN MERE
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[slovene]{babel}     % slovensko deljenje besed
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{anyfontsize}        % poljubne velikosti pisave
+\usepackage{microtype}
+\usepackage{helvet}             % Nimbus Sans (nadomestek za Barlow)
+\renewcommand{\familydefault}{\sfdefault}
+
+% Ce imate nalozeno pisavo Barlow (Google Fonts), prevajajte z xelatex ali
+% lualatex in odkomentirajte naslednji dve vrstici:
+% \usepackage{fontspec}
+% \setsansfont{Barlow}[UprightFont=*-Regular, BoldFont=*-Bold, ItalicFont=*-Italic]
+
+% Velikost lista in robovi
+\usepackage[paperwidth=70cm, paperheight=100cm,
+            left=3.44cm, right=3.44cm, top=2.65cm, bottom=2.22cm]{geometry}
+
+% Sirine stolpcev; vsota levega, presledka in desnega = 63,12 cm (sirina bloka)
+\newlength{\levistolpec}\setlength{\levistolpec}{33.20cm}   % besedilo
+\newlength{\desnistolpec}\setlength{\desnistolpec}{28.05cm} % slike
+\newlength{\presledek}\setlength{\presledek}{1.85cm}
+\newlength{\razmikodstavkov}\setlength{\razmikodstavkov}{0.64cm}
+\newlength{\razmikslik}\setlength{\razmikslik}{1.10cm}       % razmik med slikami
+
+% ------------------------------------------------------------------ [2] BARVE
+\definecolor{ozadje}{HTML}{FCFCFB}       % papir
+\definecolor{crnilo}{HTML}{22282C}       % naslov plakata
+\definecolor{besedilo}{HTML}{33393D}     % tekoce besedilo
+\definecolor{sivo}{HTML}{5F666A}         % podnapisi slik
+\definecolor{svetlosivo}{HTML}{6D7479}   % drobni tisk
+\definecolor{loeezelena}{HTML}{009933}   % zelena iz logotipa LOEE
+\definecolor{temnozelena}{HTML}{00702A}  % zelena za besedilo
+\definecolor{ulferdeca}{HTML}{E1352A}    % rdeca UL FE
+\definecolor{vmesna}{HTML}{7D8A86}       % sredina barvne crte v glavi
+\definecolor{crta}{HTML}{E1E5DF}         % locilne crte
+
+\pagecolor{ozadje}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% -------------------------------------------------------- [3] VELIKOSTI PISAVE
+\newcommand{\velNaslov}{\fontsize{90}{97}\selectfont}       % naslov plakata
+\newcommand{\velAvtorji}{\fontsize{27}{32}\selectfont}
+\newcommand{\velUvod}{\fontsize{30}{42}\selectfont}         % uvodni odstavek
+\newcommand{\velBesedilo}{\fontsize{27}{40.5}\selectfont}   % tekoce besedilo
+\newcommand{\velSekcija}{\fontsize{24}{28}\selectfont}      % naslov razdelka
+\newcommand{\velPodnapis}{\fontsize{19.5}{27.7}\selectfont} % podnapis slike
+\newcommand{\velObjava}{\fontsize{18}{24.3}\selectfont}     % seznam objav
+\newcommand{\velNoga}{\fontsize{21.75}{28}\selectfont}
+\newcommand{\velDrobno}{\fontsize{18}{24}\selectfont}
+\newcommand{\velGlava}{\fontsize{19.5}{26}\selectfont}
+
+% --------------------------------------------------------- [4] POMOZNI UKAZI
+% Naslov razdelka (zelen, verzalke, spodaj kratka crtica)
+\newcommand{\loeesekcija}[2]{%
+  \par\vspace{#1}%
+  \begingroup\setlength{\parskip}{0pt}%
+  {\color{temnozelena}\velSekcija\bfseries\textls[100]{\MakeUppercase{#2}}\par}%
+  \vspace{0.24cm}%
+  {\color{loeezelena}\rule{2.54cm}{0.106cm}\par}%
+  \endgroup
+  \vspace{-0.22cm}}
+\newcommand{\sekcija}[1]{\loeesekcija{0.94cm}{#1}}      % obicajen razdelek
+\newcommand{\prvasekcija}[1]{\loeesekcija{-0.32cm}{#1}} % prvi razdelek v stolpcu
+
+% Podnapis slike: \podnapis{Slika 1}{besedilo}
+\newcommand{\podnapis}[2]{\vspace{0.30cm}{\velPodnapis\color{sivo}%
+  \textcolor{temnozelena}{\textbf{#1}} $\cdot$ #2\par}}
+
+% Ena bibliografska enota
+\newcommand{\objava}[1]{{\velObjava\color{besedilo}#1\par}\vspace{0.26cm}}
+
+% Tanka locilna crta cez celotno sirino
+\newcommand{\locnica}{{\color{crta}\rule{\textwidth}{0.053cm}}\par}
+
+% =============================================================================
+% [5] VSEBINA
+% =============================================================================
+\begin{document}
+
+% ---------------------------------------------------------------- GLAVA
+\noindent
+\begin{minipage}[b]{0.34\textwidth}
+  {\color{svetlosivo}\velGlava Katedra za osnove elektrotehnike,\\
+   matematiko in fiziko\par}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.30\textwidth}
+  \centering\includegraphics[height=2.54cm]{slike/ulfe-logo.pdf}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.30\textwidth}
+  \raggedleft\includegraphics[height=3.44cm]{slike/loee-logo.pdf}
+\end{minipage}
+
+\vspace{0.90cm}
+\noindent\begin{tikzpicture}
+  \shade[left color=loeezelena, middle color=vmesna, right color=ulferdeca]
+        (0,0) rectangle (\textwidth,0.16cm);
+\end{tikzpicture}
+
+% ---------------------------------------------------------------- NASLOV
+\vspace{1.16cm}
+{\color{crnilo}\velNaslov Optimizacija in umetna inteligenca v energetiki\par}
+
+\vspace{0.64cm}
+{\color{temnozelena}\velAvtorji\bfseries
+ asist.\ Andraž Sivec $\cdot$ asist.\ mag.\ Miran Meža\par}
+
+\vspace{0.79cm}
+{\color{sivo}\velUvod Kako naj se baterijski hranilnik obnaša, da bo račun za
+elektriko čim nižji -- in koliko od teoretičnega optimuma je sploh dosegljivo,
+ko prihodnosti ne poznamo?\par}
+
+\vspace{1.22cm}
+
+% ---------------------------------------------------- LEVI STOLPEC (besedilo)
+\noindent
+\begin{minipage}[t]{\levistolpec}
+  \velBesedilo\color{besedilo}\setlength{\parskip}{\razmikodstavkov}
+
+  \prvasekcija{Laboratorij in industrija}
+
+  Laboratorij za osnove elektrotehnike in elektromagnetiko (LOEE) na Fakulteti
+  za elektrotehniko Univerze v Ljubljani povezuje raziskovalno, projektno in
+  pedagoško delo; vodi ga prof.\ ddr.\ Iztok Humar.
+
+  Podjetjem in drugim naročnikom so na voljo analize, meritve in zasnova
+  rešitev: presoja elektromagnetne kompatibilnosti, vrednotenje elektromagnetnih
+  polj v okolici naprav in postrojev, zastiranje polj, indukcijsko segrevanje
+  ter razvoj senzorike, vgrajenih sistemov in zajema podatkov. Pot je običajno
+  enaka -- meritev, model, prototip in preizkus na realnih podatkih.
+  % Tu je smiselno dodati konkretne partnerje ali projekte, npr.:
+  % Med naročniki so \textbf{ime podjetja}, \textbf{ime podjetja} in drugi.
+
+  Enako velja za umetno inteligenco: zanima nas, kaj od modela ostane v
+  obratovanju, zato ob točnosti merimo tudi ceno -- koliko podatkov, računanja
+  in vzdrževanja zahteva ter koliko obljubljene koristi res prinese. Metode
+  strojnega učenja uporabljamo pri razvrščanju anomalij v brezžičnih omrežjih,
+  pri energijsko varčnem globokem učenju, pri razpoznavanju porabnikov iz
+  merilnih podatkov in pri analizi polnjenja električnih vozil -- del tega z
+  Institutom »Jožef Stefan«.
+
+  \sekcija{Optimizacija baterijskih hranilnikov}
+
+  Delovanje domačega hranilnika zapišemo kot mešano celoštevilsko linearno
+  optimizacijo v 15-minutnih intervalih čez celo leto in ga poženemo na realnih
+  meritvah porabe ter na dejanskih ponudbah slovenskega trga -- z omrežnino po
+  časovnih blokih, prispevki in dajatvami vred.
+
+  Odgovor ni le »koliko prihranim«, temveč tudi, kje je meja: katera kapaciteta
+  se še izplača, koliko je vredna vsaka dodatna kilovatna ura in koliko
+  življenjske dobe baterije pri tem porabimo. Razlike med ceniki ponudnikov in
+  med tipi gospodinjstev so velike -- največ pridobijo tista s toplotno črpalko,
+  električnim avtomobilom in sončno elektrarno.
+
+  \sekcija{Krmiljenje in spodbujevalno učenje}
+
+  Optimum s popolnim poznavanjem prihodnosti je zgornja meja, ki je v resnici ni
+  mogoče doseči -- pravi krmilnik ne pozna ne jutrišnjega sonca ne jutrišnje
+  porabe. Zato primerjamo preprosta pravila, napovedne modele, optimizacijo na
+  drsečem oknu in spodbujevalno učenje (SARSA, DQN) ter merimo, koliko od
+  teoretičnega optimuma dejansko ostane.
+
+  \sekcija{Energetske skupnosti}
+
+  Isti model razširimo na skupnosti, kjer si člani delijo proizvodnjo.
+  Preverjamo, kako pogodbeni delež deljene energije, izbira sheme in skupni
+  hranilnik vplivajo na račun posameznega člana in skupnosti kot celote.
+
+\end{minipage}%
+\hspace{\presledek}%
+% ---------------------------------------------------- DESNI STOLPEC (slike)
+\begin{minipage}[t]{\desnistolpec}
+  \color{besedilo}
+
+  \includegraphics[width=\linewidth]{slike/marginal-value.pdf}
+  \podnapis{Slika 1}{Koliko je vredna vsaka dodatna kilovatna ura hranilnika pri
+  posameznem ceniku. Kjer krivulja pade pod ceno vgrajene kapacitete (vodoravne
+  črte), povečevanje baterije nima več ekonomskega smisla.}
+
+  \vspace{\razmikslik}
+  \includegraphics[width=\linewidth]{slike/net-benefit.pdf}
+  \podnapis{Slika 2}{Neto letna korist glede na velikost hranilnika pri različnih
+  cenah vgrajene kapacitete. Optimum je vrh krivulje: dražja baterija pomeni
+  manjšo optimalno kapaciteto.}
+
+  \vspace{\razmikslik}
+  \includegraphics[width=\linewidth]{slike/share-sweep.pdf}
+  \podnapis{Slika 3}{Letni račun energetske skupnosti glede na pogodbeni delež
+  deljene energije, z baterijo in brez nje. Označene točke so optimum posamezne
+  sheme delitve.}
+
+  % --- Rezervni sliki (odkomentirajte, ce zelite katero namesto zgornjih) ----
+  % \vspace{\razmikslik}
+  % \includegraphics[width=\linewidth]{slike/achievable-saving.pdf}
+  % \podnapis{Slika 4}{Koliko je pri posameznem ceniku sploh mogoče prihraniti z
+  % optimalno vodenim hranilnikom v primerjavi z istim gospodinjstvom brez
+  % baterije.}
+  %
+  % Vecpanelna slika poteka dneva; trim = {levo spodaj desno zgoraj} v pt:
+  % \includegraphics[trim={0 345.1pt 0 43.3pt}, clip, width=\linewidth]{slike/trace-day.pdf}
+  % \includegraphics[trim={0 223.4pt 0 149.0pt}, clip, width=\linewidth]{slike/trace-day.pdf}
+  % \includegraphics[trim={0 93.8pt 0 269.0pt}, clip, width=\linewidth]{slike/trace-day.pdf}
+
+\end{minipage}
+
+\vfill   % preostali prostor porine spodnji pas na dno lista
+
+% ---------------------------------------------------------------- OBJAVE
+\locnica
+\vspace{0.635cm}
+
+\noindent
+{\color{temnozelena}\velSekcija\bfseries\textls[100]{IZBRANE OBJAVE}\par}
+\vspace{0.30cm}
+{\color{loeezelena}\rule{2.54cm}{0.106cm}\par}
+\vspace{0.28cm}
+{\color{svetlosivo}\velObjava revije s faktorjem vpliva najprej, nato
+ konference in domače objave\par}
+\vspace{0.42cm}
+
+\objava{B.~Bertalanič, M.~Meža, C.~Fortuna: \textit{Resource-aware time series
+  imaging classification for wireless link layer anomalies.} IEEE Transactions
+  on Neural Networks and Learning Systems 34(10), 2022.}
+\objava{M.~Meža, G.~Strle, M.~Meža: \textit{Survival analysis of electric
+  vehicle charging behavior and the temporal evolution of feature effects.}
+  Scientific Reports 15, 2025.}
+\objava{A.~Pirnat, B.~Bertalanič, G.~Cerar, M.~Mohorčič, M.~Meža, C.~Fortuna:
+  \textit{Towards sustainable deep learning for wireless fingerprinting
+  localization.} IEEE ICC 2022.}
+\objava{A.~Sivec, M.~Meža: \textit{SARSA ali DQN za krmiljenje baterijskega
+  hranilnika.} Elektrotehniški vestnik 93(1--2), 2026.}
+\objava{A.~Sivec, M.~Meža: \textit{Optimizacija cene električne energije
+  gospodinjstva s spodbujevalnim učenjem.} ERK 2025.}
+\objava{A.~Sivec, M.~Pantoš, M.~Meža: \textit{Delovanje baterijskih hranilnikov
+  na slovenskem energetskem trgu.} V pripravi -- vir slik 1--3.}
+
+% ---------------------------------------------------------------- NOGA
+\vspace{0.30cm}
+\locnica
+\vspace{0.635cm}
+
+\noindent
+\begin{minipage}[b]{0.55\textwidth}
+  {\velNoga\color{besedilo}%
+   \textbf{asist.\ Andraž Sivec} $\cdot$ andraz.sivec@fe.uni-lj.si\\[0.21cm]
+   \textbf{asist.\ mag.\ Miran Meža} $\cdot$ miran.meza@fe.uni-lj.si\par}
+\end{minipage}\hfill
+\begin{minipage}[b]{0.42\textwidth}
+  \raggedleft
+  {\velDrobno\color{svetlosivo}Predstavljeno na konferenci Evolucija.AI 2026\par}
+  \vspace{0.42cm}
+  \includegraphics[height=2.75cm]{slike/kcui-logo.pdf}
+\end{minipage}
+
+\end{document}
