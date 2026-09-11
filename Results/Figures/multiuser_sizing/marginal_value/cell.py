@@ -42,4 +42,4 @@ pf.chart_frame(fig, "Kje se naslednja kWh hrambe ne izplača več",
       f"{CAPEX_FIXED_EUR:,.0f} EUR vgradnje, ki se zaračuna enkrat ne glede na velikost. Kjer "
       f"krivulja seka črto {CAPEX_EUR_PER_KWH:,.0f} EUR/kWh, je velikost iz tabele 8.4.",
       handles=contract_handles())
-pf.show(fig, "marginal_value", layout="frame", preset="page")
+pf.show(fig, "marginal_value", layout="frame")

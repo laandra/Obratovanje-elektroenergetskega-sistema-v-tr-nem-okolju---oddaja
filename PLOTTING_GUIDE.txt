@@ -19,7 +19,7 @@ At the top of a notebook, once:
     import importlib
     import Plotting_Functions as pf
     pf = importlib.reload(pf)
-    pf.use(subdir="battery_sizing", titles=False)
+    pf.use(subdir="battery_sizing", titles=False, preset="page")
     from Plotting_Functions import INK, INK_2, MUTED, SURFACE, SERIES, EUR, finish
 
 At the bottom of every figure cell, once:
@@ -120,10 +120,28 @@ figure when it shows it; saving afterwards silently writes a blank page.
 5. GEOMETRY — ONE WIDTH, PREVIEW EQUALS EXPORT
 --------------------------------------------------------------------------------
 
-    "screen"    7.16 in  default. \textwidth, comfortable to read inline.
+    "screen"    7.16 in  the PREVIEW preset. Notebook text, trimmed bbox.
     "page"      7.16 in  + IEEE text (Times 8 pt, white ground). A figure*.
     "column"    3.50 in  + IEEE text. \columnwidth.
     "as_built"  whatever figsize the cell asked for. Opts out.
+
+"screen" and "page" are the SAME WIDTH, and the difference between them is the
+whole point of having both:
+
+    screen   notebook text (DejaVu Sans 10 pt), bbox trimmed to the ink
+    page     IEEE text (Times 8 pt), NOT trimmed
+
+A trimmed file is no longer the width it was built at — bbox="tight" shrinks it
+to the ink and GROWS it around an overflowing label, so 7.16 in comes out
+anywhere from 6.6 to 8.3. Place that with \includegraphics[width=\textwidth]
+and LaTeX rescales it to fit, which rescales the text with it: an 8 pt label
+lands at 7.3 pt on one figure and 8.7 pt on the next. That is why an IEEE preset
+never trims (`show` derives `tight` from the preset), and why the notebooks all
+pass `preset="page"` rather than taking the default.
+
+The corollary: with the trim off, nothing rescues a label that overflows. If
+text is clipped at the edge, shorten it or pass a taller `ratio=` — do not
+reach for "screen" to make it fit.
 
 The preset is applied BEFORE the figure is displayed, not only before it is
 saved. So the inline preview is the picture that goes in the paper — they can
@@ -327,6 +345,15 @@ The saved PDF is much wider than the figure
 Text is cut off mid-word at IEEE width
     The export is not trimmed at an IEEE preset — deliberately, so the file is
     the width it claims. Shorten the label or pass a taller `ratio=`.
+
+    You should not have to FIND this by eye: on an untrimmed export `save_fig`
+    measures the drawn content against the canvas and warns
+
+        UserWarning: <name>: content extends 0.31 in beyond the
+        7.16 x 4.40 in canvas and will be CLIPPED.
+
+    The figure is still written — a clipped figure you can look at beats a
+    traceback — but treat the warning as a defect, not as noise.
 
 A grey rectangle behind the axes on the printed page
     The studio ground (#fcfcfb). pf.show paints the SAVED copy white by default

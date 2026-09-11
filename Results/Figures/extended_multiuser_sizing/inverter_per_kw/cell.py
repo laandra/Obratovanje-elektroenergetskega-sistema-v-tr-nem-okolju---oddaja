@@ -40,8 +40,8 @@ ax.annotate(f"predpostavljeno\n{CAPEX_FIXED_EUR:,.0f} EUR", xy=(CAPEX_FIXED_EUR,
             fontsize=8.5, color=INK_2, zorder=5)
 ax.set_ylim(-0.5, len(LABEL_ORDER) + 0.5)
 ax.margins(x=0.03)
-finish(ax, xlabel="Razsmernik + vgradnja, fiksni znesek [EUR]",
-       ylabel=f"V dobičku, od {len(LABEL_ORDER)}", yfmt=PLAIN)
+finish(ax, xlabel="Enkratni strošek razsmernika in montaže [EUR]",
+       ylabel="Število gospodinjstev", yfmt=PLAIN)
 pf.chart_frame(fig, "Fiksna cena razsmernika in vgradnje določa, koliko gospodinjstev "
                     "preseže ničlo",
       f"Hramba je ves čas pri {CAPEX_EUR_PER_KWH:,.0f} EUR/kWh; zaprta pogodba je izpuščena, "
@@ -64,8 +64,8 @@ ax.annotate(f"enak znesek kot\n{CAPEX_FIXED_EUR:,.0f} EUR fiksno",
 ax.set_ylim(bottom=0)
 ax.margins(x=0.03)
 # Kapacitete ležijo na polkilovatni mreži: PLAIN bi 7.5 kWh izpisal kot 8.
-finish(ax, xlabel="Razsmernik po kW nazivne moči [EUR/kW]",
-       ylabel="Mediana optimalne velikosti [kWh]", yfmt=KW)
+finish(ax, xlabel="Cena razsmernika [EUR/kW]",
+       ylabel="Mediana optimalne kapacitete [kWh]", yfmt=KW)
 pf.chart_frame(fig, "Cena na kW premakne tudi optimalno velikost",
       f"Moč je {C_RATE:g} kW na kWh do meje {INVERTER_MAX_KW:g} kW, zato cena na kW vsaki kWh "
       f"doda {C_RATE:g}-kratnik te cene in zmanjša baterijo — "

@@ -12,6 +12,6 @@ small_multiples(
     f"ravnjo kupuje prihranke na račun življenjske dobe baterije. Krivulje se začnejo pri "
     f"izračunu brez baterije, kjer je ciklov po definiciji nič. Vsako gospodinjstvo ima svojo "
     f"skalo; mediane po vseh so v tabeli 8.6.",
-    "Ekvivalentni polni cikli [1/leto]",
+    "Ekvivalentni polni cikli [1/a]",
     fmt=PLAIN,    export="cycles_panels",
 )

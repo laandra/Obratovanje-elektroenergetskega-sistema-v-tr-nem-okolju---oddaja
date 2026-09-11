@@ -58,6 +58,7 @@ from pathlib import Path
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+import warnings
 from matplotlib import rc_context
 from matplotlib.text import Text
 from matplotlib.ticker import FuncFormatter
@@ -1137,6 +1138,26 @@ def _readable(record):
 
 # --- the export ------------------------------------------------------------
 
+def _overflow_in(fig, tol=0.02):
+    """Inches by which the drawn content runs outside the figure canvas.
+
+    Only meaningful for an untrimmed export. `bbox_inches="tight"` grows the
+    saved page around anything that overflows, which is why the trimmed path
+    never needed this; an IEEE preset writes the canvas at its declared width,
+    so whatever falls outside is cut off silently. Returns None when nothing
+    overflows by more than `tol`, which absorbs the sub-point rounding every
+    text bbox carries.
+    """
+    try:
+        fig.canvas.draw()
+        bb = fig.get_tightbbox(fig.canvas.get_renderer())
+    except Exception:
+        return None          # never let a diagnostic stop an export
+    w, h = fig.get_size_inches()
+    over = max(-bb.x0, -bb.y0, bb.x1 - w, bb.y1 - h)
+    return float(over) if over > tol else None
+
+
 def save_fig(fig, name, subdir=None, *, png=False, extra_formats=(),
              dpi=EXPORT_DPI, tight=True, transparent=False, facecolor=None,
              caption=(), note=None):
@@ -1186,6 +1207,18 @@ def save_fig(fig, name, subdir=None, *, png=False, extra_formats=(),
         kwargs["facecolor"] = facecolor
         kwargs["edgecolor"] = facecolor
     exact_bbox = {"savefig.bbox": None}
+
+    overflow = None if tight else _overflow_in(fig)
+    if overflow:
+        # With the trim off, nothing grows the canvas around a label that runs
+        # past it -- it is simply cut at the edge, and a PDF gives no sign. The
+        # figure is still written, because a clipped figure the author can see
+        # is more useful than no figure and a traceback.
+        warnings.warn(
+            f"{name}: content extends {overflow:.2f} in beyond the "
+            f"{fig.get_size_inches()[0]:.2f} x {fig.get_size_inches()[1]:.2f} in "
+            f"canvas and will be CLIPPED. Shorten the label, or give show() a "
+            f"taller ratio=.", stacklevel=2)
 
     written = []
     for fmt in formats:

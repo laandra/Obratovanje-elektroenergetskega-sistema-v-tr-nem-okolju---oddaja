@@ -1,8 +1,10 @@
 # peak_grid_import
 
-Exported 2026-09-09T16:59:17+00:00
+Exported 2026-09-10T08:56:30+00:00
 Files: peak_grid_import.pdf
-Size: 7.16 x 4.4034 in @ 600 dpi (tight)
+Size: 7.16 x 4.4034 in @ 600 dpi (exact figure size)
+
+> IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt)
 
 ## Caption
 
@@ -19,27 +21,193 @@ The title text for this figure, for the article's `\caption{...}`:
 
 ## Git
 
-- commit: c946279b7af58519c80f4c1da1d35a4dc4c0b426 (Development)
-- subject: Rerun after some graph fixes
-- describe: c946279-dirty
+- commit: f6c343f6b3c6f94abe616b574949830b83ccff0f (Development)
+- subject: Adding more updated graphs
+- describe: f6c343f-dirty
 
-**Working tree was DIRTY (14 files) — the commit above does NOT reproduce this figure on its own.**
-See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
+**Working tree was DIRTY (180 files) — the commit above does NOT reproduce this figure on its own.**
+See `uncommitted.diff` (truncated), which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-.../battery_sizing/cost_vs_capacity/SOURCE.md      | 192 +------------------
- .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 18668 -> 18668 bytes
- .../battery_sizing/cost_vs_capacity/source.json    |  73 ++-----
- .../energy_through_battery/SOURCE.md               | 211 ++-------------------
- .../energy_through_battery.pdf                     | Bin 12857 -> 12857 bytes
- .../energy_through_battery/source.json             |  67 ++-----
- .../battery_sizing/marginal_value/SOURCE.md        | 198 ++-----------------
- .../Figures/battery_sizing/marginal_value/cell.py  |   2 +-
- .../marginal_value/marginal_value.pdf              | Bin 13939 -> 13952 bytes
- .../battery_sizing/marginal_value/source.json      |  72 ++-----
- .../battery_sizing/net_annual_benefit/SOURCE.md    | 205 ++------------------
- .../net_annual_benefit/net_annual_benefit.pdf      | Bin 20475 -> 20475 bytes
- .../battery_sizing/net_annual_benefit/source.json  |  70 ++-----
- .../peak_grid_import/peak_grid_import.pdf          | Bin 11663 -> 11663 bytes
- 14 files changed, 106 insertions(+), 984 deletions(-)
+Battery_Size_Optimization.ipynb                    |   8 +-
+ Energy_Community_Comparison.ipynb                  |   8 +-
+ Extended_Multuser_Battery_Size_Optimization.ipynb  |  29 +-
+ Household invoice generator.ipynb                  |  82 +++--
+ Household_local model.ipynb                        |   8 +-
+ MILP_horizon_comparison.ipynb                      | 185 ++++++----
+ Multi_household_baseline.ipynb                     |  73 ++--
+ Multuser_Battery_Size_Optimization.ipynb           | 347 +++++++++---------
+ No_battery_comparison.ipynb                        | 226 ++++++------
+ PLOTTING_GUIDE.txt                                 |  31 +-
+ Plotting_Functions.py                              |  33 ++
+ RBC_vs_MILP_Comparison.ipynb                       |   8 +-
+ .../battery_sizing/cost_vs_capacity/SOURCE.md      | 187 +++++++++-
+ .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 18668 -> 40037 bytes
+ .../battery_sizing/cost_vs_capacity/source.json    |  74 +++-
+ .../energy_through_battery/SOURCE.md               | 206 ++++++++++-
+ .../energy_through_battery.pdf                     | Bin 12857 -> 29481 bytes
+ .../energy_through_battery/source.json             |  68 +++-
+ .../battery_sizing/marginal_value/SOURCE.md        | 193 +++++++++-
+ .../marginal_value/marginal_value.pdf              | Bin 13952 -> 30063 bytes
+ .../battery_sizing/marginal_value/source.json      |  73 +++-
+ .../battery_sizing/net_annual_benefit/SOURCE.md    | 200 +++++++++-
+ .../net_annual_benefit/net_annual_benefit.pdf      | Bin 20475 -> 44605 bytes
+ .../battery_sizing/net_annual_benefit/source.json  |  71 +++-
+ .../peak_grid_import/peak_grid_import.pdf          | Bin 11663 -> 27140 bytes
+ .../Figures/horizon/achievable_saving/SOURCE.md    | 121 ++-----
+ .../achievable_saving/achievable_saving.pdf        | Bin 17235 -> 40115 bytes
+ .../Figures/horizon/achievable_saving/source.json  |  55 +--
+ .../Figures/horizon/gap_by_consumer_type/SOURCE.md | 175 +++------
+ .../gap_by_consumer_type/gap_by_consumer_type.pdf  | Bin 41176 -> 56990 bytes
+ .../horizon/gap_by_consumer_type/source.json       |  33 +-
+ .../horizon/gap_by_consumer_type_ratio/SOURCE.md   | 182 +++-------
+ .../gap_by_consumer_type_ratio.pdf                 | Bin 15983 -> 33077 bytes
+ .../horizon/gap_by_consumer_type_ratio/source.json |  38 +-
+ .../horizon/gap_by_group_and_tariff/SOURCE.md      | 167 +++------
+ .../gap_by_group_and_tariff.pdf                    | Bin 80938 -> 102886 bytes
+ .../horizon/gap_by_group_and_tariff/source.json    |  32 +-
+ .../horizon/gap_means_all_tariffs/SOURCE.md        | 148 ++------
+ .../gap_means_all_tariffs.pdf                      | Bin 17500 -> 32999 bytes
+ .../horizon/gap_means_all_tariffs/source.json      |  43 +--
+ .../horizon/gap_means_all_tariffs_zoom/SOURCE.md   | 155 +++-----
+ .../gap_means_all_tariffs_zoom.pdf                 | Bin 16000 -> 30071 bytes
+ .../horizon/gap_means_all_tariffs_zoom/source.json |  40 +-
+ .../horizon/gap_spread_households/SOURCE.md        | 140 ++-----
+ .../gap_spread_households.pdf                      | Bin 35136 -> 55900 bytes
+ .../horizon/gap_spread_households/source.json      |  43 +--
+ .../horizon/horizon_gap_by_tariff/SOURCE.md        | 128 ++-----
+ .../horizon_gap_by_tariff.pdf                      | Bin 13645 -> 28945 bytes
+ .../horizon/horizon_gap_by_tariff/source.json      |  52 +--
+ .../horizon/horizon_gap_by_tariff_zoom/SOURCE.md   | 135 ++-----
+ .../horizon_gap_by_tariff_zoom.pdf                 | Bin 11939 -> 25378 bytes
+ .../horizon/horizon_gap_by_tariff_zoom/source.json |  49 +--
+ Results/Figures/horizon/runtime_vs_gap/SOURCE.md   | 162 +++------
+ .../horizon/runtime_vs_gap/runtime_vs_gap.pdf      | Bin 24392 -> 48527 bytes
+ Results/Figures/horizon/runtime_vs_gap/source.json |  37 +-
+ .../Figures/invoices/invoice_composition/SOURCE.md |  48 +--
+ .../invoice_composition/invoice_composition.pdf    | Bin 16678 -> 34013 bytes
+ .../invoices/invoice_composition/source.json       |  23 +-
+ .../group_total_cost/SOURCE.md                     |  41 ++-
+ .../group_total_cost/group_total_cost.pdf          | Bin 11241 -> 27016 bytes
+ .../group_total_cost/source.json                   |  24 +-
+ .../community_net_benefit/SOURCE.md                | 346 ++++--------------
+ .../community_net_benefit.pdf                      | Bin 17341 -> 36265 bytes
+ .../community_net_benefit/source.json              | 105 +++---
+ .../community_total_bill/SOURCE.md                 | 343 +++---------------
+ .../community_total_bill/community_total_bill.pdf  | Bin 16544 -> 35420 bytes
+ .../community_total_bill/source.json               | 103 +++---
+ .../cost_vs_capacity_panels/SOURCE.md              | 349 ++++--------------
+ .../cost_vs_capacity_panels.pdf                    | Bin 38844 -> 66002 bytes
+ .../cost_vs_capacity_panels/source.json            | 104 +++---
+ .../Figures/multiuser_sizing/curtailed/SOURCE.md   | 380 +++++--------------
+ .../multiuser_sizing/curtailed/curtailed.pdf       | Bin 14771 -> 32737 bytes
+ .../Figures/multiuser_sizing/curtailed/source.json | 103 +++---
+ .../multiuser_sizing/cycles_median/SOURCE.md       | 368 +++++--------------
+ .../cycles_median/cycles_median.pdf                | Bin 15882 -> 34504 bytes
+ .../multiuser_sizing/cycles_median/source.json     | 103 +++---
+ .../multiuser_sizing/cycles_panels/SOURCE.md       | 365 ++++---------------
+ .../cycles_panels/cycles_panels.pdf                | Bin 37567 -> 64329 bytes
+ .../multiuser_sizing/cycles_panels/source.json     | 102 +++---
+ .../multiuser_sizing/grid_charged/SOURCE.md        | 377 +++++--------------
+ .../multiuser_sizing/grid_charged/grid_charged.pdf | Bin 15430 -> 33835 bytes
+ .../multiuser_sizing/grid_charged/source.json      | 103 +++---
+ .../headline_net_benefit/SOURCE.md                 | 371 +++++--------------
+ .../headline_net_benefit/headline_net_benefit.pdf  | Bin 18443 -> 37491 bytes
+ .../headline_net_benefit/source.json               | 103 +++---
+ .../multiuser_sizing/headline_roi/SOURCE.md        | 374 +++++--------------
+ .../multiuser_sizing/headline_roi/headline_roi.pdf | Bin 18629 -> 37669 bytes
+ .../multiuser_sizing/headline_roi/source.json      | 103 +++---
+ .../multiuser_sizing/inverter_fixed_fee/SOURCE.md  | 358 ++++--------------
+ .../inverter_fixed_fee/inverter_fixed_fee.pdf      | Bin 16586 -> 33470 bytes
+ .../inverter_fixed_fee/source.json                 | 105 +++---
+ .../multiuser_sizing/inverter_per_kw/SOURCE.md     | 362 ++++---------------
+ .../inverter_per_kw/inverter_per_kw.pdf            | Bin 16949 -> 33457 bytes
+ .../multiuser_sizing/inverter_per_kw/source.json   | 103 +++---
+ .../multiuser_sizing/marginal_value/SOURCE.md      | 353 ++++--------------
+ .../multiuser_sizing/marginal_value/cell.py        |   2 +-
+ .../marginal_value/marginal_value.pdf              | Bin 39278 -> 39278 bytes
+ .../multiuser_sizing/marginal_value/source.json    | 102 +++---
+ .../multiuser_sizing/net_benefit_panels/SOURCE.md  | 352 ++++--------------
+ .../net_benefit_panels/net_benefit_panels.pdf      | Bin 55822 -> 82672 bytes
+ .../net_benefit_panels/source.json                 | 104 +++---
+ .../multiuser_sizing/peak_change_pct/SOURCE.md     | 384 ++++++--------------
+ .../peak_change_pct/peak_change_pct.pdf            | Bin 16282 -> 34506 bytes
+ .../multiuser_sizing/peak_change_pct/source.json   | 101 +++---
+ .../multiuser_sizing/peak_import_block_1/SOURCE.md | 390 ++++++--------------
+ .../peak_import_block_1/peak_import_block_1.pdf    | Bin 15511 -> 33546 bytes
+ .../peak_import_block_1/source.json                | 101 +++---
+ .../multiuser_sizing/peak_import_block_2/SOURCE.md | 393 ++++++--------------
+ .../peak_import_block_2/peak_import_block_2.pdf    | Bin 15637 -> 33667 bytes
+ .../peak_import_block_2/source.json                | 101 +++---
+ .../multiuser_sizing/peak_import_block_3/SOURCE.md | 396 ++++++--------------
+ .../peak_import_block_3/peak_import_block_3.pdf    | Bin 15611 -> 33639 bytes
+ .../peak_import_block_3/source.json                | 101 +++---
+ .../multiuser_sizing/peak_import_block_4/SOURCE.md | 399 ++++++--------------
+ .../peak_import_block_4/peak_import_block_4.pdf    | Bin 15709 -> 33874 bytes
+ .../peak_import_block_4/source.json                | 101 +++---
+ .../multiuser_sizing/peak_import_block_5/SOURCE.md | 402 ++++++---------------
+ .../peak_import_block_5/peak_import_block_5.pdf    | Bin 15628 -> 33656 bytes
+ .../peak_import_block_5/source.json                | 101 +++---
+ .../multiuser_sizing/peak_import_median/SOURCE.md  | 381 +++++--------------
+ .../peak_import_median/peak_import_median.pdf      | Bin 16156 -> 34658 bytes
+ .../peak_import_median/source.json                 | 101 +++---
+ .../multiuser_sizing/peak_import_panels/SOURCE.md  | 387 ++++++--------------
+ .../peak_import_panels/peak_import_panels.pdf      | Bin 31899 -> 58674 bytes
+ .../peak_import_panels/source.json                 | 100 ++---
+ .../catalogue_all_bill_ranking/SOURCE.md           | 246 ++++++++-----
+ .../catalogue_all_bill_ranking.pdf                 | Bin 27354 -> 50864 bytes
+ .../catalogue_all_bill_ranking/source.json         |  89 ++---
+ .../catalogue_all_overpay_by_group/SOURCE.md       | 252 ++++++++-----
+ .../catalogue_all_overpay_by_group.pdf             | Bin 107783 -> 134008 bytes
+ .../catalogue_all_overpay_by_group/source.json     |  89 ++---
+ .../catalogue_no_pv_bill_ranking/SOURCE.md         | 222 ++++++++----
+ .../catalogue_no_pv_bill_ranking.pdf               | Bin 27406 -> 50877 bytes
+ .../catalogue_no_pv_bill_ranking/source.json       |  89 ++---
+ .../catalogue_no_pv_overpay_by_group/SOURCE.md     | 228 ++++++++----
+ .../catalogue_no_pv_overpay_by_group.pdf           | Bin 77476 -> 103659 bytes
+ .../catalogue_no_pv_overpay_by_group/source.json   |  89 ++---
+ .../catalogue_premium_by_group/SOURCE.md           | 265 +++++++++-----
+ .../catalogue_premium_by_group.pdf                 | Bin 59569 -> 75374 bytes
+ .../catalogue_premium_by_group/source.json         |  89 ++---
+ .../catalogue_premium_by_supplier/SOURCE.md        | 258 ++++++++-----
+ .../catalogue_premium_by_supplier.pdf              | Bin 26533 -> 55869 bytes
+ .../catalogue_premium_by_supplier/source.json      |  89 ++---
+ .../catalogue_with_pv_bill_ranking/SOURCE.md       | 234 ++++++++----
+ .../catalogue_with_pv_bill_ranking.pdf             | Bin 27296 -> 50806 bytes
+ .../catalogue_with_pv_bill_ranking/source.json     |  89 ++---
+ .../catalogue_with_pv_overpay_by_group/SOURCE.md   | 240 ++++++++----
+ .../catalogue_with_pv_overpay_by_group.pdf         | Bin 77800 -> 104261 bytes
+ .../catalogue_with_pv_overpay_by_group/source.json |  89 ++---
+ .../no_battery/export_right_by_group/SOURCE.md     | 215 +++++++----
+ .../export_right_by_group.pdf                      | Bin 20642 -> 45015 bytes
+ .../no_battery/export_right_by_group/source.json   |  89 ++---
+ .../no_battery/export_right_worth/SOURCE.md        | 208 +++++++----
+ .../export_right_worth/export_right_worth.pdf      | Bin 26945 -> 49704 bytes
+ .../no_battery/export_right_worth/source.json      |  89 ++---
+ .../no_battery/no_pv_bill_by_group/SOURCE.md       | 152 ++++++--
+ .../no_pv_bill_by_group/no_pv_bill_by_group.pdf    | Bin 16432 -> 33773 bytes
+ .../no_battery/no_pv_bill_by_group/source.json     |  60 ++-
+ .../no_battery/no_pv_overpay_by_group/SOURCE.md    | 159 ++++++--
+ .../no_pv_overpay_by_group.pdf                     | Bin 65385 -> 93636 bytes
+ .../no_battery/no_pv_overpay_by_group/source.json  |  64 +++-
+ .../no_battery/pv_bill_composition/SOURCE.md       | 173 ++++++---
+ .../pv_bill_composition/pv_bill_composition.pdf    | Bin 17920 -> 32101 bytes
+ .../no_battery/pv_bill_composition/source.json     |  72 ++--
+ .../Figures/no_battery/pv_bill_ranking/SOURCE.md   | 166 +++++++--
+ .../no_battery/pv_bill_ranking/pv_bill_ranking.pdf | Bin 21771 -> 41345 bytes
+ .../Figures/no_battery/pv_bill_ranking/source.json |  68 ++--
+ .../pv_nosale_bill_composition/SOURCE.md           | 194 +++++++---
+ .../pv_nosale_bill_composition.pdf                 | Bin 17857 -> 30852 bytes
+ .../pv_nosale_bill_composition/source.json         |  84 +++--
+ .../no_battery/pv_nosale_bill_ranking/SOURCE.md    | 187 +++++++---
+ .../pv_nosale_bill_ranking.pdf                     | Bin 21756 -> 41327 bytes
+ .../no_battery/pv_nosale_bill_ranking/source.json  |  80 ++--
+ .../pv_nosale_overpay_by_group/SOURCE.md           | 201 ++++++++---
+ .../pv_nosale_overpay_by_group.pdf                 | Bin 42653 -> 62013 bytes
+ .../pv_nosale_overpay_by_group/source.json         |  88 ++---
+ .../no_battery/pv_overpay_by_group/SOURCE.md       | 180 ++++++---
+ .../pv_overpay_by_group/pv_overpay_by_group.pdf    | Bin 44004 -> 62418 bytes
+ .../no_battery/pv_overpay_by_group/source.json     |  76 ++--
+ Skupnostna_Samooskrba_vs_Souporaba.ipynb           |   8 +-
+ 180 files changed, 8600 insertions(+), 10833 deletions(-)
 ```
