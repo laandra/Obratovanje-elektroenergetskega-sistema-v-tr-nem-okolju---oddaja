@@ -68,5 +68,5 @@ pf.chart_frame(fig, f"Konica odjema iz omrežja, mediana {len(LABEL_ORDER)} gosp
       f"brez baterije ({base_kw:,.1f} kW) in mediana dogovorjene obračunske moči v bloku 1 "
       f"({contracted_kw:,.1f} kW), po kateri se obračunava omrežnina za moč. To je celoletna "
       f"vrednost; po časovnih blokih, kot se dejansko obračunava, je razdelana nižje.",
-      handles=contract_handles(), ncol=3)
-pf.show(fig, "peak_import_median", layout="frame")
+      ncol=3) #handles=contract_handles(),
+pf.show(fig, "peak_import_median", layout="frame", preset="column")

@@ -60,6 +60,10 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import warnings
 from matplotlib import rc_context
+from matplotlib.collections import Collection
+from matplotlib.font_manager import FontProperties
+from matplotlib.lines import Line2D
+from matplotlib.patches import Patch
 from matplotlib.text import Text
 from matplotlib.ticker import FuncFormatter
 
@@ -380,13 +384,35 @@ def _wrap(artist, text, width_in):
     return "\n".join(lines) or text
 
 
+def _title_artist(ax):
+    """The Text that `ax.set_title` will actually write to.
+
+    It is only `ax.title` when the title is centred. This style sets
+    `axes.titlelocation: left`, which routes set_title to a different artist --
+    so measuring a wrap against `ax.title`, or restoring a font size onto it,
+    quietly operates on an empty one while the visible title goes untouched.
+    """
+    loc = plt.rcParams["axes.titlelocation"].lower()
+    return {"left": getattr(ax, "_left_title", ax.title),
+            "right": getattr(ax, "_right_title", ax.title)}.get(loc, ax.title)
+
+
 def _set_head(ax, title, subtitle, wrap, fig_width_in):
-    """Draw an axes title (+ subtitle line), wrapped to the axes width."""
+    """Draw an axes title (+ subtitle line), wrapped to the axes width.
+
+    The size and family are passed back in because `ax.set_title` resets both
+    from rcParams on every call -- and `show` calls this a second time, after
+    the text has been scaled, to re-wrap against the laid-out axes. Without
+    them that re-wrap silently undoes `_ieee_restyle` and `_scale_panel_text`
+    for every title.
+    """
     width_in = _axes_width_in(ax, fig_width_in)
-    head = _wrap(ax.title, title, width_in) if wrap else title
+    art = _title_artist(ax)
+    head = _wrap(art, title, width_in) if wrap else title
     if subtitle is not None:
-        head += "\n" + (_wrap(ax.title, subtitle, width_in) if wrap else subtitle)
-    ax.set_title(head)
+        head += "\n" + (_wrap(art, subtitle, width_in) if wrap else subtitle)
+    ax.set_title(head, fontsize=art.get_fontsize(),
+                 fontfamily=art.get_fontfamily())
 
 
 def heads(fig):
@@ -427,7 +453,11 @@ def _rewrap_heads(fig, titles=True):
         if titles:
             _set_head(ax, *head, width_in)
         else:
-            ax.set_title("")
+            art = _title_artist(ax)
+            # Same reason as in `_set_head`: set_title re-reads rcParams, so the
+            # scaled size has to be handed back even when the text is emptied.
+            ax.set_title("", fontsize=art.get_fontsize(),
+                         fontfamily=art.get_fontfamily())
         changed |= ax.get_title(loc=loc) != before
     return changed
 
@@ -467,13 +497,26 @@ def key_legend(ax, handles, where="below", ncol=4, **kw):
     study's semantics. This only decides where the keys go, which is the part
     that was written five times (`below_legend`, `tariff_legend`,
     `soc_mode_legend`, `family_legend`).
+
+    `where="below"` puts the keys a fixed distance in INCHES under the axes,
+    which is not what the anchor below says: -0.16 is an AXES fraction, so the
+    gap it produces grows with the axes -- 0.56 in under a full-height chart and
+    0.24 in under a short one. It is kept as the starting position, because the
+    axes box is not laid out yet; `show` measures and corrects it.
+
+    A caller that passes its own `bbox_to_anchor` has chosen the gap itself and
+    is left alone.
     """
+    managed = where == "below" and "bbox_to_anchor" not in kw
     if where == "below":
         kw.setdefault("bbox_to_anchor", (0.5, -0.16))
         kw.setdefault("loc", "upper center")
     else:
         kw.setdefault("loc", where if where != "inside" else "best")
-    return ax.legend(handles=handles, ncol=ncol, **kw)
+    leg = ax.legend(handles=handles, ncol=ncol, **kw)
+    if managed:
+        leg._pf_key_gap = LEGEND_PAD_IN
+    return leg
 
 
 # --- figure-level frame ----------------------------------------------------
@@ -481,54 +524,280 @@ def key_legend(ax, handles, where="below", ncol=4, **kw):
 # numbers works on a 3.4 in row and a 10 in grid alike.
 PAD_TOP_IN, TITLE_IN, HEAD_GAP_IN = 0.10, 0.26, 0.08
 SUB_LINE_IN, BODY_GAP_IN, LEFT_IN = 0.20, 0.26, 0.16
-LEGEND_ROW_IN = 0.26          # one row of keys
+LEGEND_ROW_IN = 0.26          # one row of keys -- the FALLBACK, for when nothing
+                              # can measure. A real 9.5 pt row is 0.19-0.25 in,
+                              # and the surplus landed in the gap above it.
 LEGEND_PAD_IN = 0.18          # gap between the axes and the first legend row
+LEGEND_EDGE_IN = 0.06         # margin under the last row, to the canvas edge
+LEGEND_KEY_EM = 4.8           # handle + text pad + column gap, in font-size units
 LEGEND_MAX_COLS = 5           # past this the keys are narrower than their labels
 CHAR_IN = 0.062               # mean glyph advance of DejaVu Sans at 9.5 pt
 FRAME_TITLE_PT, FRAME_SUB_PT = 13, 9.5
 
 
 def chart_frame(fig, title, subtitle="", handles=None, ncol=None):
-    """Reserve the header and legend space, lay the axes out in what is left,
-    then fill it. Call once, last, in place of suptitle + legend + tight_layout:
-    the space the text needs is measured before `rect` is handed to
-    tight_layout, so no two pieces of text can land on each other.
+    """Record the header and legend this figure wants. `show` lays them out.
 
-    Pair it with `pf.show(fig, name, layout="frame")` -- the layout is already
-    done here, and running tight_layout again would undo the reserved bands.
+    Call once, last, in place of suptitle + legend + tight_layout:
 
-    `handles=None` draws no legend; pass a list of handles to get one.
+        pf.chart_frame(fig, "Title", "Subtitle", handles=keys)
+        pf.show(fig, "name", layout="frame")
+
+    NOTHING IS DRAWN HERE. The bands have to be measured at the width and the
+    text size the figure is EXPORTED at, and when this is called neither is
+    known: `show` resizes to the preset and restyles the text afterwards.
+    Measuring here is what made `preset="column"` need a hand-tuned `ncol=` and
+    a matching `figsize` to go with it -- three places to keep in step, every
+    one of them compensating for a layout computed against the wrong canvas.
+
+    `handles=None` draws no legend; pass a list of handles to get one. `ncol` is
+    a MAXIMUM rather than an instruction -- see `_legend_shape`.
     """
-    w, h = fig.get_figwidth(), fig.get_figheight()
+    fig._pf_frame = {"title": title, "subtitle": subtitle,
+                     "handles": handles, "ncol": ncol}
+    fig._pf_frame_bands = None
     fig._pf_frame_head = " — ".join(p for p in (title, subtitle) if p)
-    if not TITLES:
-        title, subtitle = "", ""      # the caption carries it -- see `use`
-    lines = (textwrap.wrap(subtitle, max(40, int((w - 2 * LEFT_IN) / CHAR_IN)))
-             if subtitle else []) or [""]
-    head_in = (BODY_GAP_IN if not title else
-               PAD_TOP_IN + TITLE_IN + HEAD_GAP_IN
-               + SUB_LINE_IN * len(lines) + BODY_GAP_IN)
-    # The legend is measured rather than assumed to be one row: nine keys do not
-    # fit on one line of a 12 in figure.
-    n_keys = 0 if not handles else len(handles)
-    ncol = ncol or max(1, min(n_keys, LEGEND_MAX_COLS))
-    legend_rows = 0 if not n_keys else math.ceil(n_keys / ncol)
-    foot_in = 0.0 if not legend_rows else LEGEND_PAD_IN + LEGEND_ROW_IN * legend_rows
+    return fig
 
-    fig.tight_layout(rect=(0.0, foot_in / h, 1.0, 1.0 - head_in / h))
+
+def _renderer(fig):
+    """Something to measure with, or None on a canvas that cannot make one.
+
+    Every measurement in this module is optional by construction: a headless or
+    exotic backend falls back to an estimate rather than failing an export.
+    """
+    try:
+        return fig.canvas.get_renderer()
+    except AttributeError:
+        return None
+
+
+def _frame_pt(fig):
+    """The frame's title and subtitle sizes, and the family, as it will be drawn.
+
+    FRAME_TITLE_PT and FRAME_SUB_PT are quoted against STYLE's 10 pt body. When
+    the body has moved -- an IEEE preset scales it to 8 pt in Times -- the frame
+    has to move with it. It is drawn AFTER `_ieee_restyle`, which walks the text
+    artists that exist at the time, so the frame is not among them and has to
+    carry the typeface itself. Getting this wrong is not subtle: it sets the
+    legend in the notebook's sans while the axis labels are in Times, at a size
+    chosen for Times, so the keys come out looking a point or two too big.
+    """
+    scale = getattr(fig, "_pf_text_scale", None)
+    if scale is None:
+        scale = plt.rcParams["font.size"] / STYLE["font.size"]
+    family = getattr(fig, "_pf_text_family", None) or plt.rcParams["font.family"]
+    return FRAME_TITLE_PT * scale, FRAME_SUB_PT * scale, family
+
+
+def _tight_pad_in():
+    """The margin `tight_layout` keeps INSIDE whatever rect it is handed.
+
+    It is not optional and it is not small -- 1.08 font-size units, 0.15 in at a
+    10 pt body -- so a footer band that ignores it sits that much further from
+    the axes than it asked to.
+    """
+    return 1.08 * plt.rcParams["font.size"] / 72.0
+
+
+def _frame_sub_lines(fig, subtitle, width_in):
+    """The subtitle, wrapped at the size it will actually be drawn."""
+    _, sub_pt, family = _frame_pt(fig)
+    probe = fig.text(0, 0, "", fontsize=sub_pt, color=INK_2, fontfamily=family)
+    try:
+        return _wrap(probe, subtitle, width_in).split("\n")
+    finally:
+        probe.remove()
+
+
+def _widest_label_in(fig, handles, sub_pt, family, renderer):
+    """Width of the longest legend label, in inches. The estimate, not the truth.
+
+    Only used when there is no renderer; `_legend_shape` measures the assembled
+    legend when there is one.
+    """
+    labels = [h.get_label() or "" for h in handles]
+    if renderer is None:
+        return max((len(s) for s in labels), default=0) * CHAR_IN
+    probe = fig.text(0, 0, "", fontsize=sub_pt, fontfamily=family)
+    try:
+        return max((_measure(probe, renderer, s) for s in labels), default=0.0)
+    finally:
+        probe.remove()
+
+
+def _legend_probe(fig, handles, ncol, sub_pt, family, renderer):
+    """Build the legend at `ncol`, measure it in inches, take it away again.
+
+    Returns (width, height), or None when it cannot be measured.
+    """
+    leg = fig.legend(handles=handles, loc="lower center", ncol=ncol,
+                     prop=FontProperties(family=family, size=sub_pt))
+    try:
+        box = leg.get_window_extent(renderer)
+        return box.width / fig.dpi, box.height / fig.dpi
+    except Exception:
+        return None
+    finally:
+        leg.remove()
+
+
+def _legend_shape(fig, handles, requested=None):
+    """How many columns the keys fit in at this width, and how tall that is.
+
+    `requested` is a MAXIMUM, not an instruction. An `ncol=3` written for
+    \textwidth stays 3 there and drops to whatever fits at \columnwidth, which
+    is what lets one `preset=` retarget a figure with no other edit -- and is
+    the difference between a legend that reads and the block that ate a third of
+    the canvas when that same 3 was forced onto a 3.5 in figure.
+
+    The widest arrangement that fits wins, found by building the legend and
+    measuring it rather than by estimating a per-key allowance: an allowance has
+    to guess the handle, the text pad and the column gap, and being one column
+    gap out costs a whole extra ROW of height at \columnwidth.
+
+    Both returns are measured: the height is what the keys really occupy, which
+    the assumed 0.26 in a row over-stated by a third. The legend is anchored to
+    the BOTTOM of the band it is given, so every inch reserved beyond what it
+    occupies opened up as gap between the chart and its keys.
+    """
+    n = 0 if not handles else len(handles)
+    if not n:
+        return 1, 0.0
+    renderer = _renderer(fig)
+    _, sub_pt, family = _frame_pt(fig)
+    avail = fig.get_figwidth() - 2 * LEFT_IN
+    top = max(1, min(requested or LEGEND_MAX_COLS, LEGEND_MAX_COLS, n))
+
+    if renderer is None:
+        per_key = (_widest_label_in(fig, handles, sub_pt, family, None)
+                   + LEGEND_KEY_EM * sub_pt / 72.0)
+        fits = max(1, int(avail // per_key)) if per_key > 0 else n
+        ncol = max(1, min(top, fits))
+        return ncol, LEGEND_ROW_IN * math.ceil(n / ncol) * (sub_pt / FRAME_SUB_PT)
+
+    last = None
+    for ncol in range(top, 0, -1):
+        size = _legend_probe(fig, handles, ncol, sub_pt, family, renderer)
+        if size is None:
+            break
+        last = (ncol, size[1])
+        if size[0] <= avail:
+            return ncol, size[1]
+    if last is not None:
+        return last          # nothing fit, so `last` is the single-column result
+    return 1, LEGEND_ROW_IN * n * (sub_pt / FRAME_SUB_PT)
+
+
+def _frame_bands(fig):
+    """Measure the header and legend bands, in inches. Returns (head, foot).
+
+    Runs BEFORE the final resize, because the height depends on the bands and
+    not the other way round: every term here comes from the figure's WIDTH and
+    its font sizes, and none from its height. The result is cached on the figure
+    so `_apply_frame` lays out against the same numbers the height was computed
+    from -- re-measuring there would let the two drift by a rounding.
+    """
+    spec = getattr(fig, "_pf_frame", None)
+    if not spec:
+        return 0.0, 0.0
+    w = fig.get_figwidth()
+    title_pt, _, _ = _frame_pt(fig)
+    show_titles = getattr(fig, "_pf_titles", TITLES)
+    title = spec["title"] if show_titles else ""
+    subtitle = spec["subtitle"] if show_titles else ""
+    lines = (_frame_sub_lines(fig, subtitle, w - 2 * LEFT_IN)
+             if subtitle else [""])
+    head_scale = title_pt / FRAME_TITLE_PT
+    head_in = (BODY_GAP_IN if not title else
+               PAD_TOP_IN + TITLE_IN * head_scale + HEAD_GAP_IN
+               + SUB_LINE_IN * head_scale * len(lines) + BODY_GAP_IN)
+
+    ncol, legend_in = _legend_shape(fig, spec["handles"], spec["ncol"])
+    # tight_layout adds its own pad inside the rect, so only the remainder has to
+    # be reserved here; reserving the whole gap on top of it is how the space
+    # under the axes grew to roughly twice what it was set to.
+    gap_in = max(0.04, LEGEND_PAD_IN - _tight_pad_in())
+    foot_in = 0.0 if not legend_in else LEGEND_EDGE_IN + legend_in + gap_in
+    fig._pf_frame_bands = (head_in, foot_in, ncol, lines)
+    return head_in, foot_in
+
+
+def _apply_frame(fig):
+    """Lay the axes out in what is left of the canvas, then fill the bands."""
+    spec = getattr(fig, "_pf_frame", None)
+    if not spec:
+        return False
+    if getattr(fig, "_pf_frame_bands", None) is None:
+        _frame_bands(fig)
+    head_in, foot_in, ncol, lines = fig._pf_frame_bands
+    fig._pf_frame = fig._pf_frame_bands = None       # laid out once
+
+    w, h = fig.get_figwidth(), fig.get_figheight()
+    title_pt, sub_pt, family = _frame_pt(fig)
+    show_titles = getattr(fig, "_pf_titles", TITLES)
+    title = spec["title"] if show_titles else ""
+    subtitle = spec["subtitle"] if show_titles else ""
+
+    # Clamped for `as_built`, where the canvas was not grown to fit the bands and
+    # a tall header could otherwise invert the rect.
+    rect = (0.0, min(foot_in / h, 0.45), 1.0, 1.0 - min(head_in / h, 0.45))
+    fig._pf_frame_rect = rect
+    fig.tight_layout(rect=rect)
     if title:
         fig.text(LEFT_IN / w, 1.0 - PAD_TOP_IN / h, title,
-                 ha="left", va="top", fontsize=FRAME_TITLE_PT, fontweight="bold",
-                 color=INK)
+                 ha="left", va="top", fontsize=title_pt, fontweight="bold",
+                 color=INK, fontfamily=family)
     if subtitle:
-        fig.text(LEFT_IN / w, 1.0 - (PAD_TOP_IN + TITLE_IN + HEAD_GAP_IN) / h,
-                 "\n".join(lines), ha="left", va="top", fontsize=FRAME_SUB_PT,
-                 color=INK_2, linespacing=1.4)
-    if legend_rows:
-        fig.legend(handles=handles, loc="lower center",
-                   bbox_to_anchor=(0.5, 0.35 * LEGEND_PAD_IN / h),
-                   ncol=ncol, fontsize=FRAME_SUB_PT)
-    return fig
+        fig.text(LEFT_IN / w,
+                 1.0 - (PAD_TOP_IN + TITLE_IN * (title_pt / FRAME_TITLE_PT)
+                        + HEAD_GAP_IN) / h,
+                 "\n".join(lines), ha="left", va="top", fontsize=sub_pt,
+                 color=INK_2, linespacing=1.4, fontfamily=family)
+    if foot_in > 0 and spec["handles"]:
+        fig.legend(handles=spec["handles"], loc="lower center",
+                   bbox_to_anchor=(0.5, LEGEND_EDGE_IN / h), ncol=ncol,
+                   prop=FontProperties(family=family, size=sub_pt))
+    return True
+
+
+def _reanchor_key_legends(fig):
+    """Put every `key_legend` a fixed number of INCHES below its axes.
+
+    Returns whether anything moved, which is the caller's signal to lay out
+    again: `tight_layout` sizes the axes around the legend, so a legend that
+    moves changes the very box it was measured against. Two passes settle it.
+    """
+    renderer = _renderer(fig)
+    if renderer is None:
+        return False
+    fig_h = fig.get_figheight()
+    moved = False
+    for ax in fig.axes:
+        leg = ax.get_legend()
+        gap = getattr(leg, "_pf_key_gap", None)
+        if gap is None:
+            continue
+        box = ax.get_position()
+        ax_h_in = box.height * fig_h
+        if ax_h_in <= 0:
+            continue
+        try:
+            xb = ax.xaxis.get_tightbbox(renderer)
+        except Exception:
+            xb = None
+        # The tick labels and the x label hang below the axes box; the gap is
+        # measured from the bottom of those, not from the box.
+        drop_in = (0.0 if xb is None
+                   else max(0.0, box.y0 * fig_h - xb.y0 / fig.dpi))
+        y = -(drop_in + gap) / ax_h_in
+        prev = getattr(leg, "_pf_key_y", None)
+        leg._pf_key_y = y
+        leg.set_bbox_to_anchor((0.5, y), transform=ax.transAxes)
+        if prev is None or abs(prev - y) > 0.002:
+            moved = True
+    return moved
+
 
 
 def edge_label(ax, y, text, side="right"):
@@ -545,6 +814,8 @@ def edge_label(ax, y, text, side="right"):
 
 PANEL_COLS = 4                # households per row; 16 households -> a 4 x 4 grid
 PANEL_IN = (3.05, 2.5)        # one panel, at which the shared style is legible
+PANEL_REF_IN = IEEE_PAGE_W / 2   # the widest a panel gets before it stops being
+                                 # a small multiple; the text scales against it
 
 
 def panel_grid(n, ncols=PANEL_COLS, panel=PANEL_IN, sharex=True, sharey=False,
@@ -582,16 +853,24 @@ def _scale_panel_text(fig):
     panel at `as_built` and a 1.8 in panel at \textwidth, and the text that
     fits differs accordingly. Scaled against half the standard width, which is
     the widest a panel gets before it stops being a small multiple.
+
+    The reference is a fixed physical width -- half of \\textwidth, 3.58 in --
+    and not half of whatever preset is being exported to. Taking it from the
+    target width cancels out (a panel is target/ncols wide, so the ratio is just
+    2/ncols) and every preset would get identical text, which is the opposite of
+    the point. Reading it from the module `PRESET` has the same flaw whenever a
+    notebook sets that to "column".
     """
     ncols = getattr(fig, "_pf_panel_cols", None)
     if not ncols:
         return
     fig._pf_panel_cols = None                  # applied once, not once per call
-    scale = min(1.0, (fig.get_figwidth() / ncols) / (PRESETS[PRESET] / 2))
+    scale = min(1.0, (fig.get_figwidth() / ncols) / PANEL_REF_IN)
     if abs(scale - 1.0) < 1e-9:
         return
     for artist in fig.findobj(Text):
         artist.set_fontsize(artist.get_fontsize() * scale)
+
 
 
 # --- language --------------------------------------------------------------
@@ -766,6 +1045,10 @@ def _as_figure(fig):
     return fig.get_figure() if hasattr(fig, "get_figure") else fig
 
 
+INK_FLOOR_PT = 0.4        # thinner than this and a stroke drops out in print
+MARKER_FLOOR_PT = 1.5     # smaller than this and a marker is a smudge
+
+
 def _ieee_restyle(fig):
     """Put an already-drawn figure into the article's typeface and size.
 
@@ -773,12 +1056,19 @@ def _ieee_restyle(fig):
     whose notebook is expensive to re-run. Sizes are SCALED rather than set to
     IEEE_FONT_PT flat, so the hierarchy the figure was drawn with survives --
     a 12 pt title stays larger than a 10 pt label. What does not follow: offsets
-    given in points (`textcoords="offset points"`), bbox pads, and legend
-    `bbox_to_anchor` fractions, all of which stay where they were placed.
+    given in points (`textcoords="offset points"`) and bbox pads, which stay
+    where they were placed.
+
+    The scale is recorded on the figure so the frame text can follow it: the
+    header and legend are drawn AFTER this runs, and quoting them at a fixed
+    9.5 pt would leave a \columnwidth figure with a legend bigger than its own
+    axis labels.
     """
     if abs(plt.rcParams["font.size"] - IEEE_FONT_PT) < 1e-9:
         return False              # the notebook is already in IEEE text
     scale = IEEE_FONT_PT / plt.rcParams["font.size"]
+    fig._pf_text_scale = scale
+    fig._pf_text_family = "serif"
     # "serif" rather than the concrete list: the list is resolved once from
     # rcParams when the figure draws, instead of being searched for -- and
     # warned about, per artist -- on every text object here.
@@ -789,36 +1079,103 @@ def _ieee_restyle(fig):
     return True
 
 
+def _scale_ink(fig, scale):
+    """Scale every stroke in the figure by `scale`, with a floor.
+
+    Stroke weight is given in points, so a resize leaves it alone -- and that is
+    precisely the bug. Text is absolute because the reader's eye is; ink is a
+    fraction of the picture and has to follow it. A 2 pt curve that reads
+    cleanly across 7.16 in is double-weight on 3.5 in, which is what closed the
+    dash patterns up into solid and lost the detail they encode.
+
+    Scaled rather than set flat, so the weights a cell chose to tell an
+    emphasised curve from a baseline rule survive the move. The floors are what
+    keep a hairline from vanishing altogether at the bottom of the range.
+    """
+    if scale >= 1.0 - 1e-9 or getattr(fig, "_pf_ink_scaled", False):
+        return False
+    fig._pf_ink_scaled = True
+
+    def down(value, floor=INK_FLOOR_PT):
+        return max(floor, value * scale) if value else value
+
+    for line in fig.findobj(Line2D):
+        line.set_linewidth(down(line.get_linewidth()))
+        if line.get_marker() not in (None, "None", "none", " ", ""):
+            line.set_markersize(down(line.get_markersize(), MARKER_FLOOR_PT))
+            line.set_markeredgewidth(down(line.get_markeredgewidth()))
+    for patch in fig.findobj(Patch):     # Spine is a Patch, so this reaches them
+        patch.set_linewidth(down(patch.get_linewidth()))
+    for coll in fig.findobj(Collection):
+        widths = coll.get_linewidth()
+        try:
+            coll.set_linewidth([down(float(v)) for v in widths])
+        except TypeError:
+            coll.set_linewidth(down(float(widths)))
+
+    # Ticks and gridlines are rebuilt from these whenever a locator changes its
+    # mind about how many to draw, which the layout pass is quite capable of
+    # provoking -- so set them as well as scaling the ones already drawn. The
+    # grid is only touched where it is already on: `axis.grid(**kw)` turns it ON
+    # as a side effect, and two notebooks run with `pf.use(grid=False)`.
+    for ax in fig.axes:
+        for which in ("major", "minor"):
+            ax.tick_params(which=which,
+                           width=down(plt.rcParams["xtick.%s.width" % which]))
+        for axis in (ax.xaxis, ax.yaxis):
+            if any(gl.get_visible() for gl in axis.get_gridlines()):
+                axis.grid(True, linewidth=down(plt.rcParams["grid.linewidth"]))
+    return True
+
+
+
 def _normalize(fig, preset, ratio=None):
     """Resize a figure to the active preset. Returns a provenance note or None.
 
-    The width comes from the preset; the height keeps the figure's own aspect
-    unless `ratio` overrides it, so a data-derived 15.4 x 11.2 in panel grid
-    becomes 7.16 x 5.2 rather than being squashed into a standard letterbox.
+    The width comes from the preset. `ratio` sizes the PLOT BOX, and
+    `chart_frame`'s header and legend bands are measured and added around it --
+    so the same `ratio` is the same picture shape whether the figure carries a
+    one-row legend or a four-row one. It used to size the whole canvas, with the
+    bands carved out of it, which made `ratio=0.61` mean a 3.9 in plot on one
+    figure and 3.1 in on the next. A figure with no frame has no bands and is
+    sized by `ratio` alone.
 
     The resize alone does nothing to the text, and does not need to: matplotlib
     font sizes are absolute points, so shrinking the canvas is exactly what
-    building the same code at the smaller figsize would have produced. An IEEE
-    preset does restyle it, because Times at 8 pt is a different decision from
-    a different size -- see `_ieee_restyle`.
+    building the same code at the smaller figsize would have produced. Two
+    things do not survive that reasoning and are handled explicitly -- the
+    typeface an IEEE preset wants (`_ieee_restyle`), and stroke weight, which is
+    quoted in points but reads as a fraction of the canvas (`_scale_ink`).
     """
+    w0, h0 = fig.get_size_inches()
     if preset == "as_built":
+        _scale_panel_text(fig)
+        _frame_bands(fig)      # measured anyway, so the legend gap is still right
         return None
     if preset not in PRESETS:
         raise ValueError(f"unknown preset {preset!r}; expected one of "
                          f"{', '.join(PRESETS)} or 'as_built'")
-    w0, h0 = fig.get_size_inches()
     w = PRESETS[preset]
-    h = w * (ratio if ratio is not None else h0 / w0)
+    plot_h = w * (ratio if ratio is not None else h0 / w0)
 
+    # The bands are measured at the final WIDTH and the final text, both of
+    # which they depend on, and at a provisional height, which they do not.
     notes = []
-    if abs(w - w0) > 1e-3 or abs(h - h0) > 1e-3:
-        fig.set_size_inches(w, h, forward=True)
-        notes.append(f"resized from {w0:.2f}x{h0:.2f} to {w:.2f}x{h:.2f} in")
+    fig.set_size_inches(w, plot_h, forward=True)
     if preset in IEEE_PRESETS and _ieee_restyle(fig):
         notes.append("IEEE text applied to a figure drawn in the notebook style "
                      "(scaled, not rebuilt)")
+    if _scale_ink(fig, w / w0):
+        notes.append(f"stroke weights scaled {w / w0:.2f}x to the narrower canvas")
+    _scale_panel_text(fig)
+    head_in, foot_in = _frame_bands(fig)
+
+    h = plot_h + head_in + foot_in
+    if abs(w - w0) > 1e-3 or abs(h - h0) > 1e-3:
+        notes.insert(0, f"resized from {w0:.2f}x{h0:.2f} to {w:.2f}x{h:.2f} in")
+    fig.set_size_inches(w, h, forward=True)
     return "; ".join(notes) or None
+
 
 
 class _white_ground:
@@ -854,11 +1211,18 @@ class _white_ground:
 
 def _layout(fig, layout, rect):
     """Run the layout pass the figure asked for, if any."""
+    if _apply_frame(fig):
+        return          # chart_frame's bands are measured and the axes placed
+    band_rect = getattr(fig, "_pf_frame_rect", None)
+    if band_rect is not None:
+        fig.tight_layout(rect=band_rect)   # lay out again, bands still reserved
+        return
     if layout in (None, "frame"):
-        return          # "frame": chart_frame already measured and laid it out
+        return
     if layout == "auto" and fig.get_layout_engine() is not None:
         return          # built with constrained layout; tight_layout is ignored
     fig.tight_layout(**({"rect": rect} if rect else {}))
+
 
 
 # --- the terminator --------------------------------------------------------
@@ -901,16 +1265,25 @@ def show(fig=None, name=None, *, save_pdf=None, png=False,
     fig = _as_figure(fig)
     preset = PRESET if preset is None else preset
     save_pdf = SAVE_PDF if save_pdf is None else save_pdf
+    # Read by `_frame_bands` and `_apply_frame`, which run below: the frame is
+    # laid out here rather than in `chart_frame`, so a per-figure `titles=`
+    # reaches it now instead of being decided by the module default.
+    fig._pf_titles = TITLES if titles is None else titles
 
     translate_figure(fig, LANG if lang is None else lang)
     resize_note = _normalize(fig, preset, ratio)
-    _scale_panel_text(fig)
     _layout(fig, layout, rect)
     # Titles are wrapped to the axes box, which only the layout pass above
     # decides -- so wrap against it, and lay out again if a title grew a line.
     caption = heads(fig) + [h for h in [getattr(fig, "_pf_frame_head", None)] if h]
     if _rewrap_heads(fig, TITLES if titles is None else titles):
         _layout(fig, layout, rect)
+    # A `key_legend` is anchored in axes fractions before the axes box exists.
+    # Now it does, so the gap can be set in inches -- and the layout re-run to
+    # give the moved legend its room.
+    if _reanchor_key_legends(fig):
+        _layout(fig, layout, rect)
+        _reanchor_key_legends(fig)
 
     if name and (save_pdf or png):
         notes = [n for n in (note, resize_note) if n]

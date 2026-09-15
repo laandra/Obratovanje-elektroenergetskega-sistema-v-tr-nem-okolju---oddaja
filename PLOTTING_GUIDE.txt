@@ -100,9 +100,11 @@ save_pdf  None means "use pf.SAVE_PDF". Set `pf.SAVE_PDF = False` once while you
           are iterating and no figure in the session writes anything.
 png       Also write a 600 dpi PNG, for anywhere that cannot take vector art.
 layout    "tight"  (default) — what the cells used to do.
-          "frame"  — the figure went through pf.chart_frame, which measured its
-                     own header and legend bands; running tight_layout again
-                     would undo them.
+          "frame"  — the figure went through pf.chart_frame. show measures its
+                     header and legend bands and lays the axes out in what is
+                     left. Harmless to forget: a pending frame is applied
+                     whatever `layout` says, because losing the legend silently
+                     would be worse than ignoring the argument.
           "auto"   — skip when the figure was built with constrained_layout.
           None     — no layout pass.
 
@@ -111,9 +113,17 @@ whose last statement is the call, Jupyter displays that returned Figure as a
 SECOND inline image. If you ever see two copies of one figure, something is
 returning a Figure as the cell's value.
 
-Order inside show: translate -> resize -> lay out -> re-wrap titles -> save ->
-plt.show(). The save is before plt.show() because the inline backend CLOSES a
-figure when it shows it; saving afterwards silently writes a blank page.
+Order inside show: translate -> resize -> lay out -> re-wrap titles ->
+re-anchor key legends -> save -> plt.show(). The save is before plt.show()
+because the inline backend CLOSES a figure when it shows it; saving afterwards
+silently writes a blank page.
+
+"resize" is several steps that have to run in this order: set the width, restyle
+the text for the preset, scale the stroke weights, then MEASURE the frame bands
+and add them to the height. The bands are measured last because they depend on
+the width and the text size, and first relative to the height because the height
+depends on them. Nothing in the measurement reads the height, so there is no
+circularity to resolve.
 
 
 --------------------------------------------------------------------------------
@@ -150,9 +160,43 @@ never drift apart.
     pf.show(fig, "peak", preset="column")     # renders AND exports at 3.5 in
     pf.use(preset="column")                   # ... for the whole notebook
 
-Width comes from the preset; height keeps the figure's own aspect, so a
-15.4 x 11.2 in panel grid becomes 7.16 x 5.2 rather than being squashed. Pass
-`ratio=` (height/width) to override.
+Width comes from the preset. `ratio` (height/width) sizes the PLOT BOX, and
+chart_frame's header and legend are measured and added AROUND it — so the same
+ratio is the same picture shape whether a figure carries a one-row legend or a
+four-row one. Left unset it keeps the figure's own aspect, so a 15.4 x 11.2 in
+panel grid becomes 7.16 x 5.2 rather than being squashed.
+
+    figure height = width * ratio + header band + legend band
+
+Both bands are MEASURED, not assumed: the legend is built, asked how tall it is,
+and taken away again. It used to be charged a flat 0.26 in a row, against a real
+9.5 pt row of 0.19-0.25 in — and because the legend is anchored to the bottom of
+the band, every surplus inch opened up as gap between the chart and its keys.
+That is the gap that used to sit under these figures.
+
+ONE VARIABLE RETARGETS A FIGURE. To move a figure to \columnwidth, change the
+preset and nothing else:
+
+    pf.show(fig, "peak_import_median", layout="frame", preset="column")
+
+Do NOT also pass `pf.figsize(preset="column")` or hand-tune `ncol=`. Both are
+compensations for a layout computed against the wrong canvas, and they stopped
+being necessary:
+
+  * the figsize the cell built at does not matter; show resizes it, and `ratio`
+    now means the plot box, so the picture keeps its shape;
+  * `ncol=` is a MAXIMUM, not an instruction. The keys are laid out at the
+    widest arrangement that actually fits, found by measuring. An `ncol=3`
+    written for \textwidth stays 3 there and drops to what fits at 3.5 in;
+  * stroke weights follow the canvas. Ink is quoted in points, so a resize
+    leaves it alone — which is why a 2 pt curve came out double-weight at
+    \columnwidth with its dash patterns closed up into solid. Lines, markers,
+    spines, ticks and gridlines are all scaled by the width ratio, with a floor
+    so a hairline cannot vanish. Text is NOT scaled this way: it is absolute
+    because the reader's eye is.
+
+Nothing above fires when the width does not change, so `preset="page"` figures
+keep the ink they were drawn with.
 
 Build new figures with a bare `plt.subplots()`. pf.use sets figure.figsize, so
 that is already the standard size. For a shorter or taller figure at the same
@@ -243,16 +287,25 @@ chart_frame(fig, title, subtitle="", handles=None, ncol=None)
     Figure-level header and legend, measured in INCHES so one set of numbers
     works on a 3.4 in row and a 10 in grid. Call it last, in place of suptitle +
     legend + tight_layout, then `pf.show(fig, name, layout="frame")`.
+    It DRAWS NOTHING — it records what the figure wants and show lays it out, at
+    the width and text size the figure is exported at. `ncol` is a maximum; see
+    section 5.
 
 panel_grid(n, ncols=4, panel=(3.05, 2.5), sharex=True, sharey=False)
     A wrapped grid of n small panels. Returns (fig, axes) flat, unused trailing
     slots already hidden — axes[:n] are the live ones. Scales panel text to the
-    FINAL panel width, which is why a 4x4 grid stays legible when it is squeezed
-    to \textwidth.
+    FINAL panel width, against a fixed 3.58 in reference, which is why a 4x4
+    grid stays legible when it is squeezed to \textwidth — and why the same grid
+    at \columnwidth comes out smaller again rather than identical.
 
 key_legend(ax, handles, where="below", ncol=4)   placement only; you build the
                                                  handles, because what a colour
-                                                 means is the study's semantics
+                                                 means is the study's semantics.
+                                                 where="below" sits a fixed
+                                                 distance in INCHES under the
+                                                 axes — show measures it once the
+                                                 axes box is known. Pass your own
+                                                 bbox_to_anchor to opt out.
 edge_label(ax, y, text, side="right")            annotation pinned to an axes
                                                  edge, on a surface-coloured pad
 mix(a, b, t)                                     blend two hex colours

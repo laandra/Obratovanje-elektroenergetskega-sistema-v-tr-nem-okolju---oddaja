@@ -53,5 +53,5 @@ else:
               f"({base_b:,.1f} kW) in mediana dogovorjene moči za ta blok ({agreed_b:,.1f} kW), "
               f"nad katero se plača presežna moč. Vseh pet grafov ima isto skalo, zato jih "
               f"berite drug ob drugem.{season}",
-              handles=contract_handles(), ncol=3)
-        pf.show(fig, f"peak_import_block_{b}", layout="frame")
+               ncol=3) #handles=contract_handles(),
+        pf.show(fig, f"peak_import_block_{b}", layout="frame",preset="column")
