@@ -19,6 +19,8 @@ existing supplier.
     'Ponudnik 3 Samo Dinamični'
     >>> option_label("BISOL_FIKSNI99@1T")
     'Ponudnik 1 Fiksni akcijski [1T]'
+    >>> short_option_label("BISOL_FIKSNI99@1T")      # for a table row
+    'P1 FAk [1T]'
 
 `Household invoice generator.ipynb` deliberately does NOT import this module: an
 invoice has to name the contract it was issued under.
@@ -71,6 +73,27 @@ CONTRACT_TYPE = {
 
 _STRUCTURE = {"tarifni": "Tarifni", "aktivni": "Aktivni", "dinamicni": "Dinamični"}
 
+# The SHORT form, for a table row or any label that has no room for the long one:
+# "Ponudnik 1 Fiksni akcijski [1T]" -> "P1 FAk [1T]". A contract type is
+# abbreviated word by word rather than given one code of its own, so a token
+# means the same thing wherever it appears -- the F of "P1 FAk" and of "P3 SAF"
+# is both times "fiksni", and the key under a table needs one line per token
+# instead of one per type. Akcijski takes two letters because aktivni has the A.
+# The second field is what that key says; the order is the order it says it in.
+SHORT_WORDS = {
+    "samo":         ("S", "samooskrbni cenik"),
+    "redni":        ("R", "redni"),
+    "fiksni":       ("F", "fiksni"),
+    "aktivni":      ("A", "aktivni"),
+    "akcijski":     ("Ak", "akcijski"),
+    "dinamični":    ("D", "dinamični"),
+    "zamejeni":     ("Z", "zamejeni"),
+    "z vezavo":     ("V", "z vezavo"),
+    "net metering": ("NM", "net metering"),
+}
+
+PONUDNIK_SHORT = {name: label.replace("Ponudnik ", "P") for name, label in PONUDNIK.items()}
+
 
 def supplier_label(name):
     """"Ponudnik N" for a supplier name off a `Paket` or a summary column."""
@@ -117,6 +140,55 @@ def option_label(option_id, with_variant=True):
     tag = variant(option_id)
     name = paket_label(option_id)
     return f"{name} [{tag}]" if with_variant and tag != NO_VARIANT else name
+
+
+def _contract_kind(paket_id):
+    """What the list is, without the supplier: `paket_label` minus "Ponudnik N"."""
+    paket = PAKETI.get(base_id(paket_id))
+    if paket is None:
+        return None
+    return paket_label(paket_id)[len(supplier_label(paket.dobavitelj)) + 1:]
+
+
+def _short_tokens(kind):
+    """`SHORT_WORDS` entries spelling one contract type, two-word phrases first.
+
+    A word the table does not know is abbreviated to its capitalised initial, so
+    a new list still gets a short label -- it just has no line in the key.
+    """
+    words, out, i = kind.lower().split(), [], 0
+    while i < len(words):
+        pair = " ".join(words[i:i + 2])
+        if pair in SHORT_WORDS:
+            out.append(pair)
+            i += 2
+        else:
+            out.append(words[i])
+            i += 1
+    return out
+
+
+def short_option_label(option_id, with_variant=True):
+    """`option_label`, abbreviated: "P1 FAk [1T]" for "Ponudnik 1 Fiksni akcijski [1T]"."""
+    paket = PAKETI.get(base_id(option_id))
+    if paket is None:
+        return str(option_id)
+    code = "".join(SHORT_WORDS[w][0] if w in SHORT_WORDS else w[:1].upper()
+                   for w in _short_tokens(_contract_kind(option_id)))
+    name = f"{PONUDNIK_SHORT.get(paket.dobavitelj, paket.dobavitelj)} {code}"
+    tag = variant(option_id)
+    return f"{name} [{tag}]" if with_variant and tag != NO_VARIANT else name
+
+
+def short_label_key(option_ids):
+    """The key to the short labels of these options: `[(token, meaning), ...]`.
+
+    Only the tokens the rows actually use, in `SHORT_WORDS` order, so the key
+    under a six-row table does not explain the other twenty-five lists.
+    """
+    used = {w for o in option_ids if base_id(o) in PAKETI
+            for w in _short_tokens(_contract_kind(o))}
+    return [entry for word, entry in SHORT_WORDS.items() if word in used]
 
 
 def service_label(service_id):
@@ -239,6 +311,7 @@ def scrub_frame(frame, columns=None):
     return out
 
 
-__all__ = ["PONUDNIK", "CONTRACT_TYPE", "BRANDS", "supplier_label", "base_id",
-           "variant", "paket_label", "option_label", "service_label",
+__all__ = ["PONUDNIK", "PONUDNIK_SHORT", "CONTRACT_TYPE", "SHORT_WORDS", "BRANDS",
+           "supplier_label", "base_id", "variant", "paket_label", "option_label",
+           "short_option_label", "short_label_key", "service_label",
            "organizer_label", "anonymise", "scrub", "scrub_frame"]

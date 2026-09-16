@@ -1,6 +1,6 @@
 {
   "figure": "bill_composition",
-  "created_utc": "2026-09-16T08:55:13+00:00",
+  "created_utc": "2026-09-16T10:42:06+00:00",
   "files": [
     "bill_composition.pdf"
   ],
@@ -12,7 +12,7 @@
     "bbox": "exact figure size",
     "figsize_in": [
       3.5,
-      2.1
+      2.975
     ],
     "matplotlib": "3.11.1",
     "python": "3.11.14"
@@ -20,27 +20,29 @@
   "source": {
     "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\Energy_Community_Comparison.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 36,
+    "cell_execution_count": 26,
     "caller": "<frozen runpy>:198",
     "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "f7d2f9c7fae6e24b4f3b615be90ae8644c63491c",
-    "commit_short": "f7d2f9c",
+    "commit": "d5900b29f97249fb6e20a20fc33375950474a3da",
+    "commit_short": "d5900b2",
     "branch": "Development",
-    "describe": "f7d2f9c-dirty",
-    "subject": "Changing graphs",
-    "committed_at": "2026-09-15T15:08:03+02:00",
+    "describe": "d5900b2-dirty",
+    "subject": "Puhing after merge",
+    "committed_at": "2026-09-16T11:37:31+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 48,
+    "dirty_file_count": 35,
     "dirty_files": [
-      "attery_Size_Optimization.ipynb",
+      "nonymous_Labels.py",
+      "Battery_Size_Optimization.ipynb",
       "Energy_Community_Comparison.ipynb",
-      "Multuser_Battery_Size_Optimization.ipynb",
-      "Results/Community_Study/per_household.csv",
+      "No_battery_comparison.ipynb",
+      "PLOTTING_GUIDE.txt",
+      "Plotting_Functions.py",
       "Results/Figures/community_comparison/battery_effect_by_item/SOURCE.md",
       "Results/Figures/community_comparison/battery_effect_by_item/battery_effect_by_item.pdf",
       "Results/Figures/community_comparison/battery_effect_by_item/cell.py",
@@ -65,28 +67,13 @@
       "Results/Figures/community_comparison/import_duration_curve_zoom/import_duration_curve_zoom.pdf",
       "Results/Figures/community_comparison/import_duration_curve_zoom/source.json",
       "Results/Figures/community_comparison/price_extreme_days/SOURCE.md",
-      "Results/Figures/community_comparison/price_extreme_days/cell.py",
       "Results/Figures/community_comparison/price_extreme_days/price_extreme_days.pdf",
       "Results/Figures/community_comparison/price_extreme_days/source.json",
       "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/SOURCE.md",
       "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/souporaba_shared_vs_forfeited.pdf",
-      "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/source.json",
-      "Results/Figures/multiuser_sizing/cycles_median/SOURCE.md",
-      "Results/Figures/multiuser_sizing/cycles_median/cell.py",
-      "Results/Figures/multiuser_sizing/cycles_median/cycles_median.pdf",
-      "Results/Figures/multiuser_sizing/cycles_median/source.json",
-      "Results/Figures/multiuser_sizing/inverter_fixed_fee/SOURCE.md",
-      "Results/Figures/multiuser_sizing/inverter_fixed_fee/cell.py",
-      "Results/Figures/multiuser_sizing/inverter_fixed_fee/inverter_fixed_fee.pdf",
-      "Results/Figures/multiuser_sizing/inverter_fixed_fee/source.json",
-      "Results/Figures/multiuser_sizing/inverter_per_kw/SOURCE.md",
-      "Results/Figures/multiuser_sizing/inverter_per_kw/cell.py",
-      "Results/Figures/multiuser_sizing/inverter_per_kw/inverter_per_kw.pdf",
-      "Results/Figures/multiuser_sizing/inverter_per_kw/source.json",
-      "Results/battery_size_optimization.csv",
-      "Skupnostna_Samooskrba_vs_Souporaba.ipynb"
+      "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/source.json"
     ],
-    "dirty_stat": "Battery_Size_Optimization.ipynb                    |  56 +--\n Energy_Community_Comparison.ipynb                  | 446 ++++-----------------\n Multuser_Battery_Size_Optimization.ipynb           |  65 ++-\n Results/Community_Study/per_household.csv          | 210 +++++-----\n .../battery_effect_by_item/SOURCE.md               | 324 +++------------\n .../battery_effect_by_item.pdf                     | Bin 51549 -> 57939 bytes\n .../battery_effect_by_item/cell.py                 |   2 +-\n .../battery_effect_by_item/source.json             | 106 +++--\n .../battery_saving_by_segment/SOURCE.md            | 321 ++-------------\n .../battery_saving_by_segment.pdf                  | Bin 28393 -> 32769 bytes\n .../battery_saving_by_segment/source.json          |  79 ++--\n .../bill_composition/SOURCE.md                     | 325 +++------------\n .../bill_composition/bill_composition.pdf          | Bin 49565 -> 55127 bytes\n .../community_comparison/bill_composition/cell.py  |   2 +-\n .../bill_composition/source.json                   | 118 +++---\n .../community_annual_cost/SOURCE.md                | 284 ++-----------\n .../community_annual_cost.pdf                      | Bin 52259 -> 58931 bytes\n .../community_annual_cost/source.json              |  90 ++---\n .../household_cost_scatter/SOURCE.md               | 328 +++------------\n .../household_cost_scatter.pdf                     | Bin 43763 -> 47503 bytes\n .../household_cost_scatter/source.json             |  89 ++--\n .../import_duration_curve/SOURCE.md                | 302 ++------------\n .../import_duration_curve.pdf                      | Bin 47647 -> 51366 bytes\n .../import_duration_curve/source.json              |  81 ++--\n .../import_duration_curve_zoom/SOURCE.md           | 308 ++------------\n .../import_duration_curve_zoom.pdf                 | Bin 41704 -> 45875 bytes\n .../import_duration_curve_zoom/source.json         |  78 ++--\n .../price_extreme_days/SOURCE.md                   | 346 +++-------------\n .../price_extreme_days/cell.py                     |  12 +-\n .../price_extreme_days/price_extreme_days.pdf      | Bin 64988 -> 45821 bytes\n .../price_extreme_days/source.json                 |  94 +++--\n .../souporaba_shared_vs_forfeited/SOURCE.md        | 327 +++------------\n .../souporaba_shared_vs_forfeited.pdf              | Bin 28261 -> 32261 bytes\n .../souporaba_shared_vs_forfeited/source.json      |  82 ++--\n .../multiuser_sizing/cycles_median/SOURCE.md       |  91 +----\n .../Figures/multiuser_sizing/cycles_median/cell.py |   5 +-\n .../cycles_median/cycles_median.pdf                | Bin 38882 -> 29665 bytes\n .../multiuser_sizing/cycles_median/source.json     |  76 +---\n .../multiuser_sizing/inverter_fixed_fee/SOURCE.md  |  99 ++---\n .../multiuser_sizing/inverter_fixed_fee/cell.py    |   6 +-\n .../inverter_fixed_fee/inverter_fixed_fee.pdf      | Bin 37397 -> 34010 bytes\n .../inverter_fixed_fee/source.json                 |  72 +---\n .../multiuser_sizing/inverter_per_kw/SOURCE.md     |  99 ++---\n .../multiuser_sizing/inverter_per_kw/cell.py       |   6 +-\n .../inverter_per_kw/inverter_per_kw.pdf            | Bin 37514 -> 37124 bytes\n .../multiuser_sizing/inverter_per_kw/source.json   |  72 +---\n Results/battery_size_optimization.csv              |  50 +--\n Skupnostna_Samooskrba_vs_Souporaba.ipynb           |   2 +-\n 48 files changed, 1175 insertions(+), 3878 deletions(-)",
+    "dirty_stat": "Anonymous_Labels.py                                |  77 ++++-\n Battery_Size_Optimization.ipynb                    |   2 +-\n Energy_Community_Comparison.ipynb                  | 175 ++++++------\n No_battery_comparison.ipynb                        | 172 +++++++----\n PLOTTING_GUIDE.txt                                 |  52 +++-\n Plotting_Functions.py                              | 316 ++++++++++++++++++++-\n .../battery_effect_by_item/SOURCE.md               |  74 ++---\n .../battery_effect_by_item.pdf                     | Bin 57939 -> 57947 bytes\n .../battery_effect_by_item/cell.py                 |  10 +-\n .../battery_effect_by_item/source.json             |  64 +----\n .../battery_saving_by_segment/SOURCE.md            |  74 +++--\n .../battery_saving_by_segment.pdf                  | Bin 32769 -> 32769 bytes\n .../battery_saving_by_segment/source.json          |  42 ++-\n .../bill_composition/SOURCE.md                     |  74 ++---\n .../bill_composition/bill_composition.pdf          | Bin 55127 -> 54897 bytes\n .../community_comparison/bill_composition/cell.py  |  10 +-\n .../bill_composition/source.json                   |  72 ++---\n .../community_annual_cost/SOURCE.md                |  35 +--\n .../community_annual_cost.pdf                      | Bin 58931 -> 58931 bytes\n .../community_annual_cost/source.json              |  39 +--\n .../household_cost_scatter/SOURCE.md               |  79 ++----\n .../household_cost_scatter.pdf                     | Bin 47503 -> 47503 bytes\n .../household_cost_scatter/source.json             |  53 ++--\n .../import_duration_curve/SOURCE.md                |  55 ++--\n .../import_duration_curve.pdf                      | Bin 51366 -> 51366 bytes\n .../import_duration_curve/source.json              |  41 ++-\n .../import_duration_curve_zoom/SOURCE.md           |  61 ++--\n .../import_duration_curve_zoom.pdf                 | Bin 45875 -> 45875 bytes\n .../import_duration_curve_zoom/source.json         |  41 ++-\n .../price_extreme_days/SOURCE.md                   |  93 +++---\n .../price_extreme_days/price_extreme_days.pdf      | Bin 45821 -> 45821 bytes\n .../price_extreme_days/source.json                 |  45 +--\n .../souporaba_shared_vs_forfeited/SOURCE.md        |  80 +++---\n .../souporaba_shared_vs_forfeited.pdf              | Bin 32261 -> 32261 bytes\n .../souporaba_shared_vs_forfeited/source.json      |  42 ++-\n 35 files changed, 1017 insertions(+), 861 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [
@@ -96,5 +83,5 @@
   "caption": [
     "Iz česa je račun sestavljen — delež bruto računa, z baterijami"
   ],
-  "note": "resized from 7.16x3.94 to 3.50x2.10 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas"
+  "note": "resized from 7.16x4.40 to 3.50x2.98 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas"
 }

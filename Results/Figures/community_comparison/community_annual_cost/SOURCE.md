@@ -1,10 +1,10 @@
 # community_annual_cost
 
-Exported 2026-09-16T07:00:12+00:00
+Exported 2026-09-16T10:44:19+00:00
 Files: community_annual_cost.pdf
-Size: 7.16 x 3.6516 in @ 600 dpi (exact figure size)
+Size: 3.5 x 1.785 in @ 600 dpi (exact figure size)
 
-> IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt)
+> resized from 7.16x3.65 to 3.50x1.79 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas
 
 ## Caption
 
@@ -15,35 +15,54 @@ The title text for this figure, for the article's `\caption{...}`:
 ## Source
 
 - notebook: C:\Users\HP\Documents\JupyterNotebook\Energy_Community\Energy_Community_Comparison.ipynb (via __vsc_ipynb_file__)
-- cell execution count: 19
+- cell execution count: 28
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: f7d2f9c7fae6e24b4f3b615be90ae8644c63491c (Development)
-- subject: Changing graphs
-- describe: f7d2f9c-dirty
+- commit: d5900b29f97249fb6e20a20fc33375950474a3da (Development)
+- subject: Puhing after merge
+- describe: d5900b2-dirty
 
-**Working tree was DIRTY (16 files) — the commit above does NOT reproduce this figure on its own.**
+**Working tree was DIRTY (35 files) — the commit above does NOT reproduce this figure on its own.**
 See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-Multuser_Battery_Size_Optimization.ipynb           |  49 ++++-
- Results/Community_Study/per_household.csv          | 210 ++++++++++-----------
- .../community_annual_cost.pdf                      | Bin 52259 -> 58931 bytes
- .../multiuser_sizing/cycles_median/SOURCE.md       |  91 ++-------
- .../Figures/multiuser_sizing/cycles_median/cell.py |   5 +-
- .../cycles_median/cycles_median.pdf                | Bin 38882 -> 29665 bytes
- .../multiuser_sizing/cycles_median/source.json     |  76 ++------
- .../multiuser_sizing/inverter_fixed_fee/SOURCE.md  |  99 +++-------
- .../multiuser_sizing/inverter_fixed_fee/cell.py    |   6 +-
- .../inverter_fixed_fee/inverter_fixed_fee.pdf      | Bin 37397 -> 34010 bytes
- .../inverter_fixed_fee/source.json                 |  72 ++-----
- .../multiuser_sizing/inverter_per_kw/SOURCE.md     |  99 +++-------
- .../multiuser_sizing/inverter_per_kw/cell.py       |   6 +-
- .../inverter_per_kw/inverter_per_kw.pdf            | Bin 37514 -> 37124 bytes
- .../multiuser_sizing/inverter_per_kw/source.json   |  72 ++-----
- Results/battery_size_optimization.csv              |  50 ++---
- 16 files changed, 294 insertions(+), 541 deletions(-)
+Anonymous_Labels.py                                |  77 ++++-
+ Battery_Size_Optimization.ipynb                    |   2 +-
+ Energy_Community_Comparison.ipynb                  | 168 +++++------
+ No_battery_comparison.ipynb                        | 172 +++++++----
+ PLOTTING_GUIDE.txt                                 |  52 +++-
+ Plotting_Functions.py                              | 316 ++++++++++++++++++++-
+ .../battery_effect_by_item/SOURCE.md               |  97 +++----
+ .../battery_effect_by_item.pdf                     | Bin 57939 -> 57947 bytes
+ .../battery_effect_by_item/cell.py                 |  51 +---
+ .../battery_effect_by_item/source.json             |  43 +--
+ .../battery_saving_by_segment/SOURCE.md            |  74 +++--
+ .../battery_saving_by_segment.pdf                  | Bin 32769 -> 32769 bytes
+ .../battery_saving_by_segment/source.json          |  42 ++-
+ .../bill_composition/SOURCE.md                     | 101 +++----
+ .../bill_composition/bill_composition.pdf          | Bin 55127 -> 54897 bytes
+ .../community_comparison/bill_composition/cell.py  |  51 +---
+ .../bill_composition/source.json                   |  47 ++-
+ .../community_annual_cost/SOURCE.md                |  35 +--
+ .../community_annual_cost.pdf                      | Bin 58931 -> 58596 bytes
+ .../community_annual_cost/source.json              |  39 +--
+ .../household_cost_scatter/SOURCE.md               |  79 ++----
+ .../household_cost_scatter.pdf                     | Bin 47503 -> 47503 bytes
+ .../household_cost_scatter/source.json             |  53 ++--
+ .../import_duration_curve/SOURCE.md                |  55 ++--
+ .../import_duration_curve.pdf                      | Bin 51366 -> 51366 bytes
+ .../import_duration_curve/source.json              |  41 ++-
+ .../import_duration_curve_zoom/SOURCE.md           |  61 ++--
+ .../import_duration_curve_zoom.pdf                 | Bin 45875 -> 45875 bytes
+ .../import_duration_curve_zoom/source.json         |  41 ++-
+ .../price_extreme_days/SOURCE.md                   |  93 +++---
+ .../price_extreme_days/price_extreme_days.pdf      | Bin 45821 -> 45821 bytes
+ .../price_extreme_days/source.json                 |  45 +--
+ .../souporaba_shared_vs_forfeited/SOURCE.md        |  80 +++---
+ .../souporaba_shared_vs_forfeited.pdf              | Bin 32261 -> 32261 bytes
+ .../souporaba_shared_vs_forfeited/source.json      |  42 ++-
+ 35 files changed, 1066 insertions(+), 891 deletions(-)
 ```

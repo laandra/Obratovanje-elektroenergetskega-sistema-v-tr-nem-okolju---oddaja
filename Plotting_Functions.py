@@ -50,8 +50,10 @@ import json
 import math
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import textwrap
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -974,6 +976,7 @@ GLOSSARY = {
     "Letni račun [EUR/a]": "Annual bill [EUR/a]",
     "Povprečni letni račun [EUR/a]": "Mean annual bill [EUR/a]",
     "Letni račun skupnosti [EUR/a]": "Community annual bill [EUR/a]",
+    "Letni strošek skupnosti [10³ EUR/a]": "Community annual cost [10³ EUR/a]",
     "Letni račun gospodinjstva [EUR/a]": "Household annual bill [EUR/a]",
     "Neto letna korist skupnosti [EUR/a]": "Community net annual benefit [EUR/a]",
     "Sprememba letnega računa [EUR/a]": "Change in the annual bill [EUR/a]",
@@ -1501,18 +1504,23 @@ def _write_provenance(out_dir, name, fig, written, formats, dpi, note,
     git = git_trace()
     loc = _source_location()
 
+    # `fig=None` is a LaTeX table (`save_table`): there is no canvas, so no size,
+    # resolution or trim to record.
+    export = {"formats": list(formats)}
+    if fig is not None:
+        export.update({
+            "dpi": dpi,
+            "bbox": "tight" if tight else "exact figure size",
+            "figsize_in": [round(v, 4) for v in fig.get_size_inches()],
+        })
+    export.update({"matplotlib": matplotlib.__version__,
+                   "python": sys.version.split()[0]})
+
     record = {
         "figure": name,
         "created_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "files": [p.name for p in written],
-        "export": {
-            "formats": list(formats),
-            "dpi": dpi,
-            "bbox": "tight" if tight else "exact figure size",
-            "figsize_in": [round(v, 4) for v in fig.get_size_inches()],
-            "matplotlib": matplotlib.__version__,
-            "python": sys.version.split()[0],
-        },
+        "export": export,
         "source": loc,
         "git": git,
     }
@@ -1547,13 +1555,14 @@ def _write_provenance(out_dir, name, fig, written, formats, dpi, note,
 
 def _readable(record):
     """The same record as a few lines someone can read in the folder."""
-    git, src = record["git"], record["source"]
+    git, src, export = record["git"], record["source"], record["export"]
     lines = [f"# {record['figure']}", "",
              f"Exported {record['created_utc']}",
-             f"Files: {', '.join(record['files'])}",
-             f"Size: {record['export']['figsize_in'][0]} x "
-             f"{record['export']['figsize_in'][1]} in "
-             f"@ {record['export']['dpi']} dpi ({record['export']['bbox']})", ""]
+             f"Files: {', '.join(record['files'])}"]
+    if "figsize_in" in export:
+        lines.append(f"Size: {export['figsize_in'][0]} x {export['figsize_in'][1]} in "
+                     f"@ {export['dpi']} dpi ({export['bbox']})")
+    lines.append("")
     if record.get("note"):
         lines += [f"> {record['note']}", ""]
     if record.get("caption"):
@@ -1715,6 +1724,288 @@ def latex_figure(name, caption, label=None, subdir=None, span=False,
             f"  \\caption{{{caption}}}\n"
             f"  \\label{{{label}}}\n"
             f"\\end{{{env}}}")
+
+
+# --- tables ----------------------------------------------------------------
+# A heatmap that prints its number in every cell is a table drawn as a picture,
+# and at 25-31 rows the picture is a full page. Set as a LaTeX table the same
+# content fits a column: the text is the article's own, so nothing is rescaled,
+# and the shading survives as \cellcolor taken from the heatmap's own colormap.
+#
+# The code is written as `<name>.txt` into the folder a figure of that name
+# uses, and the notebook preview is that exact code typeset by pdflatex at the
+# float's real width -- so, as with `show`, the preview is what goes in the
+# paper. Without a TeX install the caller's fallback is drawn instead; the .txt
+# is written either way.
+
+TABLE_MAX_COLUMN_COLS = 5    # value columns that still fit \columnwidth; more -> table*
+TABLE_PREVIEW_DPI = 220      # the typeset preview's PNG; displayed at DISPLAY_DPI scale
+TABLE_TEX_TIMEOUT_S = 120    # MiKTeX's first run in a session rebuilds its font maps
+
+# What the article's preamble needs for these tables. Written at the head of
+# every exported table, so the requirement travels with the code.
+TABLE_PREAMBLE = (
+    r"\usepackage{booktabs}",
+    r"\usepackage[table]{xcolor}   % or \usepackage{colortbl}, if xcolor is already loaded",
+)
+
+# The page the preview is typeset on: IEEEtran's Times, its table caption
+# approximated, and `table` / `table*` replaced by boxes exactly \columnwidth and
+# \textwidth wide -- so a table too wide for its float overflows here as it
+# would in the article, and `standalone` crops the page around it.
+# Times is selected the way IEEEtran selects it, not through newtxtext: that one
+# loads expl3, and a TeX install whose format is older than its expl3 files --
+# a MiKTeX updated without refreshing its formats -- then refuses the preview.
+_TABLE_PREVIEW_DOC = r"""\documentclass[border=4pt]{standalone}
+\usepackage[T1]{fontenc}
+\renewcommand{\rmdefault}{ptm}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage[font=footnotesize,labelsep=newline,justification=centering,textfont=sc]{caption}
+\AtBeginDocument{\renewcommand{\tablename}{TABLE}}
+\renewcommand{\thetable}{\Roman{table}}
+\makeatletter
+\renewenvironment{table}[1][]{\def\@captype{table}\begin{minipage}{%(column)sin}}{\end{minipage}}
+\renewenvironment{table*}[1][]{\def\@captype{table}\begin{minipage}{%(page)sin}}{\end{minipage}}
+\makeatother
+\begin{document}
+%(body)s
+\end{document}
+"""
+
+_LATEX_ESCAPES = {
+    "\\": r"\textbackslash{}", "&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#",
+    "_": r"\_", "{": r"\{", "}": r"\}", "~": r"\textasciitilde{}",
+    "^": r"\textasciicircum{}",
+    # Characters the labels use that pdflatex's utf8 input does not define, and a
+    # no-break space written as the tie it is, not as an invisible character.
+    "−": r"$-$", "→": r"$\rightarrow$", "·": r"$\cdot$", "×": r"$\times$",
+    " ": "~",
+}
+
+
+def latex_escape(text):
+    """Plain text -> LaTeX source that prints it. č, š, ž and – pass through."""
+    return "".join(_LATEX_ESCAPES.get(ch, ch) for ch in str(text))
+
+
+def _luminance(color):
+    """WCAG relative luminance of a matplotlib colour."""
+    from matplotlib.colors import to_rgb
+
+    lin = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+           for c in to_rgb(color)]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def _white_text_on(fill):
+    """True when white reads better than INK on `fill`, by WCAG contrast ratio.
+
+    One rule for every table rather than a cut-off fraction of the colour scale
+    per heatmap: a diverging scale has two dark ends, and a ramp's dark end
+    moves with its hue.
+    """
+    lum = _luminance(fill)
+    return 1.05 / (lum + 0.05) > (lum + 0.05) / (_luminance(INK) + 0.05)
+
+
+def _cell(text):
+    """A cell's source; `{}` in front of a leading `[`, which `\\\\` would eat."""
+    return "{}" + text if text.startswith("[") else text
+
+
+def latex_heatmap_table(table, *, cmap, norm, fmt="{:.1f}", name=None,
+                        caption="", row_header="", col_header="",
+                        row_label=str, col_label=str, note=None, span=None,
+                        placement="!t", label=None):
+    """A heatmap as a LaTeX table: shaded cells with their numbers in them.
+
+    `table` is the frame the heatmap drew -- one row per index entry, one column
+    per column. `cmap` and `norm` are the heatmap's own, so every cell keeps the
+    colour its square had; the number on it is white or INK by contrast. NaN
+    prints as an en dash on no fill.
+
+    `col_label` may return a `(group, label)` pair for every column. Each run of
+    equal groups then gets a spanning header of its own -- "brez PV" over four
+    columns and "s PV" over the next four, instead of eight labels that repeat it.
+
+    `span=None` picks `table*` past TABLE_MAX_COLUMN_COLS value columns. The
+    preview typesets at the float's real width, so a wrong pick shows up as an
+    overfull warning there rather than in the article.
+
+    Every text argument is plain text: escaped here, and translated like a
+    figure's labels when LANG is not "sl". `name` sets the default label,
+    `tab:` plus the name, as `latex_figure` does with `fig:`.
+    """
+    from matplotlib.colors import to_hex
+
+    parts = sorted(GLOSSARY_PARTS.items(), key=lambda kv: -len(kv[0]))
+
+    def say(text):
+        return latex_escape(text if LANG == "sl" else _translate(text, parts))
+
+    n = table.shape[1]
+    env = "table*" if (n > TABLE_MAX_COLUMN_COLS if span is None else span) else "table"
+    label = label or (f"tab:{name.replace('_', '-')}" if name else None)
+
+    head = []
+    if col_header:
+        head += [f"    & \\multicolumn{{{n}}}{{c}}{{{say(col_header)}}} \\\\",
+                 f"    \\cmidrule(l){{2-{n + 1}}}"]
+    labels = [col_label(c) for c in table.columns]
+    if labels and all(isinstance(lab, tuple) for lab in labels):
+        runs = []                       # [group, first column, last column]
+        for col, (group, _) in enumerate(labels, start=2):
+            if runs and runs[-1][0] == group:
+                runs[-1][2] = col
+            else:
+                runs.append([group, col, col])
+        head += ["    & " + " & ".join(f"\\multicolumn{{{last - first + 1}}}{{c}}"
+                                       f"{{{say(group)}}}"
+                                       for group, first, last in runs) + " \\\\",
+                 "    " + " ".join(f"\\cmidrule(lr){{{first}-{last}}}"
+                                   for _, first, last in runs)]
+        labels = [lab for _, lab in labels]
+    head.append("    " + " & ".join(_cell(say(t)) for t in [row_header, *labels]) + " \\\\")
+
+    body = []
+    for idx, values in zip(table.index, table.to_numpy()):
+        cells = [_cell(latex_escape(row_label(idx)))]
+        for value in values:
+            value = float(value)
+            if math.isnan(value):
+                cells.append("--")
+                continue
+            fill = to_hex(cmap(norm(value)))
+            text = fmt.format(value)
+            text = "$-$" + text[1:] if text.startswith("-") else text
+            ink = r"\color{white}" if _white_text_on(fill) else ""
+            cells.append(f"\\cellcolor[HTML]{{{fill[1:].upper()}}}{ink}{text}")
+        body.append("    " + " & ".join(cells) + " \\\\")
+
+    lines = [f"\\begin{{{env}}}[{placement}]", "  \\centering"]
+    if caption:
+        lines.append(f"  \\caption{{{say(caption)}}}")
+    if label:
+        lines.append(f"  \\label{{{label}}}")
+    lines += ["  \\footnotesize",
+              "  \\setlength{\\tabcolsep}{4pt}",
+              "  \\renewcommand{\\arraystretch}{1.15}",
+              f"  \\begin{{tabular}}{{@{{}}l*{{{n}}}{{c}}}}",
+              "    \\toprule", *head, "    \\midrule", *body, "    \\bottomrule",
+              "  \\end{tabular}"]
+    if note:
+        lines += ["  \\par\\smallskip",
+                  f"  \\parbox{{\\linewidth}}{{\\raggedright\\scriptsize {say(note)}}}"]
+    lines.append(f"\\end{{{env}}}")
+    return "\n".join(lines) + "\n"
+
+
+def save_table(latex, name, subdir=None, *, caption=()):
+    """Write one LaTeX table, plus its provenance, into its own folder.
+
+        Results/Figures/[subdir/]<name>/
+            <name>.txt          the table float, ready to paste into the article
+            source.json, SOURCE.md, cell.py, uncommitted.diff   as for a figure
+
+    The folder is the one `save_fig` uses for a figure of the same name, so a
+    table that replaces a heatmap lands where the heatmap was. `.txt` rather than
+    `.tex`: it is a fragment for the article, not a document to compile.
+    """
+    base = FIGURE_DIR if subdir is None else FIGURE_DIR / subdir
+    out_dir = base / name
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    path = out_dir / f"{name}.txt"
+    head = [f"% {name}: LaTeX table written by Plotting_Functions.save_table",
+            "% Needs in the preamble:"] + [f"%   {p}" for p in TABLE_PREAMBLE]
+    path.write_text("\n".join(head) + "\n" + latex, encoding="utf-8")
+    _write_provenance(out_dir, name, None, [path], ["txt"], None, None,
+                      caption=list(caption))
+    return path
+
+
+def _typeset_table(latex, dpi):
+    """`(png, None, overfull_pt)` for one table typeset on its own page, or
+    `(None, why, 0)` when it could not be."""
+    tex, ppm = shutil.which("pdflatex"), shutil.which("pdftoppm")
+    if not (tex and ppm):
+        return None, "pdflatex and pdftoppm are not both on PATH", 0.0
+
+    doc = _TABLE_PREVIEW_DOC % {"column": IEEE_COLUMN_W, "page": IEEE_PAGE_W,
+                                "body": latex}
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
+        tmp = Path(tmp)
+        (tmp / "table.tex").write_text(doc, encoding="utf-8")
+        try:
+            run = subprocess.run(
+                [tex, "-interaction=nonstopmode", "-halt-on-error", "table.tex"],
+                cwd=tmp, capture_output=True, timeout=TABLE_TEX_TIMEOUT_S,
+                encoding="utf-8", errors="replace")
+        except (OSError, subprocess.SubprocessError) as exc:
+            return None, f"pdflatex did not run: {exc}", 0.0
+        log_file = tmp / "table.log"
+        log = (log_file.read_text(encoding="utf-8", errors="replace")
+               if log_file.exists() else run.stdout or "")
+        if run.returncode != 0 or not (tmp / "table.pdf").exists():
+            errors = [ln for ln in log.splitlines() if ln.startswith("!")]
+            return None, "pdflatex failed: " + ("; ".join(errors[:3]) or log[-400:]), 0.0
+        overfull = [float(pt) for pt in
+                    re.findall(r"Overfull \\hbox \((\d+(?:\.\d+)?)pt too wide\)", log)]
+
+        try:
+            subprocess.run([ppm, "-png", "-r", str(dpi), "-singlefile",
+                            "table.pdf", "table"], cwd=tmp, capture_output=True,
+                           timeout=60, check=True)
+            png = (tmp / "table.png").read_bytes()
+        except (OSError, subprocess.SubprocessError) as exc:
+            return None, f"pdftoppm failed: {exc}", 0.0
+    return png, None, max(overfull, default=0.0)
+
+
+def show_table(latex, name=None, *, subdir=None, save=None, fallback=None,
+               caption=(), dpi=TABLE_PREVIEW_DPI):
+    """Export a LaTeX table, then display it typeset -- `show`, for a table.
+
+        latex = pf.latex_heatmap_table(rel, cmap=..., norm=..., name="overpay")
+        pf.show_table(latex, "overpay", fallback=lambda: draw_the_heatmap())
+
+    Writes `<name>.txt` through `save_table` when `save` is on -- None means
+    `pf.SAVE_PDF`, the one switch that stops a session writing anything -- then
+    compiles that SAME code and displays the page. The preview is therefore not
+    a second rendering of the data that happens to agree with the table: it is
+    the table.
+
+    `fallback` is called instead when the page cannot be typeset -- no pdflatex
+    or pdftoppm on PATH, or code that does not compile, with the reason in the
+    warning. Hand it the cell's old figure, `pf.show` included, and a machine
+    without TeX still gets the preview it always had.
+
+    Returns nothing, like `show`.
+    """
+    save = SAVE_PDF if save is None else save
+    subdir = SUBDIR if subdir is None else subdir
+    if name and save:
+        save_table(latex, name, subdir, caption=caption)
+
+    png, problem, overfull = _typeset_table(latex, dpi)
+    if png is None:
+        warnings.warn(f"{name or 'table'}: no LaTeX preview -- {problem}"
+                      + ("; drawing the fallback instead" if fallback else ""),
+                      stacklevel=2)
+        if fallback is not None:
+            fallback()
+        return
+    if overfull:
+        warnings.warn(f"{name or 'table'}: {overfull:.1f} pt wider than its float. "
+                      f"Shorten the widest label, or pass span=True for table*.",
+                      stacklevel=2)
+
+    from IPython.display import Image, display
+
+    # Rendered at `dpi` so it stays sharp; shown at the scale the figures are.
+    width_px = int.from_bytes(png[16:20], "big")          # the PNG IHDR width
+    display(Image(data=png, width=round(width_px * DISPLAY_DPI / dpi)))
 
 
 # --- legacy ----------------------------------------------------------------

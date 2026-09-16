@@ -366,7 +366,48 @@ Two resolutions, two different questions:
 
 
 --------------------------------------------------------------------------------
-10. MIGRATING AN OLD FIGURE CELL
+10. A HEATMAP THAT IS REALLY A TABLE
+--------------------------------------------------------------------------------
+
+A heatmap that prints its number in every cell is a table drawn as a picture,
+and at 25-31 rows it fills a page of figure*. Set it as a LaTeX table instead:
+
+    latex = pf.latex_heatmap_table(rel, cmap=cmap, norm=norm, name="overpay",
+                                   caption="...", row_label=short_option_label)
+    pf.show_table(latex, "overpay", fallback=draw_the_heatmap)
+
+latex_heatmap_table  builds the `table` float (`table*` past 5 value columns):
+                     booktabs rules, every cell shaded with \cellcolor from the
+                     SAME cmap and norm the heatmap used, its number in white or
+                     black by contrast. `col_label` returning (group, label)
+                     pairs adds a spanning header per group; `note` goes under
+                     the table (the key to abbreviated row labels, say).
+show_table           writes <name>.txt next to where <name>.pdf would go, then
+                     typesets THAT code with pdflatex at the float's real width
+                     (3.5 in or 7.16 in) and displays the page. So the preview
+                     is the table, exactly as the article will set it, and a
+                     table too wide for its column warns about it here.
+
+    Results/Figures/<subdir>/<name>/
+        <name>.txt          the float, to paste into the article
+        source.json, SOURCE.md, cell.py, uncommitted.diff   as for a figure
+
+The .txt starts with the two preamble lines the article needs:
+\usepackage{booktabs} and \usepackage[table]{xcolor} — or \usepackage{colortbl}
+when xcolor is already loaded without the table option.
+
+`fallback` is called INSTEAD of the typeset preview when there is no pdflatex +
+pdftoppm on PATH or the code does not compile (the reason is in the warning).
+Pass the cell's old heatmap, pf.show included, and a machine without TeX keeps
+the preview it always had. The .txt is written either way.
+
+Abbreviated contract labels for table rows come from Anonymous_Labels:
+short_option_label("BISOL_FIKSNI99@1T") is "P1 FAk [1T]", and
+short_label_key(options) lists what the tokens those rows use stand for.
+
+
+--------------------------------------------------------------------------------
+11. MIGRATING AN OLD FIGURE CELL
 --------------------------------------------------------------------------------
 
   1. Style cell: delete the rcParams block and the local helpers it defined
@@ -390,7 +431,7 @@ plt.show(), so a cell can be converted before its article name is decided.
 
 
 --------------------------------------------------------------------------------
-11. TROUBLESHOOTING
+12. TROUBLESHOOTING
 --------------------------------------------------------------------------------
 
 Two copies of one figure
@@ -438,3 +479,10 @@ A 16-panel grid is unreadable at \textwidth
 Blank PDF
     Something saved after plt.show(). The inline backend closes the figure when
     it shows it. Let pf.show do the ordering.
+
+A table shows the old heatmap, with "no LaTeX preview -- pdflatex failed"
+    Read the reason in the warning. "Mismatched LaTeX support files detected"
+    means MiKTeX was updated without rebuilding its formats: MiKTeX Console ->
+    Tasks -> Refresh file name database, then Update formats (or run
+    `initexmf --update-fndb` and `initexmf --dump`). The preview itself avoids
+    expl3-based packages for that reason, but the article may not.
