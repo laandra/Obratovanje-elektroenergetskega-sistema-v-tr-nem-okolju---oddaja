@@ -1,0 +1,78 @@
+{
+  "figure": "cycles_panels",
+  "created_utc": "2026-09-15T23:23:38+00:00",
+  "files": [
+    "cycles_panels.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      7.16,
+      6.5753
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Multuser_Battery_Size_Optimization no cycle cost.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 24,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "f7d2f9c7fae6e24b4f3b615be90ae8644c63491c",
+    "commit_short": "f7d2f9c",
+    "branch": "Development",
+    "describe": "f7d2f9c-dirty",
+    "subject": "Changing graphs",
+    "committed_at": "2026-09-15T15:08:03+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 26,
+    "dirty_files": [
+      "attery_Size_Optimization.ipynb",
+      "Results/Figures/battery_sizing/cost_vs_capacity/SOURCE.md",
+      "Results/Figures/battery_sizing/cost_vs_capacity/cost_vs_capacity.pdf",
+      "Results/Figures/battery_sizing/cost_vs_capacity/source.json",
+      "Results/Figures/battery_sizing/energy_through_battery/SOURCE.md",
+      "Results/Figures/battery_sizing/energy_through_battery/energy_through_battery.pdf",
+      "Results/Figures/battery_sizing/energy_through_battery/source.json",
+      "Results/Figures/battery_sizing/equivalent_full_cycles/SOURCE.md",
+      "Results/Figures/battery_sizing/equivalent_full_cycles/equivalent_full_cycles.pdf",
+      "Results/Figures/battery_sizing/equivalent_full_cycles/source.json",
+      "Results/Figures/battery_sizing/marginal_value/SOURCE.md",
+      "Results/Figures/battery_sizing/marginal_value/marginal_value.pdf",
+      "Results/Figures/battery_sizing/marginal_value/source.json",
+      "Results/Figures/battery_sizing/net_annual_benefit/SOURCE.md",
+      "Results/Figures/battery_sizing/net_annual_benefit/net_annual_benefit.pdf",
+      "Results/Figures/battery_sizing/net_annual_benefit/source.json",
+      "Results/Figures/battery_sizing/peak_grid_import/SOURCE.md",
+      "Results/Figures/battery_sizing/peak_grid_import/peak_grid_import.pdf",
+      "Results/Figures/battery_sizing/peak_grid_import/source.json",
+      "Results/Figures/battery_sizing/service_life/SOURCE.md",
+      "Results/Figures/battery_sizing/service_life/service_life.pdf",
+      "Results/Figures/battery_sizing/service_life/source.json",
+      "Results/battery_size_optimization.csv",
+      "\"Multuser_Battery_Size_Optimization no cycle cost.ipynb\"",
+      "Results/Figures/multiuser_sizing_no_cycle_cost/",
+      "Results/multiuser_battery_sizing_no_cycle_cost.csv"
+    ],
+    "dirty_stat": "Battery_Size_Optimization.ipynb                    | 1381 ++++++++++----------\n .../battery_sizing/cost_vs_capacity/SOURCE.md      |  208 +--\n .../cost_vs_capacity/cost_vs_capacity.pdf          |  Bin 40037 -> 39458 bytes\n .../battery_sizing/cost_vs_capacity/source.json    |   95 +-\n .../energy_through_battery/SOURCE.md               |  217 +--\n .../energy_through_battery.pdf                     |  Bin 29481 -> 29403 bytes\n .../energy_through_battery/source.json             |   79 +-\n .../equivalent_full_cycles/SOURCE.md               |  223 +---\n .../equivalent_full_cycles.pdf                     |  Bin 25380 -> 25018 bytes\n .../equivalent_full_cycles/source.json             |   67 +-\n .../battery_sizing/marginal_value/SOURCE.md        |  211 +--\n .../marginal_value/marginal_value.pdf              |  Bin 30063 -> 30157 bytes\n .../battery_sizing/marginal_value/source.json      |   91 +-\n .../battery_sizing/net_annual_benefit/SOURCE.md    |  214 +--\n .../net_annual_benefit/net_annual_benefit.pdf      |  Bin 44605 -> 43338 bytes\n .../battery_sizing/net_annual_benefit/source.json  |   85 +-\n .../battery_sizing/peak_grid_import/SOURCE.md      |  220 +---\n .../peak_grid_import/peak_grid_import.pdf          |  Bin 27140 -> 27258 bytes\n .../battery_sizing/peak_grid_import/source.json    |   73 +-\n .../Figures/battery_sizing/service_life/SOURCE.md  |  226 +---\n .../battery_sizing/service_life/service_life.pdf   |  Bin 30900 -> 30867 bytes\n .../battery_sizing/service_life/source.json        |   61 +-\n Results/battery_size_optimization.csv              |   68 +-\n 23 files changed, 1138 insertions(+), 2381 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Kako močno vsaka pogodba obremeni baterijo — Ekvivalentni polni cikli na leto glede na shranjeno energijo, (noter + ven) / (2 x kapaciteta). Baterija z oceno 6,000 EFC je izrabljena pri 500 ciklih/leto, zato krivulja nad to ravnjo kupuje prihranke na račun življenjske dobe baterije. Krivulje se začnejo pri izračunu brez baterije, kjer je ciklov po definiciji nič. Vsako gospodinjstvo ima svojo skalo; mediane po vseh so v tabeli 8.6."
+  ],
+  "note": "resized from 12.20x10.00 to 7.16x6.58 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.59x to the narrower canvas"
+}

@@ -1,0 +1,56 @@
+{
+  "figure": "cycles_median",
+  "created_utc": "2026-09-16T09:11:18+00:00",
+  "files": [
+    "cycles_median.pdf"
+  ],
+  "export": {
+    "formats": [
+      "pdf"
+    ],
+    "dpi": 600,
+    "bbox": "exact figure size",
+    "figsize_in": [
+      3.5,
+      1.8
+    ],
+    "matplotlib": "3.11.1",
+    "python": "3.14.3"
+  },
+  "source": {
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Multuser_Battery_Size_Optimization no cycle cost.ipynb",
+    "notebook_detected_by": "__vsc_ipynb_file__",
+    "cell_execution_count": 35,
+    "caller": "<frozen runpy>:198",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cell_file": "cell.py"
+  },
+  "git": {
+    "available": true,
+    "commit": "7fbf9fb85d766d1a7a473f931f551e8dd103b354",
+    "commit_short": "7fbf9fb",
+    "branch": "Development",
+    "describe": "7fbf9fb-dirty",
+    "subject": "Adding no cicle cost optimization for comparison",
+    "committed_at": "2026-09-16T07:58:22+02:00",
+    "remote": "https://github.com/laandra/Energy_Community.git",
+    "dirty": true,
+    "dirty_file_count": 4,
+    "dirty_files": [
+      "esults/Figures/multiuser_sizing_no_cycle_cost/cycles_median/SOURCE.md",
+      "Results/Figures/multiuser_sizing_no_cycle_cost/cycles_median/cell.py",
+      "Results/Figures/multiuser_sizing_no_cycle_cost/cycles_median/cycles_median.pdf",
+      "Results/Figures/multiuser_sizing_no_cycle_cost/cycles_median/source.json"
+    ],
+    "dirty_stat": ".../cycles_median/SOURCE.md                        |  42 ++++-------------\n .../cycles_median/cell.py                          |   3 +-\n .../cycles_median/cycles_median.pdf                | Bin 34686 -> 26055 bytes\n .../cycles_median/source.json                      |  51 ++++++---------------\n 4 files changed, 25 insertions(+), 71 deletions(-)",
+    "diff_file": "uncommitted.diff",
+    "diff_truncated": false,
+    "diff_excludes": [
+      ":(exclude)*.ipynb"
+    ]
+  },
+  "caption": [
+    "Koliko je baterija sploh v uporabi — Mediana po 16 gospodinjstvih, z začetkom pri izračunu brez baterije pri 0 kWh, kjer je ciklov po definiciji nič. Redni 1T leži tik nad ničlo: enotna tarifa nima cenovnega razpona čez dan, ki bi pokril 10.8 % izgube krožnega cikla, zato baterijo poganja le lastna raba PV — 8 gospodinjstev brez PV je na tej pogodbi tako rekoč ne uporabi. Pari krivulj se prekrivajo (Aktivni s Fiksni, Redni 2T s Fiksni BO): dispečiranje določa razpon cen čez dan in ne njihova raven, razpon pa je pri teh cenikih isti — kjer sta krivulji povsem enaki, je črtkanje zamaknjeno, da se vidita obe barvi. Redni + NM je sklenljiv le s PV, zato je njegova mediana po 8 gospodinjstvih in ne po vseh."
+  ],
+  "note": "resized from 7.16x3.15 to 3.50x1.80 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas"
+}
