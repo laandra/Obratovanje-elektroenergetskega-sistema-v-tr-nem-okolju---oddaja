@@ -185,9 +185,17 @@ being necessary:
 
   * the figsize the cell built at does not matter; show resizes it, and `ratio`
     now means the plot box, so the picture keeps its shape;
-  * `ncol=` is a MAXIMUM, not an instruction. The keys are laid out at the
-    widest arrangement that actually fits, found by measuring. An `ncol=3`
-    written for \textwidth stays 3 there and drops to what fits at 3.5 in;
+  * `ncol=` is a MAXIMUM, not an instruction — in chart_frame AND in
+    key_legend. The keys are laid out at the widest arrangement that actually
+    fits, found by measuring. An `ncol=3` written for \textwidth stays 3 there
+    and drops to what fits at 3.5 in. This is measured after the resize and
+    after the IEEE restyle, because both change the answer, and before the
+    layout pass, because the layout is what it is measured for. A legend wider
+    than its canvas is not something tight_layout can place: it warns that the
+    margins cannot be made large enough, crushes the axes into whatever is
+    left in the middle, and the export is clipped — which is what a wordy
+    five-key legend forced to three columns did to bill_composition at
+    \columnwidth (7.5 in of keys on a 3.5 in page);
   * stroke weights follow the canvas. Ink is quoted in points, so a resize
     leaves it alone — which is why a 2 pt curve came out double-weight at
     \columnwidth with its dash patterns closed up into solid. Lines, markers,
@@ -304,8 +312,11 @@ key_legend(ax, handles, where="below", ncol=4)   placement only; you build the
                                                  where="below" sits a fixed
                                                  distance in INCHES under the
                                                  axes — show measures it once the
-                                                 axes box is known. Pass your own
-                                                 bbox_to_anchor to opt out.
+                                                 axes box is known. `ncol` is a
+                                                 MAXIMUM, re-fitted to the
+                                                 exported width; see section 5.
+                                                 Pass your own bbox_to_anchor to
+                                                 opt out of both.
 edge_label(ax, y, text, side="right")            annotation pinned to an axes
                                                  edge, on a surface-coloured pad
 mix(a, b, t)                                     blend two hex colours
@@ -402,8 +413,16 @@ Text is cut off mid-word at IEEE width
     You should not have to FIND this by eye: on an untrimmed export `save_fig`
     measures the drawn content against the canvas and warns
 
-        UserWarning: <name>: content extends 0.31 in beyond the
-        7.16 x 4.40 in canvas and will be CLIPPED.
+        UserWarning: <name>: content extends 0.31 in past the TOP edge of the
+        7.16 x 4.40 in canvas and will be CLIPPED. Shorten the label, or give
+        show() a taller ratio=.
+
+    READ WHICH EDGE IT NAMES. A taller `ratio=` fixes TOP and BOTTOM and does
+    nothing whatever for LEFT and RIGHT, where something is simply wider than
+    the page — usually a legend, so look at `ncol` and at the label lengths.
+    The warning used to collapse all four edges into one number and always
+    advise a taller ratio, which sent you chasing the height of a figure whose
+    problem was its width.
 
     The figure is still written — a clipped figure you can look at beats a
     traceback — but treat the warning as a defect, not as noise.

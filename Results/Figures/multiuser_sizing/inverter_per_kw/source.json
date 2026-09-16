@@ -1,6 +1,6 @@
 {
   "figure": "inverter_per_kw",
-  "created_utc": "2026-09-15T12:49:14+00:00",
+  "created_utc": "2026-09-15T15:23:05+00:00",
   "files": [
     "inverter_per_kw.pdf"
   ],
@@ -11,8 +11,8 @@
     "dpi": 600,
     "bbox": "exact figure size",
     "figsize_in": [
-      7.16,
-      5.074
+      3.5,
+      2.8414
     ],
     "matplotlib": "3.11.1",
     "python": "3.11.14"
@@ -20,77 +20,41 @@
   "source": {
     "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\Multuser_Battery_Size_Optimization.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 23,
+    "cell_execution_count": 52,
     "caller": "<frozen runpy>:198",
     "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "d839d80046aa48d7eb20c079cb512fc0edf76e2c",
-    "commit_short": "d839d80",
+    "commit": "f7d2f9c7fae6e24b4f3b615be90ae8644c63491c",
+    "commit_short": "f7d2f9c",
     "branch": "Development",
-    "describe": "d839d80-dirty",
-    "subject": "Unifiing 2 graphs",
-    "committed_at": "2026-09-11T08:50:13+02:00",
+    "describe": "f7d2f9c-dirty",
+    "subject": "Changing graphs",
+    "committed_at": "2026-09-15T15:08:03+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 65,
+    "dirty_file_count": 14,
     "dirty_files": [
-      "LOTTING_GUIDE.txt",
-      "Plotting_Functions.py",
-      "Results/Figures/multiuser_sizing/community_net_benefit/SOURCE.md",
-      "Results/Figures/multiuser_sizing/community_net_benefit/community_net_benefit.pdf",
-      "Results/Figures/multiuser_sizing/community_net_benefit/source.json",
-      "Results/Figures/multiuser_sizing/community_total_bill/SOURCE.md",
-      "Results/Figures/multiuser_sizing/community_total_bill/community_total_bill.pdf",
-      "Results/Figures/multiuser_sizing/community_total_bill/source.json",
-      "Results/Figures/multiuser_sizing/cost_vs_capacity_panels/SOURCE.md",
-      "Results/Figures/multiuser_sizing/cost_vs_capacity_panels/cost_vs_capacity_panels.pdf",
-      "Results/Figures/multiuser_sizing/cost_vs_capacity_panels/source.json",
-      "Results/Figures/multiuser_sizing/curtailed/SOURCE.md",
-      "Results/Figures/multiuser_sizing/curtailed/curtailed.pdf",
-      "Results/Figures/multiuser_sizing/curtailed/source.json",
+      "ultuser_Battery_Size_Optimization.ipynb",
       "Results/Figures/multiuser_sizing/cycles_median/SOURCE.md",
+      "Results/Figures/multiuser_sizing/cycles_median/cell.py",
       "Results/Figures/multiuser_sizing/cycles_median/cycles_median.pdf",
       "Results/Figures/multiuser_sizing/cycles_median/source.json",
-      "Results/Figures/multiuser_sizing/cycles_panels/SOURCE.md",
-      "Results/Figures/multiuser_sizing/cycles_panels/cycles_panels.pdf",
-      "Results/Figures/multiuser_sizing/cycles_panels/source.json",
-      "Results/Figures/multiuser_sizing/grid_charged/SOURCE.md",
-      "Results/Figures/multiuser_sizing/grid_charged/grid_charged.pdf",
-      "Results/Figures/multiuser_sizing/grid_charged/source.json",
-      "Results/Figures/multiuser_sizing/headline_net_benefit/SOURCE.md",
-      "Results/Figures/multiuser_sizing/headline_net_benefit/headline_net_benefit.pdf",
-      "Results/Figures/multiuser_sizing/headline_net_benefit/source.json",
-      "Results/Figures/multiuser_sizing/headline_roi/SOURCE.md",
-      "Results/Figures/multiuser_sizing/headline_roi/headline_roi.pdf",
-      "Results/Figures/multiuser_sizing/headline_roi/source.json",
       "Results/Figures/multiuser_sizing/inverter_fixed_fee/SOURCE.md",
+      "Results/Figures/multiuser_sizing/inverter_fixed_fee/cell.py",
       "Results/Figures/multiuser_sizing/inverter_fixed_fee/inverter_fixed_fee.pdf",
       "Results/Figures/multiuser_sizing/inverter_fixed_fee/source.json",
       "Results/Figures/multiuser_sizing/inverter_per_kw/SOURCE.md",
+      "Results/Figures/multiuser_sizing/inverter_per_kw/cell.py",
       "Results/Figures/multiuser_sizing/inverter_per_kw/inverter_per_kw.pdf",
       "Results/Figures/multiuser_sizing/inverter_per_kw/source.json",
-      "Results/Figures/multiuser_sizing/marginal_value/SOURCE.md",
-      "Results/Figures/multiuser_sizing/marginal_value/marginal_value.pdf",
-      "Results/Figures/multiuser_sizing/marginal_value/source.json",
-      "Results/Figures/multiuser_sizing/net_benefit_panels/SOURCE.md",
-      "Results/Figures/multiuser_sizing/net_benefit_panels/net_benefit_panels.pdf",
-      "Results/Figures/multiuser_sizing/net_benefit_panels/source.json",
-      "Results/Figures/multiuser_sizing/peak_change_pct/SOURCE.md",
-      "Results/Figures/multiuser_sizing/peak_change_pct/peak_change_pct.pdf",
-      "Results/Figures/multiuser_sizing/peak_change_pct/source.json",
-      "Results/Figures/multiuser_sizing/peak_import_block_1/SOURCE.md",
-      "Results/Figures/multiuser_sizing/peak_import_block_1/peak_import_block_1.pdf",
-      "Results/Figures/multiuser_sizing/peak_import_block_1/source.json",
-      "Results/Figures/multiuser_sizing/peak_import_block_2/SOURCE.md",
-      "Results/Figures/multiuser_sizing/peak_import_block_2/peak_import_block_2.pdf",
-      "Results/Figures/multiuser_sizing/peak_import_block_2/source.json"
+      "Results/battery_size_optimization.csv"
     ],
-    "dirty_stat": "PLOTTING_GUIDE.txt                                 |  77 +++-\n Plotting_Functions.py                              | 483 ++++++++++++++++++---\n .../community_net_benefit/SOURCE.md                | 363 ++++------------\n .../community_net_benefit.pdf                      | Bin 36265 -> 40655 bytes\n .../community_net_benefit/source.json              | 128 +++---\n .../community_total_bill/SOURCE.md                 | 363 ++++------------\n .../community_total_bill/community_total_bill.pdf  | Bin 35420 -> 40266 bytes\n .../community_total_bill/source.json               | 128 +++---\n .../cost_vs_capacity_panels/SOURCE.md              | 363 ++++------------\n .../cost_vs_capacity_panels.pdf                    | Bin 66002 -> 72186 bytes\n .../cost_vs_capacity_panels/source.json            | 128 +++---\n .../Figures/multiuser_sizing/curtailed/SOURCE.md   | 363 ++++------------\n .../multiuser_sizing/curtailed/curtailed.pdf       | Bin 32737 -> 36773 bytes\n .../Figures/multiuser_sizing/curtailed/source.json | 128 +++---\n .../multiuser_sizing/cycles_median/SOURCE.md       | 363 ++++------------\n .../cycles_median/cycles_median.pdf                | Bin 34504 -> 38882 bytes\n .../multiuser_sizing/cycles_median/source.json     | 128 +++---\n .../multiuser_sizing/cycles_panels/SOURCE.md       | 363 ++++------------\n .../cycles_panels/cycles_panels.pdf                | Bin 64329 -> 70357 bytes\n .../multiuser_sizing/cycles_panels/source.json     | 128 +++---\n .../multiuser_sizing/grid_charged/SOURCE.md        | 363 ++++------------\n .../multiuser_sizing/grid_charged/grid_charged.pdf | Bin 33835 -> 38735 bytes\n .../multiuser_sizing/grid_charged/source.json      | 128 +++---\n .../headline_net_benefit/SOURCE.md                 | 363 ++++------------\n .../headline_net_benefit/headline_net_benefit.pdf  | Bin 37491 -> 42767 bytes\n .../headline_net_benefit/source.json               | 128 +++---\n .../multiuser_sizing/headline_roi/SOURCE.md        | 363 ++++------------\n .../multiuser_sizing/headline_roi/headline_roi.pdf | Bin 37669 -> 42874 bytes\n .../multiuser_sizing/headline_roi/source.json      | 128 +++---\n .../multiuser_sizing/inverter_fixed_fee/SOURCE.md  | 363 ++++------------\n .../inverter_fixed_fee/inverter_fixed_fee.pdf      | Bin 33470 -> 37397 bytes\n .../inverter_fixed_fee/source.json                 | 128 +++---\n .../multiuser_sizing/inverter_per_kw/SOURCE.md     | 363 ++++------------\n .../inverter_per_kw/inverter_per_kw.pdf            | Bin 33457 -> 37514 bytes\n .../multiuser_sizing/inverter_per_kw/source.json   | 128 +++---\n .../multiuser_sizing/marginal_value/SOURCE.md      | 363 ++++------------\n .../marginal_value/marginal_value.pdf              | Bin 39278 -> 44012 bytes\n .../multiuser_sizing/marginal_value/source.json    | 128 +++---\n .../multiuser_sizing/net_benefit_panels/SOURCE.md  | 363 ++++------------\n .../net_benefit_panels/net_benefit_panels.pdf      | Bin 82672 -> 89594 bytes\n .../net_benefit_panels/source.json                 | 128 +++---\n .../multiuser_sizing/peak_change_pct/SOURCE.md     | 363 ++++------------\n .../peak_change_pct/peak_change_pct.pdf            | Bin 34506 -> 38450 bytes\n .../multiuser_sizing/peak_change_pct/source.json   | 128 +++---\n .../multiuser_sizing/peak_import_block_1/SOURCE.md | 363 ++++------------\n .../peak_import_block_1/peak_import_block_1.pdf    | Bin 33546 -> 37791 bytes\n .../peak_import_block_1/source.json                | 128 +++---\n .../multiuser_sizing/peak_import_block_2/SOURCE.md | 363 ++++------------\n .../peak_import_block_2/peak_import_block_2.pdf    | Bin 33667 -> 37933 bytes\n .../peak_import_block_2/source.json                | 128 +++---\n .../multiuser_sizing/peak_import_block_3/SOURCE.md | 363 ++++------------\n .../peak_import_block_3/peak_import_block_3.pdf    | Bin 33639 -> 37904 bytes\n .../peak_import_block_3/source.json                | 128 +++---\n .../multiuser_sizing/peak_import_block_4/SOURCE.md | 363 ++++------------\n .../peak_import_block_4/peak_import_block_4.pdf    | Bin 33874 -> 38324 bytes\n .../peak_import_block_4/source.json                | 128 +++---\n .../multiuser_sizing/peak_import_block_5/SOURCE.md | 363 ++++------------\n .../peak_import_block_5/peak_import_block_5.pdf    | Bin 33656 -> 37925 bytes\n .../peak_import_block_5/source.json                | 128 +++---\n .../multiuser_sizing/peak_import_median/SOURCE.md  | 363 ++++------------\n .../peak_import_median/peak_import_median.pdf      | Bin 34658 -> 39081 bytes\n .../peak_import_median/source.json                 | 128 +++---\n .../multiuser_sizing/peak_import_panels/SOURCE.md  | 363 ++++------------\n .../peak_import_panels/peak_import_panels.pdf      | Bin 58674 -> 65066 bytes\n .../peak_import_panels/source.json                 | 128 +++---\n 65 files changed, 3412 insertions(+), 7459 deletions(-)",
+    "dirty_stat": "Multuser_Battery_Size_Optimization.ipynb           |  49 +++++++---\n .../multiuser_sizing/cycles_median/SOURCE.md       |  91 ++++---------------\n .../Figures/multiuser_sizing/cycles_median/cell.py |   5 +-\n .../cycles_median/cycles_median.pdf                | Bin 38882 -> 29665 bytes\n .../multiuser_sizing/cycles_median/source.json     |  76 ++++------------\n .../multiuser_sizing/inverter_fixed_fee/SOURCE.md  |  99 +++++----------------\n .../multiuser_sizing/inverter_fixed_fee/cell.py    |   6 +-\n .../inverter_fixed_fee/inverter_fixed_fee.pdf      | Bin 37397 -> 34010 bytes\n .../inverter_fixed_fee/source.json                 |  72 ++++-----------\n .../multiuser_sizing/inverter_per_kw/SOURCE.md     |  99 +++++----------------\n .../multiuser_sizing/inverter_per_kw/cell.py       |   4 +-\n .../inverter_per_kw/inverter_per_kw.pdf            | Bin 37514 -> 37124 bytes\n .../multiuser_sizing/inverter_per_kw/source.json   |  72 ++++-----------\n Results/battery_size_optimization.csv              |  50 ++++++-----\n 14 files changed, 188 insertions(+), 435 deletions(-)",
     "diff_file": "uncommitted.diff",
-    "diff_truncated": true,
+    "diff_truncated": false,
     "diff_excludes": [
       ":(exclude)*.ipynb"
     ]
@@ -98,5 +62,5 @@
   "caption": [
     "Optimalna velikost baterije, ko je razsmernik zaračunan na kW — Mediana najboljših kapacitet po 16 gospodinjstvih, pri hrambi 250 EUR/kWh in brez enkratnega stroška. Moč paketa je min(0.5 x kapaciteta, 11 kW), zato cena na kW ni pavšal: pod mejo razsmernika vsaki kWh hrambe doda 0.5-kratnik cene na kW in optimum potisne navzdol, nad njo pa ne več. Navpičnica je 333 EUR/kW — enak denar kot 1,000 EUR pavšala pri moči, ki jo črpa današnji mediani optimum."
   ],
-  "note": "resized from 7.16x4.37 to 7.16x5.07 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt)"
+  "note": "resized from 7.16x4.37 to 3.50x2.84 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas"
 }

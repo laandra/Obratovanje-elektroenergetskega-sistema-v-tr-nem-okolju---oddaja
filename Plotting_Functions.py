@@ -504,6 +504,11 @@ def key_legend(ax, handles, where="below", ncol=4, **kw):
     0.24 in under a short one. It is kept as the starting position, because the
     axes box is not laid out yet; `show` measures and corrects it.
 
+    `ncol` is a MAXIMUM rather than an instruction, the same way `chart_frame`'s
+    is -- see `_fit_key_legends`, which is where it is honoured. It cannot be
+    honoured here: this runs in the cell, where the figure is still the width it
+    was built at and in the notebook's text, so what fits is not yet knowable.
+
     A caller that passes its own `bbox_to_anchor` has chosen the gap itself and
     is left alone.
     """
@@ -516,6 +521,7 @@ def key_legend(ax, handles, where="below", ncol=4, **kw):
     leg = ax.legend(handles=handles, ncol=ncol, **kw)
     if managed:
         leg._pf_key_gap = LEGEND_PAD_IN
+        ax._pf_key_spec = (list(handles), ncol, dict(kw))
     return leg
 
 
@@ -759,6 +765,75 @@ def _apply_frame(fig):
                    bbox_to_anchor=(0.5, LEGEND_EDGE_IN / h), ncol=ncol,
                    prop=FontProperties(family=family, size=sub_pt))
     return True
+
+
+def _legend_font(leg):
+    """The font the legend's labels are drawn in, or None if it has no labels.
+
+    Carried by hand across a rebuild for the same reason `_set_head` carries the
+    title's: `ax.legend` re-reads `legend.fontsize` from rcParams, and
+    `_ieee_restyle` never touched rcParams -- it scaled the artists that existed
+    at the time. So a legend rebuilt after it would come back in the notebook's
+    10 pt sans inside an 8 pt Times figure.
+    """
+    texts = leg.get_texts() if leg is not None else []
+    if not texts:
+        return None
+    return FontProperties(family=texts[0].get_fontfamily(),
+                          size=texts[0].get_fontsize())
+
+
+def _fit_key_legends(fig):
+    """Re-fit every `key_legend` to the canvas the figure actually ended up on.
+
+    `ncol` is a MAXIMUM, which is what the guide has always said and what
+    `_legend_shape` already does for `chart_frame`. `key_legend` took it
+    literally, and that is what made `preset="column"` unusable on a figure with
+    wordy keys: three columns of 2 in labels want 7.5 in of legend on a 3.5 in
+    canvas, and `tight_layout` cannot find the margins for it. It does not fail
+    -- it warns, crushes the axes into whatever is left in the middle, and the
+    export is clipped. One measured `ncol` is the difference between that and a
+    chart.
+
+    Run after the resize and the IEEE restyle, because both change the answer,
+    and before the first layout pass, because the layout is what it is being
+    measured for. The width is bounded by the figure rather than by the axes for
+    the same reason `_legend_shape` does it: the axes box is not placed yet.
+    """
+    renderer = _renderer(fig)
+    if renderer is None:
+        return False
+    avail = fig.get_figwidth() - 2 * LEFT_IN
+    changed = False
+    for ax in fig.axes:
+        spec = getattr(ax, "_pf_key_spec", None)
+        if spec is None:
+            continue
+        ax._pf_key_spec = None               # fitted once, not once per layout
+        handles, top, kw = spec
+        prop = _legend_font(ax.get_legend())
+        if prop is not None and "prop" not in kw and "fontsize" not in kw:
+            kw = dict(kw, prop=prop)
+
+        top = max(1, min(top, len(handles)))
+        fitted = 1
+        for ncol in range(top, 0, -1):
+            leg = ax.legend(handles=handles, ncol=ncol, **kw)
+            fitted = ncol
+            try:
+                width = leg.get_window_extent(renderer).width / fig.dpi
+            except Exception:
+                break
+            if width <= avail:
+                break
+        # The loop leaves the winning arrangement attached, so there is nothing
+        # to rebuild -- only the gap marker to put back, since `ax.legend`
+        # replaced the artist `key_legend` tagged.
+        leg = ax.get_legend()
+        if leg is not None:
+            leg._pf_key_gap = LEGEND_PAD_IN
+        changed |= fitted != spec[1]
+    return changed
 
 
 def _reanchor_key_legends(fig):
@@ -1272,6 +1347,10 @@ def show(fig=None, name=None, *, save_pdf=None, png=False,
 
     translate_figure(fig, LANG if lang is None else lang)
     resize_note = _normalize(fig, preset, ratio)
+    # Before the first layout pass: a `key_legend`'s `ncol` was a maximum taken
+    # on trust in the cell, and a legend wider than the canvas is not something
+    # `tight_layout` can place -- it crushes the axes instead.
+    _fit_key_legends(fig)
     _layout(fig, layout, rect)
     # Titles are wrapped to the axes box, which only the layout pass above
     # decides -- so wrap against it, and lay out again if a title grew a line.
@@ -1512,14 +1591,20 @@ def _readable(record):
 # --- the export ------------------------------------------------------------
 
 def _overflow_in(fig, tol=0.02):
-    """Inches by which the drawn content runs outside the figure canvas.
+    """How far the drawn content runs outside the canvas, and past which edge.
+
+    Returns `(inches, side)` or None when nothing overflows by more than `tol`,
+    which absorbs the sub-point rounding every text bbox carries.
 
     Only meaningful for an untrimmed export. `bbox_inches="tight"` grows the
     saved page around anything that overflows, which is why the trimmed path
     never needed this; an IEEE preset writes the canvas at its declared width,
-    so whatever falls outside is cut off silently. Returns None when nothing
-    overflows by more than `tol`, which absorbs the sub-point rounding every
-    text bbox carries.
+    so whatever falls outside is cut off silently.
+
+    The SIDE is reported because it decides the remedy, and collapsing all four
+    into one number is how the warning came to advise a taller `ratio=` for a
+    figure whose legend was twice the width of the page -- advice that cannot
+    work, since height was never the problem.
     """
     try:
         fig.canvas.draw()
@@ -1527,8 +1612,10 @@ def _overflow_in(fig, tol=0.02):
     except Exception:
         return None          # never let a diagnostic stop an export
     w, h = fig.get_size_inches()
-    over = max(-bb.x0, -bb.y0, bb.x1 - w, bb.y1 - h)
-    return float(over) if over > tol else None
+    side, over = max({"left": -bb.x0, "bottom": -bb.y0,
+                      "right": bb.x1 - w, "top": bb.y1 - h}.items(),
+                     key=lambda kv: kv[1])
+    return (float(over), side) if over > tol else None
 
 
 def save_fig(fig, name, subdir=None, *, png=False, extra_formats=(),
@@ -1587,11 +1674,18 @@ def save_fig(fig, name, subdir=None, *, png=False, extra_formats=(),
         # past it -- it is simply cut at the edge, and a PDF gives no sign. The
         # figure is still written, because a clipped figure the author can see
         # is more useful than no figure and a traceback.
+        over, side = overflow
+        # A taller `ratio=` is the fix for the top or the bottom and is no fix
+        # at all for the left or the right, where something is simply wider than
+        # the page. Naming the edge is what tells those two cases apart.
+        remedy = ("give show() a taller ratio="
+                  if side in ("top", "bottom") else
+                  "narrow the widest item in it")
         warnings.warn(
-            f"{name}: content extends {overflow:.2f} in beyond the "
-            f"{fig.get_size_inches()[0]:.2f} x {fig.get_size_inches()[1]:.2f} in "
-            f"canvas and will be CLIPPED. Shorten the label, or give show() a "
-            f"taller ratio=.", stacklevel=2)
+            f"{name}: content extends {over:.2f} in past the {side.upper()} edge "
+            f"of the {fig.get_size_inches()[0]:.2f} x "
+            f"{fig.get_size_inches()[1]:.2f} in canvas and will be CLIPPED. "
+            f"Shorten the label, or {remedy}.", stacklevel=2)
 
     written = []
     for fmt in formats:

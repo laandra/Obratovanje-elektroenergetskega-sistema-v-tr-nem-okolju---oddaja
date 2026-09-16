@@ -42,6 +42,6 @@ fig, ax = plt.subplots(figsize=pf.figsize(ratio=rows_ratio(len(by_group_pv_rel),
 overpay_heatmap(ax, by_group_pv_rel, REGIME_COLOR["credited"],
                 "S PV, presežke odkupi dobavitelj: preplačilo po tipu gospodinjstva [%]",
                 fig=fig)
-pf.show(fig, "pv_overpay_by_group")
+pf.show(fig, "pv_overpay_by_group", preset="column")
 
 anonymise(by_group_pv_rel).round(2)

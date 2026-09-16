@@ -72,7 +72,7 @@ finish(axL, title="Iz česa je račun sestavljen",
        subtitle="delež bruto računa, z baterijami",
        ylabel="Delež bruto računa [%]", yfmt=PCT)
 pf.key_legend(axL, [Patch(facecolor=c, label=l) for _, l, c in PARTS], ncol=3)
-pf.show(fig, "bill_composition")
+pf.show(fig, "bill_composition", preset="column", ratio=0.6)
 
 # --- what the battery moves -------------------------------------------------
 fig, axR = plt.subplots(figsize=pf.figsize(ratio=0.55))

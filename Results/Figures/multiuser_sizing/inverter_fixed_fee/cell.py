@@ -63,8 +63,8 @@ pf.chart_frame(fig1, "Koliko gospodinjstvom se baterija izplača pri danem enkra
       f"ničlo. Enkratni strošek — razsmernik, montaža, dela na merilnem mestu — se zaračuna "
       f"ne glede na velikost paketa, zato optimalne kapacitete ne premakne: vse krivulje "
       f"zniža za enako letno anuiteto in odloča samo o tem, ali se nakup sploh izplača. "
-      f"Navpičnica je privzetih {CAPEX_FIXED_EUR:,.0f} EUR.", handles=keys, ncol=4)
-pf.show(fig1, "inverter_fixed_fee", layout="frame")
+      f"Navpičnica je privzetih {CAPEX_FIXED_EUR:,.0f} EUR.", ncol=4) #, handles=keys
+pf.show(fig1, "inverter_fixed_fee", layout="frame", preset="column")
 
 ### 9b A per-kW price decides HOW BIG
 fig2, ax2 = plt.subplots(figsize=pf.figsize(ratio=0.61))
@@ -94,4 +94,4 @@ pf.chart_frame(fig2, "Optimalna velikost baterije, ko je razsmernik zaračunan n
       f"potisne navzdol, nad njo pa ne več. Navpičnica je {EQUAL_MONEY_EUR_PER_KW:,.0f} "
       f"EUR/kW — enak denar kot {CAPEX_FIXED_EUR:,.0f} EUR pavšala pri moči, ki jo črpa "
       f"današnji mediani optimum.", handles=keys, ncol=4)
-pf.show(fig2, "inverter_per_kw", layout="frame")
+pf.show(fig2, "inverter_per_kw", layout="frame", preset="column")
