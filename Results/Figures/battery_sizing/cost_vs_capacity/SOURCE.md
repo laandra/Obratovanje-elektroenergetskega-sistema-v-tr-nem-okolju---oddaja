@@ -1,6 +1,6 @@
 # cost_vs_capacity
 
-Exported 2026-09-15T14:33:06+00:00
+Exported 2026-09-16T11:10:48+00:00
 Files: cost_vs_capacity.pdf
 Size: 7.16 x 4.4034 in @ 600 dpi (exact figure size)
 
@@ -14,42 +14,21 @@ The title text for this figure, for the article's `\caption{...}`:
 
 ## Source
 
-- notebook: /Users/summerscholl/Documents/Andraz/Energy_Community/Battery_Size_Optimization.ipynb (via __vsc_ipynb_file__)
-- cell execution count: 30
+- notebook: C:\Users\HP\Documents\JupyterNotebook\Energy_Community\Battery_Size_Optimization.ipynb (via __vsc_ipynb_file__)
+- cell execution count: 12
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: f7d2f9c7fae6e24b4f3b615be90ae8644c63491c (Development)
-- subject: Changing graphs
-- describe: f7d2f9c-dirty
+- commit: c134bcae1736c41e670854eb0cdccc05fbbb135d (Development)
+- subject: Tables converted to latex format. More work on graphs
+- describe: c134bca-dirty
 
-**Working tree was DIRTY (23 files) — the commit above does NOT reproduce this figure on its own.**
+**Working tree was DIRTY (1 files) — the commit above does NOT reproduce this figure on its own.**
 See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-.../battery_sizing/cost_vs_capacity/SOURCE.md      | 187 +----------------
- .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 40037 -> 39458 bytes
- .../battery_sizing/cost_vs_capacity/source.json    |  75 ++-----
- .../energy_through_battery/SOURCE.md               | 205 ++-----------------
- .../energy_through_battery.pdf                     | Bin 29481 -> 29481 bytes
- .../energy_through_battery/source.json             |  68 ++-----
- .../equivalent_full_cycles/SOURCE.md               | 217 +++-----------------
- .../equivalent_full_cycles.pdf                     | Bin 25380 -> 25380 bytes
- .../equivalent_full_cycles/source.json             |  62 ++----
- .../battery_sizing/marginal_value/SOURCE.md        | 193 ++----------------
- .../marginal_value/marginal_value.pdf              | Bin 30063 -> 30063 bytes
- .../battery_sizing/marginal_value/source.json      |  74 ++-----
- .../battery_sizing/net_annual_benefit/SOURCE.md    | 199 ++----------------
- .../net_annual_benefit/net_annual_benefit.pdf      | Bin 44605 -> 44605 bytes
- .../battery_sizing/net_annual_benefit/source.json  |  71 ++-----
- .../battery_sizing/peak_grid_import/SOURCE.md      | 211 ++-----------------
- .../peak_grid_import/peak_grid_import.pdf          | Bin 27140 -> 27140 bytes
- .../battery_sizing/peak_grid_import/source.json    |  65 ++----
- .../Figures/battery_sizing/service_life/SOURCE.md  | 223 +++------------------
- .../battery_sizing/service_life/service_life.pdf   | Bin 30900 -> 30900 bytes
- .../battery_sizing/service_life/source.json        |  59 ++----
- Results/battery_size_optimization.csv              |  68 +++++--
- 22 files changed, 277 insertions(+), 1700 deletions(-)
+.../cost_vs_capacity/cost_vs_capacity.pdf           | Bin 39458 -> 44208 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
 ```

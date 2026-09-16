@@ -1,6 +1,6 @@
 # souporaba_shared_vs_forfeited
 
-Exported 2026-09-16T11:17:43+00:00
+Exported 2026-09-16T12:10:15+00:00
 Files: souporaba_shared_vs_forfeited.pdf
 Size: 7.16 x 3.5084 in @ 600 dpi (exact figure size)
 
@@ -14,44 +14,63 @@ The title text for this figure, for the article's `\caption{...}`:
 
 ## Source
 
-- notebook: /Users/summerscholl/Documents/Andraz/Energy_Community/Energy_Community_Comparison.ipynb (via __vsc_ipynb_file__)
-- cell execution count: 23
+- notebook: C:\Users\HP\Documents\JupyterNotebook\Energy_Community\Energy_Community_Comparison.ipynb (via __vsc_ipynb_file__)
+- cell execution count: 51
 - caller: <frozen runpy>:198
 - cell source: cell.py
 
 ## Git
 
-- commit: c134bcae1736c41e670854eb0cdccc05fbbb135d (Development)
-- subject: Tables converted to latex format. More work on graphs
-- describe: c134bca-dirty
+- commit: 14f2db4254ceaa392c275c9618e70d48b2e825ed (Development)
+- subject: Generating the latex tables
+- describe: 14f2db4-dirty
 
-**Working tree was DIRTY (24 files) — the commit above does NOT reproduce this figure on its own.**
+**Working tree was DIRTY (43 files) — the commit above does NOT reproduce this figure on its own.**
 See `uncommitted.diff`, which excludes :(exclude)*.ipynb — the notebook side is in `cell.py`.
 
 ```
-Results/Community_Study/per_household.csv          | 210 ++++++++++-----------
- .../battery_effect_by_item/SOURCE.md               |  60 ++----
- .../battery_effect_by_item.pdf                     | Bin 57947 -> 51540 bytes
- .../battery_effect_by_item/source.json             |  56 ++----
- .../battery_saving_by_segment/SOURCE.md            |  60 +++---
- .../battery_saving_by_segment.pdf                  | Bin 32769 -> 28393 bytes
- .../battery_saving_by_segment/source.json          |  30 ++-
- .../bill_composition/SOURCE.md                     |  57 ++----
- .../bill_composition/bill_composition.pdf          | Bin 54897 -> 49279 bytes
- .../bill_composition/source.json                   |  59 ++----
- .../community_annual_cost/SOURCE.md                |  57 ++----
- .../community_annual_cost/cell.py                  |  86 ++++++---
- .../community_annual_cost.pdf                      | Bin 58596 -> 51423 bytes
- .../community_annual_cost/source.json              |  65 ++-----
- .../household_cost_scatter/SOURCE.md               |  54 +++---
- .../household_cost_scatter.pdf                     | Bin 47503 -> 43763 bytes
- .../household_cost_scatter/source.json             |  30 ++-
- .../import_duration_curve/SOURCE.md                |  42 ++---
- .../import_duration_curve.pdf                      | Bin 51366 -> 47647 bytes
- .../import_duration_curve/source.json              |  30 ++-
- .../import_duration_curve_zoom/SOURCE.md           |  48 +++--
- .../import_duration_curve_zoom.pdf                 | Bin 45875 -> 41704 bytes
- .../import_duration_curve_zoom/source.json         |  30 ++-
- .../souporaba_shared_vs_forfeited.pdf              | Bin 32261 -> 28261 bytes
- 24 files changed, 397 insertions(+), 577 deletions(-)
+.../battery_sizing/cost_vs_capacity/SOURCE.md      |  39 +++--------
+ .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 39458 -> 44208 bytes
+ .../battery_sizing/cost_vs_capacity/source.json    |  48 ++++---------
+ .../energy_through_battery/SOURCE.md               |  48 +++++--------
+ .../energy_through_battery.pdf                     | Bin 29403 -> 33134 bytes
+ .../energy_through_battery/source.json             |  39 ++++-------
+ .../equivalent_full_cycles/SOURCE.md               |  54 +++++++--------
+ .../equivalent_full_cycles.pdf                     | Bin 25018 -> 28581 bytes
+ .../equivalent_full_cycles/source.json             |  33 ++++-----
+ .../battery_sizing/marginal_value/SOURCE.md        |  42 ++++-------
+ .../marginal_value/marginal_value.pdf              | Bin 30157 -> 34442 bytes
+ .../battery_sizing/marginal_value/source.json      |  45 ++++--------
+ .../battery_sizing/net_annual_benefit/SOURCE.md    |  45 ++++--------
+ .../net_annual_benefit/net_annual_benefit.pdf      | Bin 43338 -> 48643 bytes
+ .../battery_sizing/net_annual_benefit/source.json  |  42 ++++-------
+ .../battery_sizing/peak_grid_import/SOURCE.md      |  51 ++++++--------
+ .../peak_grid_import/peak_grid_import.pdf          | Bin 27258 -> 30602 bytes
+ .../battery_sizing/peak_grid_import/source.json    |  36 ++++------
+ .../Figures/battery_sizing/service_life/SOURCE.md  |  57 ++++++++-------
+ .../battery_sizing/service_life/service_life.pdf   | Bin 30867 -> 34804 bytes
+ .../battery_sizing/service_life/source.json        |  30 ++++----
+ .../battery_effect_by_item/SOURCE.md               |  53 +++++++++-----
+ .../battery_effect_by_item.pdf                     | Bin 51540 -> 57926 bytes
+ .../battery_effect_by_item/source.json             |  47 +++++++++----
+ .../battery_saving_by_segment/SOURCE.md            |  77 +++++++++++++--------
+ .../battery_saving_by_segment.pdf                  | Bin 28393 -> 32769 bytes
+ .../battery_saving_by_segment/source.json          |  47 +++++++++----
+ .../bill_composition/SOURCE.md                     |  47 +++++++++----
+ .../bill_composition/bill_composition.pdf          | Bin 49279 -> 54897 bytes
+ .../bill_composition/source.json                   |  47 +++++++++----
+ .../community_annual_cost/SOURCE.md                |  40 ++++++++---
+ .../community_annual_cost.pdf                      | Bin 51423 -> 57650 bytes
+ .../community_annual_cost/source.json              |  46 ++++++++----
+ .../household_cost_scatter/SOURCE.md               |  71 ++++++++++++-------
+ .../household_cost_scatter.pdf                     | Bin 43763 -> 47503 bytes
+ .../household_cost_scatter/source.json             |  47 +++++++++----
+ .../import_duration_curve/SOURCE.md                |  59 ++++++++++------
+ .../import_duration_curve.pdf                      | Bin 47647 -> 51366 bytes
+ .../import_duration_curve/source.json              |  47 +++++++++----
+ .../import_duration_curve_zoom/SOURCE.md           |  65 +++++++++++------
+ .../import_duration_curve_zoom.pdf                 | Bin 41704 -> 45875 bytes
+ .../import_duration_curve_zoom/source.json         |  47 +++++++++----
+ .../souporaba_shared_vs_forfeited.pdf              | Bin 28261 -> 32261 bytes
+ 43 files changed, 721 insertions(+), 628 deletions(-)
 ```

@@ -1,6 +1,6 @@
 {
   "figure": "net_annual_benefit",
-  "created_utc": "2026-09-15T14:33:07+00:00",
+  "created_utc": "2026-09-16T11:10:55+00:00",
   "files": [
     "net_annual_benefit.pdf"
   ],
@@ -15,53 +15,37 @@
       4.4034
     ],
     "matplotlib": "3.11.1",
-    "python": "3.14.3"
+    "python": "3.11.14"
   },
   "source": {
-    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Battery_Size_Optimization.ipynb",
+    "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\Battery_Size_Optimization.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 32,
+    "cell_execution_count": 14,
     "caller": "<frozen runpy>:198",
-    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
+    "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "f7d2f9c7fae6e24b4f3b615be90ae8644c63491c",
-    "commit_short": "f7d2f9c",
+    "commit": "c134bcae1736c41e670854eb0cdccc05fbbb135d",
+    "commit_short": "c134bca",
     "branch": "Development",
-    "describe": "f7d2f9c-dirty",
-    "subject": "Changing graphs",
-    "committed_at": "2026-09-15T15:08:03+02:00",
+    "describe": "c134bca-dirty",
+    "subject": "Tables converted to latex format. More work on graphs",
+    "committed_at": "2026-09-16T12:58:00+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 23,
+    "dirty_file_count": 7,
     "dirty_files": [
       "esults/Figures/battery_sizing/cost_vs_capacity/SOURCE.md",
       "Results/Figures/battery_sizing/cost_vs_capacity/cost_vs_capacity.pdf",
       "Results/Figures/battery_sizing/cost_vs_capacity/source.json",
-      "Results/Figures/battery_sizing/energy_through_battery/SOURCE.md",
-      "Results/Figures/battery_sizing/energy_through_battery/energy_through_battery.pdf",
-      "Results/Figures/battery_sizing/energy_through_battery/source.json",
-      "Results/Figures/battery_sizing/equivalent_full_cycles/SOURCE.md",
-      "Results/Figures/battery_sizing/equivalent_full_cycles/equivalent_full_cycles.pdf",
-      "Results/Figures/battery_sizing/equivalent_full_cycles/source.json",
       "Results/Figures/battery_sizing/marginal_value/SOURCE.md",
       "Results/Figures/battery_sizing/marginal_value/marginal_value.pdf",
       "Results/Figures/battery_sizing/marginal_value/source.json",
-      "Results/Figures/battery_sizing/net_annual_benefit/SOURCE.md",
-      "Results/Figures/battery_sizing/net_annual_benefit/net_annual_benefit.pdf",
-      "Results/Figures/battery_sizing/net_annual_benefit/source.json",
-      "Results/Figures/battery_sizing/peak_grid_import/SOURCE.md",
-      "Results/Figures/battery_sizing/peak_grid_import/peak_grid_import.pdf",
-      "Results/Figures/battery_sizing/peak_grid_import/source.json",
-      "Results/Figures/battery_sizing/service_life/SOURCE.md",
-      "Results/Figures/battery_sizing/service_life/service_life.pdf",
-      "Results/Figures/battery_sizing/service_life/source.json",
-      "Results/battery_size_optimization.csv",
-      "\"Multuser_Battery_Size_Optimization no cycle cost.ipynb\""
+      "Results/Figures/battery_sizing/net_annual_benefit/net_annual_benefit.pdf"
     ],
-    "dirty_stat": ".../battery_sizing/cost_vs_capacity/SOURCE.md      | 208 +++----------------\n .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 40037 -> 39458 bytes\n .../battery_sizing/cost_vs_capacity/source.json    |  95 ++++-----\n .../energy_through_battery/SOURCE.md               | 205 ++-----------------\n .../energy_through_battery.pdf                     | Bin 29481 -> 29481 bytes\n .../energy_through_battery/source.json             |  68 ++-----\n .../equivalent_full_cycles/SOURCE.md               | 217 +++-----------------\n .../equivalent_full_cycles.pdf                     | Bin 25380 -> 25380 bytes\n .../equivalent_full_cycles/source.json             |  62 ++----\n .../battery_sizing/marginal_value/SOURCE.md        | 211 +++----------------\n .../marginal_value/marginal_value.pdf              | Bin 30063 -> 30157 bytes\n .../battery_sizing/marginal_value/source.json      |  91 +++------\n .../battery_sizing/net_annual_benefit/SOURCE.md    | 199 ++----------------\n .../net_annual_benefit/net_annual_benefit.pdf      | Bin 44605 -> 43338 bytes\n .../battery_sizing/net_annual_benefit/source.json  |  71 ++-----\n .../battery_sizing/peak_grid_import/SOURCE.md      | 211 ++-----------------\n .../peak_grid_import/peak_grid_import.pdf          | Bin 27140 -> 27140 bytes\n .../battery_sizing/peak_grid_import/source.json    |  65 ++----\n .../Figures/battery_sizing/service_life/SOURCE.md  | 223 +++------------------\n .../battery_sizing/service_life/service_life.pdf   | Bin 30900 -> 30900 bytes\n .../battery_sizing/service_life/source.json        |  59 ++----\n Results/battery_size_optimization.csv              |  68 +++++--\n 22 files changed, 355 insertions(+), 1698 deletions(-)",
+    "dirty_stat": ".../battery_sizing/cost_vs_capacity/SOURCE.md      |  39 ++++-------------\n .../cost_vs_capacity/cost_vs_capacity.pdf          | Bin 39458 -> 44208 bytes\n .../battery_sizing/cost_vs_capacity/source.json    |  48 ++++++---------------\n .../battery_sizing/marginal_value/SOURCE.md        |  42 ++++++------------\n .../marginal_value/marginal_value.pdf              | Bin 30157 -> 34442 bytes\n .../battery_sizing/marginal_value/source.json      |  45 ++++++-------------\n .../net_annual_benefit/net_annual_benefit.pdf      | Bin 43338 -> 48643 bytes\n 7 files changed, 47 insertions(+), 127 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [
