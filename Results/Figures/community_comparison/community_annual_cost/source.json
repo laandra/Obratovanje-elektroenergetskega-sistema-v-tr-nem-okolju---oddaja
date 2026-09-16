@@ -1,6 +1,6 @@
 {
   "figure": "community_annual_cost",
-  "created_utc": "2026-09-16T10:44:19+00:00",
+  "created_utc": "2026-09-16T11:17:40+00:00",
   "files": [
     "community_annual_cost.pdf"
   ],
@@ -12,68 +12,35 @@
     "bbox": "exact figure size",
     "figsize_in": [
       3.5,
-      1.785
+      3.5
     ],
     "matplotlib": "3.11.1",
-    "python": "3.11.14"
+    "python": "3.14.3"
   },
   "source": {
-    "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\Energy_Community_Comparison.ipynb",
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Energy_Community_Comparison.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 28,
+    "cell_execution_count": 18,
     "caller": "<frozen runpy>:198",
-    "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "d5900b29f97249fb6e20a20fc33375950474a3da",
-    "commit_short": "d5900b2",
+    "commit": "c134bcae1736c41e670854eb0cdccc05fbbb135d",
+    "commit_short": "c134bca",
     "branch": "Development",
-    "describe": "d5900b2-dirty",
-    "subject": "Puhing after merge",
-    "committed_at": "2026-09-16T11:37:31+02:00",
+    "describe": "c134bca-dirty",
+    "subject": "Tables converted to latex format. More work on graphs",
+    "committed_at": "2026-09-16T12:58:00+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 35,
+    "dirty_file_count": 2,
     "dirty_files": [
-      "nonymous_Labels.py",
-      "Battery_Size_Optimization.ipynb",
-      "Energy_Community_Comparison.ipynb",
-      "No_battery_comparison.ipynb",
-      "PLOTTING_GUIDE.txt",
-      "Plotting_Functions.py",
-      "Results/Figures/community_comparison/battery_effect_by_item/SOURCE.md",
-      "Results/Figures/community_comparison/battery_effect_by_item/battery_effect_by_item.pdf",
-      "Results/Figures/community_comparison/battery_effect_by_item/cell.py",
-      "Results/Figures/community_comparison/battery_effect_by_item/source.json",
-      "Results/Figures/community_comparison/battery_saving_by_segment/SOURCE.md",
-      "Results/Figures/community_comparison/battery_saving_by_segment/battery_saving_by_segment.pdf",
-      "Results/Figures/community_comparison/battery_saving_by_segment/source.json",
-      "Results/Figures/community_comparison/bill_composition/SOURCE.md",
-      "Results/Figures/community_comparison/bill_composition/bill_composition.pdf",
-      "Results/Figures/community_comparison/bill_composition/cell.py",
-      "Results/Figures/community_comparison/bill_composition/source.json",
-      "Results/Figures/community_comparison/community_annual_cost/SOURCE.md",
-      "Results/Figures/community_comparison/community_annual_cost/community_annual_cost.pdf",
-      "Results/Figures/community_comparison/community_annual_cost/source.json",
-      "Results/Figures/community_comparison/household_cost_scatter/SOURCE.md",
-      "Results/Figures/community_comparison/household_cost_scatter/household_cost_scatter.pdf",
-      "Results/Figures/community_comparison/household_cost_scatter/source.json",
-      "Results/Figures/community_comparison/import_duration_curve/SOURCE.md",
-      "Results/Figures/community_comparison/import_duration_curve/import_duration_curve.pdf",
-      "Results/Figures/community_comparison/import_duration_curve/source.json",
-      "Results/Figures/community_comparison/import_duration_curve_zoom/SOURCE.md",
-      "Results/Figures/community_comparison/import_duration_curve_zoom/import_duration_curve_zoom.pdf",
-      "Results/Figures/community_comparison/import_duration_curve_zoom/source.json",
-      "Results/Figures/community_comparison/price_extreme_days/SOURCE.md",
-      "Results/Figures/community_comparison/price_extreme_days/price_extreme_days.pdf",
-      "Results/Figures/community_comparison/price_extreme_days/source.json",
-      "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/SOURCE.md",
-      "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/souporaba_shared_vs_forfeited.pdf",
-      "Results/Figures/community_comparison/souporaba_shared_vs_forfeited/source.json"
+      "esults/Community_Study/per_household.csv",
+      "Results/Figures/community_comparison/community_annual_cost/community_annual_cost.pdf"
     ],
-    "dirty_stat": "Anonymous_Labels.py                                |  77 ++++-\n Battery_Size_Optimization.ipynb                    |   2 +-\n Energy_Community_Comparison.ipynb                  | 168 +++++------\n No_battery_comparison.ipynb                        | 172 +++++++----\n PLOTTING_GUIDE.txt                                 |  52 +++-\n Plotting_Functions.py                              | 316 ++++++++++++++++++++-\n .../battery_effect_by_item/SOURCE.md               |  97 +++----\n .../battery_effect_by_item.pdf                     | Bin 57939 -> 57947 bytes\n .../battery_effect_by_item/cell.py                 |  51 +---\n .../battery_effect_by_item/source.json             |  43 +--\n .../battery_saving_by_segment/SOURCE.md            |  74 +++--\n .../battery_saving_by_segment.pdf                  | Bin 32769 -> 32769 bytes\n .../battery_saving_by_segment/source.json          |  42 ++-\n .../bill_composition/SOURCE.md                     | 101 +++----\n .../bill_composition/bill_composition.pdf          | Bin 55127 -> 54897 bytes\n .../community_comparison/bill_composition/cell.py  |  51 +---\n .../bill_composition/source.json                   |  47 ++-\n .../community_annual_cost/SOURCE.md                |  35 +--\n .../community_annual_cost.pdf                      | Bin 58931 -> 58596 bytes\n .../community_annual_cost/source.json              |  39 +--\n .../household_cost_scatter/SOURCE.md               |  79 ++----\n .../household_cost_scatter.pdf                     | Bin 47503 -> 47503 bytes\n .../household_cost_scatter/source.json             |  53 ++--\n .../import_duration_curve/SOURCE.md                |  55 ++--\n .../import_duration_curve.pdf                      | Bin 51366 -> 51366 bytes\n .../import_duration_curve/source.json              |  41 ++-\n .../import_duration_curve_zoom/SOURCE.md           |  61 ++--\n .../import_duration_curve_zoom.pdf                 | Bin 45875 -> 45875 bytes\n .../import_duration_curve_zoom/source.json         |  41 ++-\n .../price_extreme_days/SOURCE.md                   |  93 +++---\n .../price_extreme_days/price_extreme_days.pdf      | Bin 45821 -> 45821 bytes\n .../price_extreme_days/source.json                 |  45 +--\n .../souporaba_shared_vs_forfeited/SOURCE.md        |  80 +++---\n .../souporaba_shared_vs_forfeited.pdf              | Bin 32261 -> 32261 bytes\n .../souporaba_shared_vs_forfeited/source.json      |  42 ++-\n 35 files changed, 1066 insertions(+), 891 deletions(-)",
+    "dirty_stat": "Results/Community_Study/per_household.csv          | 210 ++++++++++-----------\n .../community_annual_cost.pdf                      | Bin 58596 -> 51423 bytes\n 2 files changed, 105 insertions(+), 105 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [
@@ -83,5 +50,5 @@
   "caption": [
     "Kolikšen je letni strošek skupnosti — 50 gospodinjstev, z DDV; postavke nad črto, dobropis pod njo"
   ],
-  "note": "resized from 7.16x3.65 to 3.50x1.79 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas"
+  "note": "resized from 7.16x4.40 to 3.50x3.50 in; IEEE text applied to a figure drawn in the notebook style (scaled, not rebuilt); stroke weights scaled 0.49x to the narrower canvas"
 }

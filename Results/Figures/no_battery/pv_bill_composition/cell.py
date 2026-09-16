@@ -37,11 +37,8 @@ ax.grid(axis="x")
 ax.spines["left"].set_visible(False)
 pf.show(fig, "pv_bill_composition")
 
-fig, ax = plt.subplots(figsize=pf.figsize(ratio=rows_ratio(len(by_group_pv_rel),
-                                                           per_row=0.30)))
-overpay_heatmap(ax, by_group_pv_rel, REGIME_COLOR["credited"],
-                "S PV, presežke odkupi dobavitelj: preplačilo po tipu gospodinjstva [%]",
-                fig=fig)
-pf.show(fig, "pv_overpay_by_group", preset="column")
+overpay_table(by_group_pv_rel, REGIME_COLOR["credited"],
+              "S PV, presežke odkupi dobavitelj: preplačilo po tipu gospodinjstva [%]",
+              "pv_overpay_by_group")
 
 anonymise(by_group_pv_rel).round(2)

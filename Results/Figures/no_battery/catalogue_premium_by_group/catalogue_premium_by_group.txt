@@ -1,0 +1,30 @@
+% catalogue_premium_by_group: LaTeX table written by Plotting_Functions.save_table
+% Needs in the preamble:
+%   \usepackage{booktabs}
+%   \usepackage[table]{xcolor}   % or \usepackage{colortbl}, if xcolor is already loaded
+\begin{table*}[!t]
+  \centering
+  \caption{Koliko dražji je samooskrbni cenik od najcenejšega cenika za dobavo [EUR/a]}
+  \label{tab:catalogue-premium-by-group}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{@{}l*{8}{c}}
+    \toprule
+    & \multicolumn{8}{c}{Tip gospodinjstva} \\
+    \cmidrule(l){2-9}
+    & \multicolumn{4}{c}{brez PV} & \multicolumn{4}{c}{s PV} \\
+    \cmidrule(lr){2-5} \cmidrule(lr){6-9}
+    Cenik & osnovni & EV & HP & HP\_EV & osnovni & EV & HP & HP\_EV \\
+    \midrule
+    P3 SR & \cellcolor[HTML]{F0EEEC}+4 & \cellcolor[HTML]{EEE7EA}+22 & \cellcolor[HTML]{EBE0E9}+45 & \cellcolor[HTML]{EBE0E9}+45 & \cellcolor[HTML]{247233}\color{white}$-$2 & \cellcolor[HTML]{EFECEB}+8 & \cellcolor[HTML]{EFEBEB}+13 & \cellcolor[HTML]{EDE7EA}+25 \\
+    P3 SD & \cellcolor[HTML]{EDE5EA}+31 & \cellcolor[HTML]{EBDEE9}+49 & \cellcolor[HTML]{E6CFE5}+93 & \cellcolor[HTML]{E8D6E7}+73 & \cellcolor[HTML]{EDE5EA}+32 & \cellcolor[HTML]{ECE3E9}+36 & \cellcolor[HTML]{E9D9E7}+65 & \cellcolor[HTML]{E9D9E7}+64 \\
+    P1 SD & \cellcolor[HTML]{EDE6EA}+29 & \cellcolor[HTML]{EADEE8}+50 & \cellcolor[HTML]{E5CDE5}+99 & \cellcolor[HTML]{E7D4E6}+80 & \cellcolor[HTML]{EDE6EA}+29 & \cellcolor[HTML]{ECE3E9}+36 & \cellcolor[HTML]{E9D9E7}+65 & \cellcolor[HTML]{E9D8E7}+68 \\
+    P4 SR & \cellcolor[HTML]{ECE3E9}+36 & \cellcolor[HTML]{DEBCDE}+122 & \cellcolor[HTML]{A244A2}\color{white}+220 & \cellcolor[HTML]{A141A1}\color{white}+224 & \cellcolor[HTML]{EEE9EB}+16 & \cellcolor[HTML]{E9D7E7}+70 & \cellcolor[HTML]{E7D2E6}+86 & \cellcolor[HTML]{C78FC7}+160 \\
+    P3 SA & \cellcolor[HTML]{EBDEE9}+48 & \cellcolor[HTML]{B76EB7}+185 & \cellcolor[HTML]{893789}\color{white}+283 & \cellcolor[HTML]{903990}\color{white}+265 & \cellcolor[HTML]{EADDE8}+55 & \cellcolor[HTML]{E5CDE5}+102 & \cellcolor[HTML]{D7AFD7}+134 & \cellcolor[HTML]{9B3D9B}\color{white}+237 \\
+    P3 SAF & \cellcolor[HTML]{E9DAE8}+62 & \cellcolor[HTML]{A447A4}\color{white}+219 & \cellcolor[HTML]{732F73}\color{white}+339 & \cellcolor[HTML]{793179}\color{white}+322 & \cellcolor[HTML]{E9D9E7}+64 & \cellcolor[HTML]{DEBCDE}+124 & \cellcolor[HTML]{C78FC7}+160 & \cellcolor[HTML]{893789}\color{white}+281 \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \parbox{\linewidth}{\raggedright\scriptsize Okrajšave: P1–P4~ponudnik 1–4; S~samooskrbni cenik; R~redni; F~fiksni; A~aktivni; D~dinamični.}
+\end{table*}

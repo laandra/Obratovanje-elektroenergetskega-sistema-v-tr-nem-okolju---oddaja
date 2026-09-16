@@ -89,8 +89,6 @@ pf.show(fig, "catalogue_premium_by_supplier")
 # purple where the supply shelf wins, green where this samooskrba list beats
 # everything on it, neutral at the tie. `TwoSlopeNorm` keeps the zero on the
 # neutral colour, the negative side being too small for a symmetric scale.
-fig, ax = plt.subplots(figsize=pf.figsize(
-    ratio=rows_ratio(len(premium_by_group), per_row=0.30)))
 values = premium_by_group.to_numpy()
 diverging = LinearSegmentedColormap.from_list("catalogue_div", [
     pf.mix(CATALOGUE_COLOR["samooskrba"], "#0b0b0b", 0.30),
@@ -102,23 +100,34 @@ diverging = LinearSegmentedColormap.from_list("catalogue_div", [
     pf.mix(CATALOGUE_COLOR["dobava"], "#0b0b0b", 0.30)])
 norm = TwoSlopeNorm(vmin=float(np.nanmin(values)), vcenter=0.0,
                     vmax=float(np.nanmax(values)))
-im = ax.imshow(values, cmap=diverging, norm=norm, aspect="auto")
-ax.set_xticks(range(premium_by_group.shape[1]),
-              [group_label(c) for c in premium_by_group.columns],
-              rotation=30, ha="right", fontsize=8)
-ax.set_yticks(range(premium_by_group.shape[0]),
-              [short_list_name(o) for o in premium_by_group.index], fontsize=8)
-ax.grid(False)
-for r in range(values.shape[0]):
-    for c in range(values.shape[1]):
-        strong = norm(values[r, c]) > 0.86 or norm(values[r, c]) < 0.14
-        ax.text(c, r, f"{values[r, c]:+.0f}", ha="center", va="center",
-                fontsize=7.5, color="#ffffff" if strong else INK)
-finish(ax, title="Koliko dražji je samooskrbni cenik od najcenejšega cenika za dobavo "
+premium_title = ("Koliko dražji je samooskrbni cenik od najcenejšega cenika za dobavo "
                  "[EUR/a]")
-fig.colorbar(im, ax=ax, fraction=0.045, pad=0.02,
-             label="Razlika [EUR/a]")
-pf.show(fig, "catalogue_premium_by_group")
+
+
+def premium_heatmap():
+    """The heatmap this table replaced -- the preview where LaTeX is not typeset."""
+    fig, ax = plt.subplots(figsize=pf.figsize(
+        ratio=rows_ratio(len(premium_by_group), per_row=0.30)))
+    im = ax.imshow(values, cmap=diverging, norm=norm, aspect="auto")
+    ax.set_xticks(range(premium_by_group.shape[1]),
+                  [group_label(c) for c in premium_by_group.columns],
+                  rotation=30, ha="right", fontsize=8)
+    ax.set_yticks(range(premium_by_group.shape[0]),
+                  [short_list_name(o) for o in premium_by_group.index], fontsize=8)
+    ax.grid(False)
+    for r in range(values.shape[0]):
+        for c in range(values.shape[1]):
+            strong = norm(values[r, c]) > 0.86 or norm(values[r, c]) < 0.14
+            ax.text(c, r, f"{values[r, c]:+.0f}", ha="center", va="center",
+                    fontsize=7.5, color="#ffffff" if strong else INK)
+    finish(ax, title=premium_title)
+    fig.colorbar(im, ax=ax, fraction=0.045, pad=0.02,
+                 label="Razlika [EUR/a]")
+    pf.show(fig, "catalogue_premium_by_group")
+
+
+contract_table(premium_by_group, "catalogue_premium_by_group", premium_title,
+               diverging, norm, premium_heatmap, fmt="{:+.0f}")
 
 supplier_premium[["Dobava_EUR", "Samooskrba_EUR", "Premium_EUR",
                   "Lists_Dobava", "Lists_Samooskrba"]].rename(

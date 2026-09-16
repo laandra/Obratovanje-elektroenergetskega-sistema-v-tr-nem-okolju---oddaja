@@ -1,0 +1,28 @@
+% pv_nosale_overpay_by_group: LaTeX table written by Plotting_Functions.save_table
+% Needs in the preamble:
+%   \usepackage{booktabs}
+%   \usepackage[table]{xcolor}   % or \usepackage{colortbl}, if xcolor is already loaded
+\begin{table}[!t]
+  \centering
+  \caption{Brez odkupa presežkov: preplačilo po tipu gospodinjstva [\%]}
+  \label{tab:pv-nosale-overpay-by-group}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{@{}l*{4}{c}}
+    \toprule
+    & \multicolumn{4}{c}{Tip gospodinjstva} \\
+    \cmidrule(l){2-5}
+    Cenik & PV & PV\_EV & PV\_HP & PV\_HP\_EV \\
+    \midrule
+    P3 SR & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 \\
+    P3 SD & \cellcolor[HTML]{F4B8A0}9.3 & \cellcolor[HTML]{F9E3DA}3.4 & \cellcolor[HTML]{F7CEBE}6.3 & \cellcolor[HTML]{FAE8E0}2.8 \\
+    P1 SD & \cellcolor[HTML]{F5BFA8}8.5 & \cellcolor[HTML]{F9E3DA}3.4 & \cellcolor[HTML]{F6CEBD}6.3 & \cellcolor[HTML]{F9E6DD}3.0 \\
+    P4 SR & \cellcolor[HTML]{F8D8CA}5.0 & \cellcolor[HTML]{F6C6B2}7.4 & \cellcolor[HTML]{F4BCA5}8.8 & \cellcolor[HTML]{F4B69C}9.6 \\
+    P3 SA & \cellcolor[HTML]{EE7F53}15.7 & \cellcolor[HTML]{F2A687}11.3 & \cellcolor[HTML]{EF8860}14.7 & \cellcolor[HTML]{EE845A}15.1 \\
+    P3 SAF & \cellcolor[HTML]{EB6834}18.3 & \cellcolor[HTML]{EF8E67}14.0 & \cellcolor[HTML]{EB6C3A}17.8 & \cellcolor[HTML]{EB6935}18.3 \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \parbox{\linewidth}{\raggedright\scriptsize Okrajšave: P1–P4~ponudnik 1–4; S~samooskrbni cenik; R~redni; F~fiksni; A~aktivni; D~dinamični.}
+\end{table}

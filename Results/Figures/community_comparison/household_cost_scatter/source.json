@@ -1,6 +1,6 @@
 {
   "figure": "household_cost_scatter",
-  "created_utc": "2026-09-16T10:25:12+00:00",
+  "created_utc": "2026-09-16T11:17:42+00:00",
   "files": [
     "household_cost_scatter.pdf"
   ],
@@ -15,41 +15,37 @@
       3.7948
     ],
     "matplotlib": "3.11.1",
-    "python": "3.11.14"
+    "python": "3.14.3"
   },
   "source": {
-    "notebook": "C:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community\\Energy_Community_Comparison.ipynb",
+    "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Energy_Community_Comparison.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
     "cell_execution_count": 21,
     "caller": "<frozen runpy>:198",
-    "cwd": "c:\\Users\\HP\\Documents\\JupyterNotebook\\Energy_Community",
+    "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "d5900b29f97249fb6e20a20fc33375950474a3da",
-    "commit_short": "d5900b2",
+    "commit": "c134bcae1736c41e670854eb0cdccc05fbbb135d",
+    "commit_short": "c134bca",
     "branch": "Development",
-    "describe": "d5900b2-dirty",
-    "subject": "Puhing after merge",
-    "committed_at": "2026-09-16T11:37:31+02:00",
+    "describe": "c134bca-dirty",
+    "subject": "Tables converted to latex format. More work on graphs",
+    "committed_at": "2026-09-16T12:58:00+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 22,
+    "dirty_file_count": 18,
     "dirty_files": [
-      "nonymous_Labels.py",
-      "No_battery_comparison.ipynb",
-      "PLOTTING_GUIDE.txt",
-      "Plotting_Functions.py",
+      "esults/Community_Study/per_household.csv",
       "Results/Figures/community_comparison/battery_effect_by_item/SOURCE.md",
       "Results/Figures/community_comparison/battery_effect_by_item/battery_effect_by_item.pdf",
-      "Results/Figures/community_comparison/battery_effect_by_item/cell.py",
       "Results/Figures/community_comparison/battery_effect_by_item/source.json",
       "Results/Figures/community_comparison/bill_composition/SOURCE.md",
       "Results/Figures/community_comparison/bill_composition/bill_composition.pdf",
-      "Results/Figures/community_comparison/bill_composition/cell.py",
       "Results/Figures/community_comparison/bill_composition/source.json",
       "Results/Figures/community_comparison/community_annual_cost/SOURCE.md",
+      "Results/Figures/community_comparison/community_annual_cost/cell.py",
       "Results/Figures/community_comparison/community_annual_cost/community_annual_cost.pdf",
       "Results/Figures/community_comparison/community_annual_cost/source.json",
       "Results/Figures/community_comparison/household_cost_scatter/household_cost_scatter.pdf",
@@ -60,7 +56,7 @@
       "Results/Figures/community_comparison/import_duration_curve_zoom/import_duration_curve_zoom.pdf",
       "Results/Figures/community_comparison/import_duration_curve_zoom/source.json"
     ],
-    "dirty_stat": "Anonymous_Labels.py                                |  77 ++++-\n No_battery_comparison.ipynb                        | 172 +++++++----\n PLOTTING_GUIDE.txt                                 |  52 +++-\n Plotting_Functions.py                              | 316 ++++++++++++++++++++-\n .../battery_effect_by_item/SOURCE.md               |  74 ++---\n .../battery_effect_by_item.pdf                     | Bin 57939 -> 57947 bytes\n .../battery_effect_by_item/cell.py                 |  10 +-\n .../battery_effect_by_item/source.json             |  64 +----\n .../bill_composition/SOURCE.md                     |  74 ++---\n .../bill_composition/bill_composition.pdf          | Bin 55127 -> 55215 bytes\n .../community_comparison/bill_composition/cell.py  |  10 +-\n .../bill_composition/source.json                   |  72 ++---\n .../community_annual_cost/SOURCE.md                |  35 +--\n .../community_annual_cost.pdf                      | Bin 58931 -> 58931 bytes\n .../community_annual_cost/source.json              |  39 +--\n .../household_cost_scatter.pdf                     | Bin 47503 -> 47503 bytes\n .../import_duration_curve/SOURCE.md                |  55 ++--\n .../import_duration_curve.pdf                      | Bin 51366 -> 51366 bytes\n .../import_duration_curve/source.json              |  41 ++-\n .../import_duration_curve_zoom/SOURCE.md           |  61 ++--\n .../import_duration_curve_zoom.pdf                 | Bin 45875 -> 45875 bytes\n .../import_duration_curve_zoom/source.json         |  41 ++-\n 22 files changed, 737 insertions(+), 456 deletions(-)",
+    "dirty_stat": "Results/Community_Study/per_household.csv          | 210 ++++++++++-----------\n .../battery_effect_by_item/SOURCE.md               |  60 ++----\n .../battery_effect_by_item.pdf                     | Bin 57947 -> 51540 bytes\n .../battery_effect_by_item/source.json             |  56 ++----\n .../bill_composition/SOURCE.md                     |  57 ++----\n .../bill_composition/bill_composition.pdf          | Bin 54897 -> 49279 bytes\n .../bill_composition/source.json                   |  59 ++----\n .../community_annual_cost/SOURCE.md                |  57 ++----\n .../community_annual_cost/cell.py                  |  86 ++++++---\n .../community_annual_cost.pdf                      | Bin 58596 -> 51423 bytes\n .../community_annual_cost/source.json              |  65 ++-----\n .../household_cost_scatter.pdf                     | Bin 47503 -> 43763 bytes\n .../import_duration_curve/SOURCE.md                |  42 ++---\n .../import_duration_curve.pdf                      | Bin 51366 -> 47647 bytes\n .../import_duration_curve/source.json              |  30 ++-\n .../import_duration_curve_zoom/SOURCE.md           |  48 +++--\n .../import_duration_curve_zoom.pdf                 | Bin 45875 -> 41704 bytes\n .../import_duration_curve_zoom/source.json         |  30 ++-\n 18 files changed, 318 insertions(+), 482 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [

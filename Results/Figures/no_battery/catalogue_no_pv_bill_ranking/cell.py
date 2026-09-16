@@ -26,16 +26,16 @@ def catalogue_bill_panel(ax, summary, title, xlabel="Letni račun [EUR/a]"):
 
 
 def catalogue_figure(name, bill_title, heat_title, export):
-    """The chapter's two figures for one household set.
+    """The chapter's figure and table for one household set.
 
-    First: every option ranked by its own bill. Second: the same rows against the
-    cheapest option for each household TYPE -- the ranking is a mean and can hide
-    a list that suits one kind of household and no other.
+    The figure: every option ranked by its own bill. The table: the same rows
+    against the cheapest option for each household TYPE -- the ranking is a mean
+    and can hide a list that suits one kind of household and no other.
 
-    They are two figures rather than two panels of one: at 31 price lists a row
+    They are two exports rather than two panels of one: at 31 price lists a row
     shared between them is unreadable at half of \\textwidth.
 
-    The heatmap ramp is NEUTRAL rather than either catalogue's hue: its rows come
+    The table's ramp is NEUTRAL rather than either catalogue's hue: its rows come
     from both shelves, and giving the magnitude one of the two categorical hues
     would read as a claim about which shelf the cell belongs to.
     """
@@ -46,12 +46,8 @@ def catalogue_figure(name, bill_title, heat_title, export):
     catalogue_bill_panel(ax, summary, bill_title)
     pf.show(fig, f"{export}_bill_ranking")
 
-    fig, ax = plt.subplots(figsize=pf.figsize(ratio=rows_ratio(len(rel),
-                                                               per_row=0.28)))
-    overpay_heatmap(ax, rel, INK_2, heat_title, fig=fig,
-                    cell_fontsize=6.5 if rel.shape[1] > 5 else 7.0,
-                    label_fontsize=7.5)
-    pf.show(fig, f"{export}_overpay_by_group")
+    overpay_table(rel, INK_2, heat_title, f"{export}_overpay_by_group", per_row=0.28,
+                  cell_fontsize=6.5 if rel.shape[1] > 5 else 7.0, label_fontsize=7.5)
     return rel
 
 

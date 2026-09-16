@@ -1,0 +1,53 @@
+% catalogue_with_pv_overpay_by_group: LaTeX table written by Plotting_Functions.save_table
+% Needs in the preamble:
+%   \usepackage{booktabs}
+%   \usepackage[table]{xcolor}   % or \usepackage{colortbl}, if xcolor is already loaded
+\begin{table}[!t]
+  \centering
+  \caption{S PV, presežki po 0 EUR: preplačilo glede na najcenejši cenik te skupine [\%]}
+  \label{tab:catalogue-with-pv-overpay-by-group}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{@{}l*{4}{c}}
+    \toprule
+    & \multicolumn{4}{c}{Tip gospodinjstva} \\
+    \cmidrule(l){2-5}
+    Cenik & PV & PV\_EV & PV\_HP & PV\_HP\_EV \\
+    \midrule
+    P1 FAk [1T] & \cellcolor[HTML]{F8F8F7}0.5 & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 \\
+    P1 FAk [2T] & \cellcolor[HTML]{F4F4F3}1.1 & \cellcolor[HTML]{F7F7F6}0.7 & \cellcolor[HTML]{F4F4F3}1.0 & \cellcolor[HTML]{F8F8F7}0.5 \\
+    P3 SR & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{F5F5F4}1.0 & \cellcolor[HTML]{F2F2F1}1.3 & \cellcolor[HTML]{EFEFEE}1.8 \\
+    P1 FV [2T] & \cellcolor[HTML]{E4E4E3}3.2 & \cellcolor[HTML]{E7E6E5}2.9 & \cellcolor[HTML]{E1E0DF}3.7 & \cellcolor[HTML]{E6E6E4}3.0 \\
+    P1 FV [1T] & \cellcolor[HTML]{E1E0DF}3.7 & \cellcolor[HTML]{E4E4E3}3.3 & \cellcolor[HTML]{E0E0DE}3.8 & \cellcolor[HTML]{E0E0DE}3.8 \\
+    P3 R [2T] & \cellcolor[HTML]{EDEDEC}2.0 & \cellcolor[HTML]{E4E3E2}3.3 & \cellcolor[HTML]{DCDCDB}4.3 & \cellcolor[HTML]{DEDEDC}4.0 \\
+    P3 D & \cellcolor[HTML]{C3C3C1}7.6 & \cellcolor[HTML]{E5E4E3}3.1 & \cellcolor[HTML]{D1D1CF}5.8 & \cellcolor[HTML]{E4E4E3}3.2 \\
+    P2 D & \cellcolor[HTML]{BDBDBB}8.4 & \cellcolor[HTML]{E2E2E1}3.5 & \cellcolor[HTML]{CECDCC}6.1 & \cellcolor[HTML]{E2E2E1}3.4 \\
+    P3 R [1T] & \cellcolor[HTML]{E5E4E3}3.2 & \cellcolor[HTML]{DCDCDB}4.2 & \cellcolor[HTML]{D6D6D4}5.1 & \cellcolor[HTML]{D2D2D0}5.6 \\
+    P3 SD & \cellcolor[HTML]{B7B6B4}9.3 & \cellcolor[HTML]{DBDBD9}4.4 & \cellcolor[HTML]{C3C2C0}7.7 & \cellcolor[HTML]{DADAD8}4.6 \\
+    P1 D & \cellcolor[HTML]{BDBCBA}8.5 & \cellcolor[HTML]{DBDBD9}4.4 & \cellcolor[HTML]{C3C2C0}7.7 & \cellcolor[HTML]{D8D7D6}4.9 \\
+    P1 SD & \cellcolor[HTML]{BDBCBA}8.5 & \cellcolor[HTML]{DBDBD9}4.4 & \cellcolor[HTML]{C3C2C0}7.7 & \cellcolor[HTML]{D8D7D6}4.9 \\
+    P4 Ak [2T] & \cellcolor[HTML]{CAC9C8}6.7 & \cellcolor[HTML]{D2D1D0}5.7 & \cellcolor[HTML]{C9C9C7}6.8 & \cellcolor[HTML]{D0D0CE}5.9 \\
+    P3 F [2T] & \cellcolor[HTML]{D9D9D8}4.6 & \cellcolor[HTML]{CFCFCD}6.0 & \cellcolor[HTML]{C5C4C2}7.4 & \cellcolor[HTML]{C7C6C5}7.2 \\
+    P2 R [2T] & \cellcolor[HTML]{D3D3D1}5.4 & \cellcolor[HTML]{CDCCCB}6.3 & \cellcolor[HTML]{C2C1C0}7.8 & \cellcolor[HTML]{C5C4C3}7.4 \\
+    P4 Ak [1T] & \cellcolor[HTML]{C2C1C0}7.7 & \cellcolor[HTML]{CBCAC9}6.6 & \cellcolor[HTML]{C4C3C1}7.5 & \cellcolor[HTML]{C6C5C3}7.3 \\
+    P3 A & \cellcolor[HTML]{BCBBB9}8.6 & \cellcolor[HTML]{D5D4D3}5.3 & \cellcolor[HTML]{C2C1BF}7.8 & \cellcolor[HTML]{BABAB8}8.8 \\
+    P4 F [2T] & \cellcolor[HTML]{BFBEBD}8.2 & \cellcolor[HTML]{C6C5C3}7.3 & \cellcolor[HTML]{BCBBB9}8.6 & \cellcolor[HTML]{C3C3C1}7.6 \\
+    P3 F [1T] & \cellcolor[HTML]{D1D1CF}5.8 & \cellcolor[HTML]{C8C7C6}7.0 & \cellcolor[HTML]{BFBEBD}8.2 & \cellcolor[HTML]{BABAB8}8.8 \\
+    P2 R [1T] & \cellcolor[HTML]{CBCAC9}6.6 & \cellcolor[HTML]{C6C5C3}7.3 & \cellcolor[HTML]{BCBBBA}8.5 & \cellcolor[HTML]{B9B8B6}9.0 \\
+    P1 DZ & \cellcolor[HTML]{83827F}15.1 & \cellcolor[HTML]{C6C5C3}7.3 & \cellcolor[HTML]{ACABA9}10.6 & \cellcolor[HTML]{CBCAC8}6.6 \\
+    P4 F [1T] & \cellcolor[HTML]{B7B6B4}9.3 & \cellcolor[HTML]{BFBEBC}8.2 & \cellcolor[HTML]{B6B5B3}9.4 & \cellcolor[HTML]{B7B7B5}9.2 \\
+    P1 F [2T] & \cellcolor[HTML]{B9B8B6}9.0 & \cellcolor[HTML]{B9B8B6}8.9 & \cellcolor[HTML]{ADACAA}10.6 & \cellcolor[HTML]{B1B1AF}10.0 \\
+    P4 SR & \cellcolor[HTML]{D7D7D5}5.0 & \cellcolor[HTML]{BDBCBA}8.5 & \cellcolor[HTML]{B0AFAD}10.2 & \cellcolor[HTML]{A3A2A0}11.6 \\
+    P2 F [2T] & \cellcolor[HTML]{C0BFBD}8.0 & \cellcolor[HTML]{B9B8B6}9.1 & \cellcolor[HTML]{AAA9A7}10.9 & \cellcolor[HTML]{ADACAA}10.5 \\
+    P1 F [1T] & \cellcolor[HTML]{B1B1AF}10.0 & \cellcolor[HTML]{B3B2B0}9.8 & \cellcolor[HTML]{A6A5A3}11.3 & \cellcolor[HTML]{A5A4A1}11.4 \\
+    P4 R [2T] & \cellcolor[HTML]{AAA9A7}10.9 & \cellcolor[HTML]{B1B0AE}10.1 & \cellcolor[HTML]{A1A09E}11.8 & \cellcolor[HTML]{A9A8A6}10.9 \\
+    P2 F [1T] & \cellcolor[HTML]{B7B7B5}9.2 & \cellcolor[HTML]{B1B1AF}10.0 & \cellcolor[HTML]{A2A19F}11.7 & \cellcolor[HTML]{9E9D9B}12.2 \\
+    P4 R [1T] & \cellcolor[HTML]{9F9E9C}11.9 & \cellcolor[HTML]{A9A8A6}10.9 & \cellcolor[HTML]{9A9997}12.5 & \cellcolor[HTML]{9C9B99}12.4 \\
+    P3 SA & \cellcolor[HTML]{7D7C79}15.7 & \cellcolor[HTML]{9C9B99}12.4 & \cellcolor[HTML]{787775}\color{white}16.2 & \cellcolor[HTML]{6F6E6B}\color{white}17.2 \\
+    P3 SAF & \cellcolor[HTML]{646361}\color{white}18.3 & \cellcolor[HTML]{82817E}15.1 & \cellcolor[HTML]{5C5B58}\color{white}19.3 & \cellcolor[HTML]{52514E}\color{white}20.4 \\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \parbox{\linewidth}{\raggedright\scriptsize Okrajšave: P1–P4~ponudnik 1–4; S~samooskrbni cenik; R~redni; F~fiksni; A~aktivni; Ak~akcijski; D~dinamični; Z~zamejeni; V~z vezavo; [2T]~dvotarifni števec; [1T]~enotarifni števec.}
+\end{table}

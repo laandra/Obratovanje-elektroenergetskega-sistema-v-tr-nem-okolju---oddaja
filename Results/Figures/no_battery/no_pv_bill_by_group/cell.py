@@ -1,6 +1,6 @@
 ### The same ranking per household type, absolute and relative to that group's best
-# Two figures, not two panels: half of \textwidth is \columnwidth, and a 25-row
-# bar chart squeezed into it is unreadable. Same cell, one pf.show each.
+# A figure and a table, not two panels: half of \textwidth is \columnwidth, and
+# a 25-row bar chart squeezed into it is unreadable. Same cell, one export each.
 by_group_cost = df_no_pv.pivot_table(index="Option", columns="Dataset",
                                      values="Cost_EUR").reindex(no_pv_summary.index)
 by_group_rel = 100.0 * (by_group_cost / by_group_cost.min() - 1.0)
@@ -27,11 +27,8 @@ pf.show(fig, "no_pv_bill_by_group")
 # Relative penalty against the cheapest list for that same household type: a
 # magnitude with a floor at 0 %, so one hue ramped light -> dark. No PV means no
 # export, so this chapter takes the neutral slot rather than a regime hue.
-fig, ax = plt.subplots(figsize=pf.figsize(ratio=rows_ratio(len(by_group_rel),
-                                                           per_row=0.30)))
-overpay_heatmap(ax, by_group_rel, INK_2,
-                "Brez PV: preplačilo glede na najcenejši cenik te skupine [%]",
-                fig=fig, cell_fontsize=7.0)
-pf.show(fig, "no_pv_overpay_by_group")
+overpay_table(by_group_rel, INK_2,
+              "Brez PV: preplačilo glede na najcenejši cenik te skupine [%]",
+              "no_pv_overpay_by_group", cell_fontsize=7.0)
 
 anonymise(by_group_rel).round(2)
