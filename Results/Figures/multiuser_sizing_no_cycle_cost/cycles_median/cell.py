@@ -56,9 +56,10 @@ pf.chart_frame(fig, "Koliko je baterija sploh v uporabi",
       f"Fiksni, Redni 2T s Fiksni BO): dispečiranje določa razpon cen čez dan in ne njihova "
       f"raven, razpon pa je pri teh cenikih isti — kjer sta krivulji povsem enaki, je črtkanje "
       f"zamaknjeno, da se vidita obe barvi. Redni + NM je sklenljiv le s PV, zato je "
-      f"njegova mediana po {n_pv} gospodinjstvih in ne po vseh.",
-      handles=contract_handles())
-pf.show(fig, "cycles_median", layout="frame")
+      f"njegova mediana po {n_pv} gospodinjstvih in ne po vseh.")
+       #handles=contract_handles()
+pf.show(fig, "cycles_median", layout="frame", preset="column")
+
 
 # The claim in the subtitle, as numbers. The threshold is about the pack rather
 # than the money: under a cycle a month the store spends the year standing
