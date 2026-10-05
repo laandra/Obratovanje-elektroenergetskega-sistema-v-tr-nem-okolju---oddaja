@@ -1,6 +1,6 @@
 {
   "figure": "community_annual_cost",
-  "created_utc": "2026-09-16T11:17:40+00:00",
+  "created_utc": "2026-09-17T15:48:49+00:00",
   "files": [
     "community_annual_cost.pdf"
   ],
@@ -20,27 +20,29 @@
   "source": {
     "notebook": "/Users/summerscholl/Documents/Andraz/Energy_Community/Energy_Community_Comparison.ipynb",
     "notebook_detected_by": "__vsc_ipynb_file__",
-    "cell_execution_count": 18,
+    "cell_execution_count": 27,
     "caller": "<frozen runpy>:198",
     "cwd": "/Users/summerscholl/Documents/Andraz/Energy_Community",
     "cell_file": "cell.py"
   },
   "git": {
     "available": true,
-    "commit": "c134bcae1736c41e670854eb0cdccc05fbbb135d",
-    "commit_short": "c134bca",
+    "commit": "1c0c444a595c6dce108d6274881d629e6a7d8139",
+    "commit_short": "1c0c444",
     "branch": "Development",
-    "describe": "c134bca-dirty",
-    "subject": "Tables converted to latex format. More work on graphs",
-    "committed_at": "2026-09-16T12:58:00+02:00",
+    "describe": "1c0c444-dirty",
+    "subject": "Update comparison notebooks",
+    "committed_at": "2026-09-17T17:26:33+02:00",
     "remote": "https://github.com/laandra/Energy_Community.git",
     "dirty": true,
-    "dirty_file_count": 2,
+    "dirty_file_count": 4,
     "dirty_files": [
-      "esults/Community_Study/per_household.csv",
-      "Results/Figures/community_comparison/community_annual_cost/community_annual_cost.pdf"
+      "esults/Figures/community_comparison/community_annual_cost/SOURCE.md",
+      "Results/Figures/community_comparison/community_annual_cost/cell.py",
+      "Results/Figures/community_comparison/community_annual_cost/community_annual_cost.pdf",
+      "Results/Figures/community_comparison/community_annual_cost/source.json"
     ],
-    "dirty_stat": "Results/Community_Study/per_household.csv          | 210 ++++++++++-----------\n .../community_annual_cost.pdf                      | Bin 58596 -> 51423 bytes\n 2 files changed, 105 insertions(+), 105 deletions(-)",
+    "dirty_stat": ".../community_annual_cost/SOURCE.md                |  21 +++++++++--------\n .../community_annual_cost/cell.py                  |   2 +-\n .../community_annual_cost.pdf                      | Bin 51423 -> 51423 bytes\n .../community_annual_cost/source.json              |  25 ++++++++++-----------\n 4 files changed, 23 insertions(+), 25 deletions(-)",
     "diff_file": "uncommitted.diff",
     "diff_truncated": false,
     "diff_excludes": [
