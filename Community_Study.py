@@ -6,7 +6,7 @@ whole community is settled under four commercial arrangements:
 
     redni      GEN-I Redni       (self-supply list for PV owners)
     aktivni    GEN-I Aktivni     (4-tariff, time-of-use)
-    dinamicni  GEN-I Dinamicni   (SIPX + margin)
+    dinamicni  GEN-I Dinamični   (SIPX + margin)
     souporaba  ZOEE energy sharing between the members
 
 The question is what the community pays as a whole, what its annual peak draw
@@ -42,6 +42,7 @@ import Horizon_Comparison as hc
 import multi_household_tools as mht
 from Environment import agreed_power_schedule_for_profile
 from MILP_Household import (
+    FULL_PERIOD_RESOLVE_TIME_LIMIT_S,
     build_household_env,
     effective_profile as _effective_profile,
     full_period_solver,
@@ -99,7 +100,7 @@ SCENARIOS = {
     "dinamicni": {
         "pv_paket": "GENI_SAMO_DINAMICNI",
         "nonpv_paket": "GENI_DINAMICNI",
-        "label": "Dinamicni",
+        "label": "Dinamični",
     },
     "souporaba": {
         "pv_paket": "GENI_SAMO_DINAMICNI",
@@ -356,6 +357,24 @@ def dispatch_member(member: Member, scenario: str, data=None, force=False, verbo
         solver=solver(),
         problem_name=f"Community_{scenario}_{member.key}",
     )
+    # A stop on the time limit reads "Optimal" but is an unproven incumbent, and
+    # this cache keeps only the trajectory -- nothing downstream could tell it
+    # apart. So it gets one more try at the longer limit before it is written.
+    if df_milp.attrs.get("stopped_on_limit"):
+        print(f"  {scenario:10s} {member.key:22s} stopped on the time limit; "
+              f"re-solving at {FULL_PERIOD_RESOLVE_TIME_LIMIT_S:,.0f} s", flush=True)
+        env = build_env(data, member, scenario)
+        df_milp = solve_household(
+            env,
+            initial_soc_kwh=soc,
+            final_soc_kwh=soc,
+            verbose=False,
+            solver=full_period_solver(time_limit_s=FULL_PERIOD_RESOLVE_TIME_LIMIT_S),
+            problem_name=f"Community_{scenario}_{member.key}",
+        )
+        if df_milp.attrs.get("stopped_on_limit"):
+            print(f"  WARNING {scenario} {member.key}: stopped again; caching the "
+                  f"incumbent, which is not proven within the gap", flush=True)
     runtime = time.time() - t0
 
     df_milp = df_milp.set_index("Date")
@@ -512,7 +531,7 @@ def run_scenario(members, data, scenario: str, collect_flows=False, verbose=True
         if verbose:
             print(
                 f"souporaba: {len(senders)} oddajnikov, {len(receivers)} prejemnikov, "
-                f"delez {SOUPORABA_DELEZ:.0%}, cena {SOUPORABA_CENA_EUR_KWH} EUR/kWh",
+                f"delež {SOUPORABA_DELEZ:.0%}, cena {SOUPORABA_CENA_EUR_KWH} EUR/kWh",
                 flush=True,
             )
         out = mht.run_souporaba_period_scenario(

@@ -22,7 +22,7 @@ def duration_curves(ax):
         ax.plot(hours, sorted_kw,
                 color=SCEN_COLOR[scenario], linewidth=2, zorder=2,
                 linestyle="--" if scenario == "souporaba" else "-",
-                label=LABEL[scenario] + (" (= Dinamicni)" if scenario == "souporaba" else ""))
+                label=LABEL[scenario] + (f" (= {LABEL['dinamicni']})" if scenario == "souporaba" else ""))
     return ax
 
 

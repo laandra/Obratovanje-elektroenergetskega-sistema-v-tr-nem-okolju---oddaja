@@ -622,7 +622,7 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
 
     if endogenous:
         hours = env.interval_minutes / 60.0
-        spent = {"solves": 0, "seconds": 0.0}
+        spent = {"solves": 0, "seconds": 0.0, "stopped": 0}
 
         def _dispatch():
             out = _run_strategy_once(env, horizon_kind, execution, soc_mode=soc_mode,
@@ -630,6 +630,7 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
                                      surrogate=surrogate)
             spent["solves"] += out["N_Solves"]
             spent["seconds"] += out["Runtime_s"]
+            spent["stopped"] += out["N_Stopped_On_Limit"]
             return out, np.maximum(out["_net_trace"], 0.0) / hours
 
         out, info = converge_agreed_power(env, _dispatch, verbose=verbose)
@@ -637,6 +638,7 @@ def run_strategy(env, horizon_kind, execution, soc_mode="fixed50", n_steps=None,
         # strategy is all of them and not just the pass that happened to be last.
         out["N_Solves"] = spent["solves"]
         out["Runtime_s"] = spent["seconds"]
+        out["N_Stopped_On_Limit"] = spent["stopped"]
         out["Agreed_Power_Iters"] = info["iterations"]
         out["Agreed_Power_Converged"] = info["converged"]
         out["Contract_Roll"] = CONTRACT_ROLL_TAG
@@ -734,6 +736,11 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
     import_kwh = export_kwh = 0.0
     peak_import_kw = 0.0
     n_solves = 0
+    # Sub-solves CBC stopped on its time limit. PuLP labels those "Optimal", so
+    # without this count a strategy row cannot say its bill is an unproven
+    # incumbent rather than a solution within the gap (see
+    # MILP_Household.solve_household).
+    n_stopped = 0
     soc_drift = 0.0
     hours = env.interval_minutes / 60.0
     soc_trace = np.empty(n_steps, dtype=float)
@@ -803,6 +810,7 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
             ),
         )
         n_solves += 1
+        n_stopped += int(plan.attrs.get("stopped_on_limit", False))
 
         n_exec = 1 if execution == "receding" else span
         for k in range(n_exec):
@@ -872,6 +880,7 @@ def _run_strategy_once(env, horizon_kind, execution, soc_mode="fixed50", n_steps
             env, "nominal_capacity_kwh", env.battery_capacity_kwh
         ),
         "N_Solves": n_solves,
+        "N_Stopped_On_Limit": n_stopped,
         "SOC_Drift_kWh": soc_drift,
         "Runtime_s": time.time() - t_start,
         "_soc_trace": soc_trace,
@@ -1318,7 +1327,8 @@ def option_label(option_id):
 
 
 def tariff_structure_label(option_id):
-    """What the household is actually billed on, in words."""
+    """What the household is actually billed on, in words -- Slovenian, since the
+    string is drawn as a row label in the article's figures."""
     from Pricing_Functions import TipCene
 
     p = option_paket(option_id)
@@ -1328,9 +1338,9 @@ def tariff_structure_label(option_id):
     if variant == VARIANT_1T:
         return f"1T: ET {p.et:.5f}"
     if p.tip_cene is TipCene.DINAMICNI:
-        return f"dynamic: SIPX + {p.pribitek_odjem:.5f}"
+        return f"dinamični: SIPX + {p.pribitek_odjem:.5f}"
     if p.tip_cene is TipCene.AKTIVNI:
-        return (f"4 blocks: {min(p.soncna_ns, p.soncna_vs, p.osnovna, p.konicna):.5f}"
+        return (f"4 bloki: {min(p.soncna_ns, p.soncna_vs, p.osnovna, p.konicna):.5f}"
                 f" -> {max(p.soncna_ns, p.soncna_vs, p.osnovna, p.konicna):.5f}")
     return f"1T: ET {p.et:.5f}"      # tarifni with no VT/MT published at all
 
@@ -1372,20 +1382,20 @@ def prosumer_price_lists(provider=None, include_net_metering=False):
 
 
 def buyback_rate_label(option_id):
-    """One-line description of what an option pays for an exported kWh."""
+    """One-line description of what an option pays for an exported kWh (Slovenian)."""
     from Pricing_Functions import TipOdkupa
 
     p = option_paket(option_id)
     if p.tip_odkupa is TipOdkupa.NI:
-        return "no buyback"
+        return "brez odkupa"
     if p.tip_odkupa is TipOdkupa.NET_METERING:
-        return "annual netting"
+        return "letni neto obračun"
     if p.tip_odkupa is TipOdkupa.DINAMICNI:
         return f"SIPX - {p.pribitek_oddaja:.5f}"
     if p.tip_odkupa is TipOdkupa.AKTIVNI:
         rates = [p.odkup_soncna_ns, p.odkup_soncna_vs, p.odkup_osnovna, p.odkup_konicna]
-        return f"4 blocks, {min(rates):.5f} -> {max(rates):.5f}"
-    return f"{p.odkup_fiksni:.5f} flat"
+        return f"4 bloki, {min(rates):.5f} -> {max(rates):.5f}"
+    return f"{p.odkup_fiksni:.5f} fiksno"
 
 
 _RATE_CACHE = {}

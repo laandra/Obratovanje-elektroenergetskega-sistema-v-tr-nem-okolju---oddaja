@@ -67,7 +67,7 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
 from matplotlib.text import Text
-from matplotlib.ticker import FuncFormatter
+from matplotlib.ticker import Formatter, FuncFormatter
 
 EXPORT_DPI = 600          # raster resolution for the article
 DISPLAY_DPI = 110         # inline preview in the notebook, unchanged
@@ -302,6 +302,207 @@ KW = FuncFormatter(lambda v, _: f"{v:,.1f}")
 PCT = FuncFormatter(lambda v, _: f"{v:,.0f}")
 PCT_SIGNED = FuncFormatter(lambda v, _: f"{v:+,.0f}")
 YEARS = FuncFormatter(lambda v, _: f"{v:.0f}")
+
+
+# --- number format ---------------------------------------------------------
+# Slovenian writes a DECIMAL COMMA. Every number Python and matplotlib produce
+# is in the English convention -- "0.5", and `f"{v:,.0f}"` gives "10,000" --
+# and in a Slovenian figure both are wrong, the second one badly: a reader
+# takes "10,000" for ten. So a figure going out in Slovenian has its numbers
+# rewritten on the way out, the same way it is translated for English: the
+# cells keep writing ordinary f-strings and formatters, and `show` localises
+# the finished figure -- tick labels (by wrapping each axis' formatter, since
+# matplotlib regenerates tick text from it on every draw), annotations, bar
+# labels, legend keys and the caption text alike.
+#
+# Thousands are grouped with a NARROW NO-BREAK SPACE (U+202F), the SI / ISO
+# 80000 separator: unambiguous in both languages, and present in DejaVu Sans,
+# Times New Roman and STIX. A LaTeX table gets `\,` instead, because
+# pdflatex's utf8 input does not define U+202F.
+DECIMAL_SEP = {"sl": ","}
+GROUP_SEP = {"sl": " "}
+LATEX_GROUP_SEP = r"\,"
+
+# An English-format number: digits with optional comma groups of exactly three,
+# then an optional fraction. Not inside a word, and not one part of a dotted
+# sequence -- "1.3.2025" and "15.03." are dates and stay as they are, which is
+# also why a number directly followed by a full stop is left alone. A comma
+# followed by anything but three digits is not a group ("1,2,3" is a list).
+_EN_NUMBER = re.compile(
+    r"(?<![\w.,])(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?![\w.]|,\d)")
+
+
+def localize_numbers(text, lang=None, *, latex=False):
+    """Rewrite the English-format numbers in `text` for `lang`.
+
+        localize_numbers("+119 (+16.2%)")      ->  "+119 (+16,2%)"
+        localize_numbers("10,000 EUR")         ->  "10 000 EUR"  (U+202F)
+
+    A no-op for any language without an entry in DECIMAL_SEP, so English text
+    passes through untouched. Not idempotent -- "0.125" becomes "0,125", which
+    reads as an English thousands group the second time round -- so callers
+    apply it exactly once; `localize_figure` keeps track of what it has done.
+    Inside `$...$` the decimal comma is written `{,}`, or mathtext sets it as
+    punctuation with a space after it.
+    """
+    lang = LANG if lang is None else lang
+    dec = DECIMAL_SEP.get(lang)
+    if dec is None or not text or not any(ch.isdigit() for ch in text):
+        return text
+    group = LATEX_GROUP_SEP if latex else GROUP_SEP[lang]
+
+    def swap(math):
+        point = "{,}" if (math or latex) and dec == "," else dec
+
+        def one(m):
+            whole, frac = m.group(1), m.group(2) or ""
+            return whole.replace(",", group) + (point + frac[1:] if frac else "")
+        return one
+
+    parts = text.split("$")
+    if len(parts) % 2 == 0:       # an unpaired $ -- not mathtext, treat as text
+        parts = [text]
+    return "$".join(_EN_NUMBER.sub(swap(i % 2 == 1), part)
+                    for i, part in enumerate(parts))
+
+
+def num(value, spec="", lang=None):
+    """Format one number in the active language: `pf.num(0.125, ".2f")`.
+
+    For new code that builds a label itself and wants it right at the source
+    rather than fixed up by `show` -- it gives the same text.
+    """
+    return localize_numbers(format(value, spec), lang)
+
+
+class _LocalizedFormatter(Formatter):
+    """Wraps an axis formatter so the tick text comes out in the figure's language.
+
+    Tick labels cannot be fixed by rewriting their Text artists: matplotlib asks
+    the formatter for fresh text on every draw, so the rewrite would be gone by
+    the time the figure is saved. Wrapping the formatter itself is the only
+    place the change survives. Everything but the final text is delegated, so
+    the wrapped formatter still chooses the ticks, the offset and the precision.
+    """
+
+    def __init__(self, inner, lang):
+        self.inner, self.lang = inner, lang
+
+    def set_axis(self, axis):
+        super().set_axis(axis)
+        self.inner.set_axis(axis)
+
+    def __call__(self, x, pos=None):
+        return localize_numbers(self.inner(x, pos), self.lang)
+
+    def format_ticks(self, values):
+        return [localize_numbers(s, self.lang)
+                for s in self.inner.format_ticks(values)]
+
+    def set_locs(self, locs):
+        self.locs = locs
+        self.inner.set_locs(locs)
+
+    def get_offset(self):
+        return localize_numbers(self.inner.get_offset(), self.lang)
+
+    def format_data(self, value):
+        return localize_numbers(self.inner.format_data(value), self.lang)
+
+    def format_data_short(self, value):
+        return localize_numbers(self.inner.format_data_short(value), self.lang)
+
+    def fix_minus(self, s):
+        return self.inner.fix_minus(s)
+
+
+def _is_date_formatter(fmt):
+    """Date tick text ("15.03.", "2025-01") is not a number and must stay."""
+    kind = type(fmt)
+    return "date" in kind.__module__.lower() or "Date" in kind.__name__
+
+
+def _rewrite_figure_text(fig, rewrite, mark):
+    """Apply `rewrite` once to every piece of text the figure will show.
+
+    Text artists alone are not enough, because three things in this module
+    re-create text from a stored original after this has run: `show` re-wraps
+    titles from `_pf_head`, `chart_frame` draws its header and legend from the
+    spec it recorded, and `_fit_key_legends` rebuilds every `key_legend` from
+    its handles -- whose labels are the originals. All of them are rewritten
+    here too. `mark` names the attribute that records an object as done, so a
+    rewrite that must not run twice (`localize_numbers`) never does.
+    """
+    def done(obj):
+        if getattr(obj, mark, False):
+            return True
+        try:
+            setattr(obj, mark, True)
+        except AttributeError:
+            return True
+        return False
+
+    def lines(text):
+        return "\n".join(rewrite(line) for line in text.split("\n"))
+
+    def handles(seq):
+        for h in seq or ():
+            label = h.get_label() if hasattr(h, "get_label") else None
+            if label and not label.startswith("_") and not done(h):
+                h.set_label(lines(label))
+
+    for ax in fig.axes:
+        head = getattr(ax, "_pf_head", None)
+        if head is not None and not done(ax):
+            title, subtitle, wrap = head
+            ax._pf_head = (rewrite(title),
+                           None if subtitle is None else rewrite(subtitle), wrap)
+        spec = getattr(ax, "_pf_key_spec", None)
+        if spec is not None:
+            handles(spec[0])
+    spec = getattr(fig, "_pf_frame", None)
+    if spec and not done(fig):
+        spec["title"] = rewrite(spec["title"] or "")
+        spec["subtitle"] = rewrite(spec["subtitle"] or "")
+        if getattr(fig, "_pf_frame_head", None):
+            fig._pf_frame_head = rewrite(fig._pf_frame_head)
+    if spec:
+        handles(spec["handles"])
+
+    for artist in fig.findobj(Text):
+        text = artist.get_text()
+        if text and not done(artist):
+            out = lines(text)
+            if out != text:
+                artist.set_text(out)
+
+
+def localize_figure(fig, lang=None):
+    """Put every number in a finished figure into `lang`'s convention.
+
+    A no-op for English. Runs in `show` after the translation, so a glossary
+    entry is still matched against the text the cell wrote.
+    """
+    lang = LANG if lang is None else lang
+    if lang not in DECIMAL_SEP:
+        return fig
+    for ax in fig.axes:
+        for axis in (ax.xaxis, ax.yaxis):
+            for which, get, put in (
+                    ("major", axis.get_major_formatter, axis.set_major_formatter),
+                    ("minor", axis.get_minor_formatter, axis.set_minor_formatter)):
+                fmt = get()
+                if isinstance(fmt, _LocalizedFormatter) or _is_date_formatter(fmt):
+                    continue
+                # set_*_formatter clears the "default formatter" flag, which
+                # would stop a later unit conversion from replacing it -- keep
+                # the flag as it was, since the wrapper is not a user choice.
+                default = getattr(axis, f"isDefault_{which[:3]}fmt", None)
+                put(_LocalizedFormatter(fmt, lang))
+                if default is not None:
+                    setattr(axis, f"isDefault_{which[:3]}fmt", default)
+    _rewrite_figure_text(fig, lambda s: localize_numbers(s, lang), "_pf_localized")
+    return fig
 
 
 # --- colour ----------------------------------------------------------------
@@ -1107,8 +1308,11 @@ def _translate(text, parts):
     if text in GLOSSARY:
         return GLOSSARY[text]
     out = text
+    # Whole words only: the fragment "let" ("10 let") would otherwise rewrite
+    # the inside of English words, and a notebook that writes its figures in
+    # English (`lang="en"`) runs every one of its labels through here.
     for sl, en in parts:
-        out = out.replace(sl, en)
+        out = re.sub(r"(?<!\w)" + re.escape(sl) + r"(?!\w)", en, out)
     if out == text:
         MISSING_TRANSLATIONS.setdefault(text, None)
     return out
@@ -1349,6 +1553,9 @@ def show(fig=None, name=None, *, save_pdf=None, png=False,
     fig._pf_titles = TITLES if titles is None else titles
 
     translate_figure(fig, LANG if lang is None else lang)
+    # After the translation, so the glossary still sees the cell's own text;
+    # before anything is measured, because "10 000" is not as wide as "10,000".
+    localize_figure(fig, LANG if lang is None else lang)
     resize_note = _normalize(fig, preset, ratio)
     # Before the first layout pass: a `key_legend`'s `ncol` was a maximum taken
     # on trust in the cell, and a legend wider than the canvas is not something
@@ -1842,7 +2049,8 @@ def latex_heatmap_table(table, *, cmap, norm, fmt="{:.1f}", name=None,
     parts = sorted(GLOSSARY_PARTS.items(), key=lambda kv: -len(kv[0]))
 
     def say(text):
-        return latex_escape(text if LANG == "sl" else _translate(text, parts))
+        text = text if LANG == "sl" else _translate(text, parts)
+        return localize_numbers(latex_escape(text), latex=True)
 
     n = table.shape[1]
     env = "table*" if (n > TABLE_MAX_COLUMN_COLS if span is None else span) else "table"
@@ -1870,14 +2078,14 @@ def latex_heatmap_table(table, *, cmap, norm, fmt="{:.1f}", name=None,
 
     body = []
     for idx, values in zip(table.index, table.to_numpy()):
-        cells = [_cell(latex_escape(row_label(idx)))]
+        cells = [_cell(localize_numbers(latex_escape(row_label(idx)), latex=True))]
         for value in values:
             value = float(value)
             if math.isnan(value):
                 cells.append("--")
                 continue
             fill = to_hex(cmap(norm(value)))
-            text = fmt.format(value)
+            text = localize_numbers(fmt.format(value), latex=True)
             text = "$-$" + text[1:] if text.startswith("-") else text
             ink = r"\color{white}" if _white_text_on(fill) else ""
             cells.append(f"\\cellcolor[HTML]{{{fill[1:].upper()}}}{ink}{text}")

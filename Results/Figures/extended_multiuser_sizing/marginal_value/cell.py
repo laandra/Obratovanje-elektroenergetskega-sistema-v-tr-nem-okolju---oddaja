@@ -34,12 +34,36 @@ ax.set_ylim(bottom=0)
 ax.margins(x=0.02)
 finish(ax, xlabel="Kapaciteta baterije [kWh]",
        ylabel="Mejna vrednost kapacitete [EUR/kWh/a]", yfmt=PLAIN)
+# Not every list is quotable to every household (Redni + NM needs PV), so the
+# caption names the sample each median is over rather than the whole selection.
+n_households = (
+    df.dropna(subset=["Marginal_Value_EUR_per_kWh"])
+    .groupby("Contract", observed=True)["Label"].nunique().reindex(CONTRACT_ORDER)
+)
+fewer = n_households[n_households < len(LABEL_ORDER)]
+sample_text = f"Mediana po {len(LABEL_ORDER)} gospodinjstvih" + (
+    " (" + ", ".join(f"{c}: {int(n)}" for c, n in fewer.items()) + ")" if len(fewer) else ""
+)
+# The cost lines assume the calendar life. A run that wears out on cycles first
+# recovers its capital over fewer years, so for it the line understates the cost
+# and the 8.4 optimum, which uses each run's own life, can sit left of the
+# crossing. The caption only claims the two agree when no run is cycle-limited.
+# "8.4" closes its sentence on purpose: pf.show leaves a number followed by a
+# full stop alone, and anywhere else would localise it to "8,4".
+n_cycle_limited = int((df.loc[df["Capacity_kWh"] > 0, "Life_Limited_By"] == "cycles").sum())
+crossing_text = (
+    f"Kjer krivulja seka črto {CAPEX_EUR_PER_KWH:,.0f} EUR/kWh, je velikost iz tabele 8.4."
+    if n_cycle_limited == 0 else
+    f"{n_cycle_limited} izračunov doseže mejo {BATTERY_CYCLE_LIMIT_EFC:,} ciklov pred koncem "
+    f"koledarske dobe; zanje črta strošek podcenjuje, zato je presečišče s črto "
+    f"{CAPEX_EUR_PER_KWH:,.0f} EUR/kWh lahko večje od velikosti iz tabele 8.4."
+)
 pf.chart_frame(fig, "Kje se naslednja kWh hrambe ne izplača več",
-      f"Mediana po {len(LABEL_ORDER)} gospodinjstvih. Kapaciteto se splača dodajati, dokler je "
+      f"{sample_text}. Kapaciteto se splača dodajati, dokler je "
       f"njena krivulja nad črto stroška. Te črte so strošek hrambe na kWh, porazdeljen na leto "
       f"čez celotno {BATTERY_CALENDAR_LIFE_Y}-letno koledarsko dobo, z "
       f"{OPEX_FRAC_OF_CAPEX_PER_YEAR:.1%} letnega vzdrževanja; ne vključujejo "
-      f"{CAPEX_FIXED_EUR:,.0f} EUR vgradnje, ki se zaračuna enkrat ne glede na velikost. Kjer "
-      f"krivulja seka črto {CAPEX_EUR_PER_KWH:,.0f} EUR/kWh, je velikost iz tabele 8.4.",
+      f"{CAPEX_FIXED_EUR:,.0f} EUR vgradnje, ki se zaračuna enkrat ne glede na velikost. "
+      + crossing_text,
       handles=contract_handles())
 pf.show(fig, "marginal_value", layout="frame")

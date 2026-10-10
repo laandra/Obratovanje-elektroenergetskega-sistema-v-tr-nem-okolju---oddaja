@@ -982,6 +982,7 @@ def _run_policy_once(env, policy, n_steps=None, signals=None, keep_traces=False)
         # `run_strategy` and `summarize_trajectory` use for `EFC_AC_Legacy`.
         "Equivalent_Full_Cycles": discharged / nominal if nominal > 0 else 0.0,
         "N_Solves": 0,
+        "N_Stopped_On_Limit": 0,
         "SOC_Drift_kWh": soc_drift,
         "Runtime_s": time.time() - t_start,
     }

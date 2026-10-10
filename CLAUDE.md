@@ -150,6 +150,10 @@ Practical rules:
 - Labels are written in Slovenian; `pf.LANG = "en"` translates through `GLOSSARY` /
   `GLOSSARY_PARTS`. Untranslated strings collect in `pf.MISSING_TRANSLATIONS` — that list
   is the glossary to-do. Use `pf.t(sl, en)` in new code.
+- Numbers: in a Slovenian figure `pf.show` rewrites every number to a decimal comma
+  and a U+202F thousands space (ticks, annotations, legends, LaTeX tables). Write plain
+  English f-strings in cells; never hand-format "0,5" (the pass would misread it).
+  English-text notebooks declare `lang="en"`.
 - Use the shared helpers rather than re-rolling them: `finish`, `chart_frame`
   (+ `layout="frame"`), `key_legend`, `panel_grid`, `edge_label`, `mix`, `ramp`, and the
   formatters `EUR`, `PLAIN`, `KW`, `PCT`, `PCT_SIGNED`, `YEARS`. An axis on a percent

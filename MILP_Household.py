@@ -104,6 +104,11 @@ SOC_MAX_FRAC = 1.0           # unusable headroom at the top
 # the gap costs hours and moves a bill in the hundreds by cents.
 FULL_PERIOD_GAP_REL = 0.001
 FULL_PERIOD_TIME_LIMIT_S = 900
+# The limit a run gets on its second try, after CBC stopped it on the first one
+# (`solve_household` sets `attrs["stopped_on_limit"]`). A stopped run is an
+# unproven incumbent that PuLP still labels "Optimal", and in the sizing sweeps
+# such incumbents ran up to 235 EUR/a above the converged bill.
+FULL_PERIOD_RESOLVE_TIME_LIMIT_S = 4 * FULL_PERIOD_TIME_LIMIT_S
 
 
 def full_period_solver(gap_rel=FULL_PERIOD_GAP_REL, time_limit_s=FULL_PERIOD_TIME_LIMIT_S,
@@ -1413,6 +1418,17 @@ def solve_household(
 
     if pulp.LpStatus[prob.status] != "Optimal":
         print(f"Warning: Solver ended with status {pulp.LpStatus[prob.status]}")
+    # CBC stopped by its time limit writes "Stopped on time - objective value
+    # ..." and PuLP reports that as LpStatus "Optimal" -- only `sol_status`
+    # (IntegerFeasible rather than Optimal) says the incumbent was never proven
+    # within the gap. Such an incumbent can be far off: a sizing run once came
+    # back 155 EUR/a above both neighbouring capacities. `solver_status` is left
+    # as PuLP reports it, because callers already gate on it; this flag is the
+    # extra fact they need to tell a time-limit stop from a converged solve.
+    stopped_on_limit = prob.sol_status == pulp.LpSolutionIntegerFeasible
+    if stopped_on_limit:
+        print("Warning: Solver stopped on its time limit; the incumbent is not "
+              "proven within the gap")
 
     # The contract the solve agreed to is what the trajectory is billed under,
     # here and in anything that prices it afterwards.
@@ -1501,6 +1517,7 @@ def solve_household(
     df_results = pd.DataFrame(results)
     # A non-Optimal status means the numbers below are not a solution.
     df_results.attrs["solver_status"] = pulp.LpStatus[prob.status]
+    df_results.attrs["stopped_on_limit"] = bool(stopped_on_limit)
     df_results.attrs["export_rate_floored_intervals"] = int(n_export_floored)
 
     # The envelope this trajectory was solved under, so a cached row can say what

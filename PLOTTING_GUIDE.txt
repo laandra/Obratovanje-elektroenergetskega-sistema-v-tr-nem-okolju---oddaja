@@ -249,6 +249,32 @@ Product names (GEN-I Dinamični samooskrba) are meant to stay untranslated.
 
 For new code that has both strings to hand: `pf.t("Poraba", "Consumption")`.
 
+NUMBERS. Slovenian writes a decimal comma, and every number Python and
+matplotlib produce is English -- "0.5", and `f"{v:,.0f}"` gives "10,000",
+which a Slovenian reader takes for ten. So when the figure language is "sl",
+`show` also LOCALISES the finished figure, after translating it:
+
+    0.5        ->  0,5
+    10,000     ->  10 000      (U+202F narrow no-break space, the SI separator)
+    +16.2%     ->  +16,2%
+    1.3.2025   ->  1.3.2025    (dotted sequences are dates; left alone)
+
+It reaches tick labels (each axis formatter is wrapped, because matplotlib
+regenerates tick text from the formatter on every draw -- rewriting the text
+artists would not survive the save), colourbars, annotations, bar labels,
+legend keys (including the handles `key_legend` and `chart_frame` rebuild the
+legend from), and the caption text in SOURCE.md. Date formatters are skipped.
+
+So cells keep writing ordinary f-strings and formatters; nothing in a cell has
+to change. Do NOT pre-format a number Slovenian-style by hand ("0,125"): the
+pass would read it as an English thousands group. For new code that wants the
+text right at the source, `pf.num(0.125, ".2f")` gives "0,13" in Slovenian.
+`pf.latex_heatmap_table` localises the same way, with `{,}` and `\,`.
+
+A notebook whose figures are written in English declares it with
+`pf.use(..., lang="en")` (RBC_vs_MILP_Comparison does), which turns both the
+translation and the localisation into no-ops for its text.
+
 
 --------------------------------------------------------------------------------
 7. TITLES AND CAPTIONS

@@ -15,37 +15,37 @@
     \cmidrule(l){2-5}
     Cenik & osnovni & EV & HP & HP\_EV \\
     \midrule
-    P1 FAk [1T] & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 & \cellcolor[HTML]{FCFCFB}0.0 \\
-    P1 FAk [2T] & \cellcolor[HTML]{F1F1EF}1.6 & \cellcolor[HTML]{F9F9F8}0.4 & \cellcolor[HTML]{F7F7F6}0.7 & \cellcolor[HTML]{F4F4F2}1.2 \\
-    P3 SR & \cellcolor[HTML]{FAFAF9}0.3 & \cellcolor[HTML]{F1F1EF}1.6 & \cellcolor[HTML]{EDECEB}2.2 & \cellcolor[HTML]{EEEEEC}2.0 \\
-    P3 D & \cellcolor[HTML]{DFDFDE}3.9 & \cellcolor[HTML]{EBEAE9}2.4 & \cellcolor[HTML]{E5E5E4}3.2 & \cellcolor[HTML]{EDECEB}2.2 \\
-    P2 D & \cellcolor[HTML]{DBDBD9}4.5 & \cellcolor[HTML]{E9E9E7}2.7 & \cellcolor[HTML]{E4E4E3}3.3 & \cellcolor[HTML]{EBEBEA}2.3 \\
-    P1 FV [2T] & \cellcolor[HTML]{DDDDDB}4.3 & \cellcolor[HTML]{E7E6E5}3.0 & \cellcolor[HTML]{E3E3E1}3.5 & \cellcolor[HTML]{E0E0DE}3.9 \\
-    P1 FV [1T] & \cellcolor[HTML]{E3E3E1}3.5 & \cellcolor[HTML]{E0E0DE}3.9 & \cellcolor[HTML]{DDDDDB}4.3 & \cellcolor[HTML]{E0E0DE}3.9 \\
-    P3 SD & \cellcolor[HTML]{D0D0CE}6.0 & \cellcolor[HTML]{DEDEDC}4.2 & \cellcolor[HTML]{D6D5D4}5.3 & \cellcolor[HTML]{E2E2E1}3.6 \\
-    P3 R [2T] & \cellcolor[HTML]{DFDFDE}4.0 & \cellcolor[HTML]{E1E1DF}3.8 & \cellcolor[HTML]{D9D9D8}4.8 & \cellcolor[HTML]{D6D6D4}5.2 \\
-    P1 D & \cellcolor[HTML]{D4D4D2}5.6 & \cellcolor[HTML]{DDDDDB}4.3 & \cellcolor[HTML]{D3D3D1}5.7 & \cellcolor[HTML]{DFDFDE}4.0 \\
-    P1 SD & \cellcolor[HTML]{D4D4D2}5.6 & \cellcolor[HTML]{DDDDDB}4.3 & \cellcolor[HTML]{D3D3D1}5.7 & \cellcolor[HTML]{DFDFDE}4.0 \\
-    P3 R [1T] & \cellcolor[HTML]{E1E0DF}3.8 & \cellcolor[HTML]{D4D4D2}5.5 & \cellcolor[HTML]{CECDCB}6.4 & \cellcolor[HTML]{D2D1D0}5.9 \\
-    P4 Ak [2T] & \cellcolor[HTML]{C5C4C2}7.7 & \cellcolor[HTML]{D0D0CE}6.0 & \cellcolor[HTML]{CCCBC9}6.7 & \cellcolor[HTML]{CBCAC9}6.7 \\
-    P1 DZ & \cellcolor[HTML]{AEADAB}10.7 & \cellcolor[HTML]{CCCBC9}6.6 & \cellcolor[HTML]{C8C7C6}7.2 & \cellcolor[HTML]{D6D5D4}5.3 \\
-    P3 A & \cellcolor[HTML]{EBEBEA}2.4 & \cellcolor[HTML]{B9B8B6}9.3 & \cellcolor[HTML]{C0BFBD}8.3 & \cellcolor[HTML]{D2D1D0}5.9 \\
-    P4 Ak [1T] & \cellcolor[HTML]{C6C5C3}7.5 & \cellcolor[HTML]{C5C4C3}7.6 & \cellcolor[HTML]{C1C0BE}8.1 & \cellcolor[HTML]{C7C6C5}7.4 \\
-    P3 F [2T] & \cellcolor[HTML]{CAC9C8}6.9 & \cellcolor[HTML]{C9C9C7}7.0 & \cellcolor[HTML]{BFBEBD}8.4 & \cellcolor[HTML]{BFBEBD}8.4 \\
-    P2 R [2T] & \cellcolor[HTML]{C6C5C3}7.5 & \cellcolor[HTML]{C8C7C5}7.3 & \cellcolor[HTML]{BEBDBB}8.6 & \cellcolor[HTML]{BEBDBB}8.6 \\
-    P4 F [2T] & \cellcolor[HTML]{B7B7B5}9.4 & \cellcolor[HTML]{C3C3C1}7.8 & \cellcolor[HTML]{BDBDBB}8.6 & \cellcolor[HTML]{BDBDBB}8.6 \\
-    P3 F [1T] & \cellcolor[HTML]{CCCBC9}6.7 & \cellcolor[HTML]{BDBCBA}8.7 & \cellcolor[HTML]{B3B2B0}10.0 & \cellcolor[HTML]{BABAB8}9.1 \\
-    P2 R [1T] & \cellcolor[HTML]{C7C6C5}7.3 & \cellcolor[HTML]{BABAB8}9.0 & \cellcolor[HTML]{B2B1AF}10.2 & \cellcolor[HTML]{B9B8B6}9.2 \\
-    P4 F [1T] & \cellcolor[HTML]{B9B8B6}9.3 & \cellcolor[HTML]{B7B6B4}9.5 & \cellcolor[HTML]{B1B1AF}10.3 & \cellcolor[HTML]{B9B8B6}9.3 \\
-    P1 F [2T] & \cellcolor[HTML]{AEADAB}10.7 & \cellcolor[HTML]{B3B2B0}10.1 & \cellcolor[HTML]{A8A7A5}11.3 & \cellcolor[HTML]{ABAAA8}11.0 \\
-    P2 F [2T] & \cellcolor[HTML]{B0AFAD}10.4 & \cellcolor[HTML]{B0AFAD}10.5 & \cellcolor[HTML]{A2A19E}12.1 & \cellcolor[HTML]{A4A3A1}11.8 \\
-    P4 SR & \cellcolor[HTML]{C9C8C6}7.1 & \cellcolor[HTML]{A9A8A6}11.3 & \cellcolor[HTML]{969593}13.4 & \cellcolor[HTML]{A1A09E}12.2 \\
-    P1 F [1T] & \cellcolor[HTML]{B0AFAD}10.5 & \cellcolor[HTML]{A5A4A2}11.7 & \cellcolor[HTML]{9B9A98}12.8 & \cellcolor[HTML]{A6A5A3}11.6 \\
-    P4 R [2T] & \cellcolor[HTML]{9F9E9C}12.4 & \cellcolor[HTML]{AAA9A7}11.2 & \cellcolor[HTML]{9F9E9C}12.3 & \cellcolor[HTML]{A3A2A0}11.9 \\
-    P2 F [1T] & \cellcolor[HTML]{B2B1AF}10.2 & \cellcolor[HTML]{A09F9D}12.3 & \cellcolor[HTML]{939290}13.7 & \cellcolor[HTML]{9E9D9B}12.5 \\
-    P4 R [1T] & \cellcolor[HTML]{A1A09E}12.2 & \cellcolor[HTML]{9C9B99}12.8 & \cellcolor[HTML]{92918F}13.8 & \cellcolor[HTML]{9E9D9B}12.5 \\
-    P3 SA & \cellcolor[HTML]{B5B4B2}9.8 & \cellcolor[HTML]{72716E}\color{white}17.4 & \cellcolor[HTML]{72716E}\color{white}17.4 & \cellcolor[HTML]{8C8B88}14.5 \\
-    P3 SAF & \cellcolor[HTML]{9C9B99}12.8 & \cellcolor[HTML]{545350}\color{white}20.7 & \cellcolor[HTML]{52514E}\color{white}21.0 & \cellcolor[HTML]{6F6E6B}\color{white}17.7 \\
+    P1 FAk [1T] & \cellcolor[HTML]{FCFCFB}0{,}0 & \cellcolor[HTML]{FCFCFB}0{,}0 & \cellcolor[HTML]{FCFCFB}0{,}0 & \cellcolor[HTML]{FCFCFB}0{,}0 \\
+    P1 FAk [2T] & \cellcolor[HTML]{F1F1EF}1{,}6 & \cellcolor[HTML]{F9F9F8}0{,}4 & \cellcolor[HTML]{F7F7F6}0{,}7 & \cellcolor[HTML]{F4F4F2}1{,}2 \\
+    P3 SR & \cellcolor[HTML]{FAFAF9}0{,}3 & \cellcolor[HTML]{F1F1EF}1{,}6 & \cellcolor[HTML]{EDECEB}2{,}2 & \cellcolor[HTML]{EEEEEC}2{,}0 \\
+    P3 D & \cellcolor[HTML]{DFDFDE}3{,}9 & \cellcolor[HTML]{EBEAE9}2{,}4 & \cellcolor[HTML]{E5E5E4}3{,}2 & \cellcolor[HTML]{EDECEB}2{,}2 \\
+    P2 D & \cellcolor[HTML]{DBDBD9}4{,}5 & \cellcolor[HTML]{E9E9E7}2{,}7 & \cellcolor[HTML]{E4E4E3}3{,}3 & \cellcolor[HTML]{EBEBEA}2{,}3 \\
+    P1 FV [2T] & \cellcolor[HTML]{DDDDDB}4{,}3 & \cellcolor[HTML]{E7E6E5}3{,}0 & \cellcolor[HTML]{E3E3E1}3{,}5 & \cellcolor[HTML]{E0E0DE}3{,}9 \\
+    P1 FV [1T] & \cellcolor[HTML]{E3E3E1}3{,}5 & \cellcolor[HTML]{E0E0DE}3{,}9 & \cellcolor[HTML]{DDDDDB}4{,}3 & \cellcolor[HTML]{E0E0DE}3{,}9 \\
+    P3 SD & \cellcolor[HTML]{D0D0CE}6{,}0 & \cellcolor[HTML]{DEDEDC}4{,}2 & \cellcolor[HTML]{D6D5D4}5{,}3 & \cellcolor[HTML]{E2E2E1}3{,}6 \\
+    P3 R [2T] & \cellcolor[HTML]{DFDFDE}4{,}0 & \cellcolor[HTML]{E1E1DF}3{,}8 & \cellcolor[HTML]{D9D9D8}4{,}8 & \cellcolor[HTML]{D6D6D4}5{,}2 \\
+    P1 D & \cellcolor[HTML]{D4D4D2}5{,}6 & \cellcolor[HTML]{DDDDDB}4{,}3 & \cellcolor[HTML]{D3D3D1}5{,}7 & \cellcolor[HTML]{DFDFDE}4{,}0 \\
+    P1 SD & \cellcolor[HTML]{D4D4D2}5{,}6 & \cellcolor[HTML]{DDDDDB}4{,}3 & \cellcolor[HTML]{D3D3D1}5{,}7 & \cellcolor[HTML]{DFDFDE}4{,}0 \\
+    P3 R [1T] & \cellcolor[HTML]{E1E0DF}3{,}8 & \cellcolor[HTML]{D4D4D2}5{,}5 & \cellcolor[HTML]{CECDCB}6{,}4 & \cellcolor[HTML]{D2D1D0}5{,}9 \\
+    P4 Ak [2T] & \cellcolor[HTML]{C5C4C2}7{,}7 & \cellcolor[HTML]{D0D0CE}6{,}0 & \cellcolor[HTML]{CCCBC9}6{,}7 & \cellcolor[HTML]{CBCAC9}6{,}7 \\
+    P1 DZ & \cellcolor[HTML]{AEADAB}10{,}7 & \cellcolor[HTML]{CCCBC9}6{,}6 & \cellcolor[HTML]{C8C7C6}7{,}2 & \cellcolor[HTML]{D6D5D4}5{,}3 \\
+    P3 A & \cellcolor[HTML]{EBEBEA}2{,}4 & \cellcolor[HTML]{B9B8B6}9{,}3 & \cellcolor[HTML]{C0BFBD}8{,}3 & \cellcolor[HTML]{D2D1D0}5{,}9 \\
+    P4 Ak [1T] & \cellcolor[HTML]{C6C5C3}7{,}5 & \cellcolor[HTML]{C5C4C3}7{,}6 & \cellcolor[HTML]{C1C0BE}8{,}1 & \cellcolor[HTML]{C7C6C5}7{,}4 \\
+    P3 F [2T] & \cellcolor[HTML]{CAC9C8}6{,}9 & \cellcolor[HTML]{C9C9C7}7{,}0 & \cellcolor[HTML]{BFBEBD}8{,}4 & \cellcolor[HTML]{BFBEBD}8{,}4 \\
+    P2 R [2T] & \cellcolor[HTML]{C6C5C3}7{,}5 & \cellcolor[HTML]{C8C7C5}7{,}3 & \cellcolor[HTML]{BEBDBB}8{,}6 & \cellcolor[HTML]{BEBDBB}8{,}6 \\
+    P4 F [2T] & \cellcolor[HTML]{B7B7B5}9{,}4 & \cellcolor[HTML]{C3C3C1}7{,}8 & \cellcolor[HTML]{BDBDBB}8{,}6 & \cellcolor[HTML]{BDBDBB}8{,}6 \\
+    P3 F [1T] & \cellcolor[HTML]{CCCBC9}6{,}7 & \cellcolor[HTML]{BDBCBA}8{,}7 & \cellcolor[HTML]{B3B2B0}10{,}0 & \cellcolor[HTML]{BABAB8}9{,}1 \\
+    P2 R [1T] & \cellcolor[HTML]{C7C6C5}7{,}3 & \cellcolor[HTML]{BABAB8}9{,}0 & \cellcolor[HTML]{B2B1AF}10{,}2 & \cellcolor[HTML]{B9B8B6}9{,}2 \\
+    P4 F [1T] & \cellcolor[HTML]{B9B8B6}9{,}3 & \cellcolor[HTML]{B7B6B4}9{,}5 & \cellcolor[HTML]{B1B1AF}10{,}3 & \cellcolor[HTML]{B9B8B6}9{,}3 \\
+    P1 F [2T] & \cellcolor[HTML]{AEADAB}10{,}7 & \cellcolor[HTML]{B3B2B0}10{,}1 & \cellcolor[HTML]{A8A7A5}11{,}3 & \cellcolor[HTML]{ABAAA8}11{,}0 \\
+    P2 F [2T] & \cellcolor[HTML]{B0AFAD}10{,}4 & \cellcolor[HTML]{B0AFAD}10{,}5 & \cellcolor[HTML]{A2A19E}12{,}1 & \cellcolor[HTML]{A4A3A1}11{,}8 \\
+    P4 SR & \cellcolor[HTML]{C9C8C6}7{,}1 & \cellcolor[HTML]{A9A8A6}11{,}3 & \cellcolor[HTML]{969593}13{,}4 & \cellcolor[HTML]{A1A09E}12{,}2 \\
+    P1 F [1T] & \cellcolor[HTML]{B0AFAD}10{,}5 & \cellcolor[HTML]{A5A4A2}11{,}7 & \cellcolor[HTML]{9B9A98}12{,}8 & \cellcolor[HTML]{A6A5A3}11{,}6 \\
+    P4 R [2T] & \cellcolor[HTML]{9F9E9C}12{,}4 & \cellcolor[HTML]{AAA9A7}11{,}2 & \cellcolor[HTML]{9F9E9C}12{,}3 & \cellcolor[HTML]{A3A2A0}11{,}9 \\
+    P2 F [1T] & \cellcolor[HTML]{B2B1AF}10{,}2 & \cellcolor[HTML]{A09F9D}12{,}3 & \cellcolor[HTML]{939290}13{,}7 & \cellcolor[HTML]{9E9D9B}12{,}5 \\
+    P4 R [1T] & \cellcolor[HTML]{A1A09E}12{,}2 & \cellcolor[HTML]{9C9B99}12{,}8 & \cellcolor[HTML]{92918F}13{,}8 & \cellcolor[HTML]{9E9D9B}12{,}5 \\
+    P3 SA & \cellcolor[HTML]{B5B4B2}9{,}8 & \cellcolor[HTML]{72716E}\color{white}17{,}4 & \cellcolor[HTML]{72716E}\color{white}17{,}4 & \cellcolor[HTML]{8C8B88}14{,}5 \\
+    P3 SAF & \cellcolor[HTML]{9C9B99}12{,}8 & \cellcolor[HTML]{545350}\color{white}20{,}7 & \cellcolor[HTML]{52514E}\color{white}21{,}0 & \cellcolor[HTML]{6F6E6B}\color{white}17{,}7 \\
     \bottomrule
   \end{tabular}
   \par\smallskip

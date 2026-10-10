@@ -11,7 +11,7 @@ for battery in SWEEP_BATTERIES:
         sub = sweep[(sweep["battery"] == battery) & (sweep["scheme"] == scheme)]\
             .sort_values("share")
         color = SCHEME_COLOR[scheme]
-        linestyle = "--" if battery == "brez baterije" else "-"
+        linestyle = "-" if battery == "brez baterije" else "--"
         ax.plot(sub["share"], sub["Community_cost_EUR"], color=color, linewidth=2.0,
                 linestyle=linestyle, marker="o", markersize=4.5, markerfacecolor=SURFACE,
                 markeredgewidth=1.6,
@@ -27,7 +27,7 @@ ax.set_axisbelow(True)
 finish(ax, xlabel="Pogodbeni delež deljene energije [%]",
        ylabel="Letni račun skupnosti [EUR/a]", yfmt=EUR, xfmt=SHARE)
 line_keys = [
-    plt.Line2D([], [], color=SCHEME_COLOR[scheme], linestyle=("--" if battery == "brez baterije" else "-"),
+    plt.Line2D([], [], color=SCHEME_COLOR[scheme], linestyle=("-" if battery == "brez baterije" else "--"),
                linewidth=2.0, label=f"{SCHEME_LABEL[scheme]} — {battery}")
     for battery in SWEEP_BATTERIES
     for scheme in (ccm.SCHEME_SOUPORABA, ccm.SCHEME_SKUPNOST)
