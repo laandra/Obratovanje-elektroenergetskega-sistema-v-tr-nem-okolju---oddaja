@@ -65,6 +65,8 @@ for col, (label, day) in enumerate(picks):
     # ax.set_title(f"{label} — {day:%d.%m.%Y}\n"
     #              f"povprečje {row['mean']:.0f}, od {row['min']:.0f} do "
     #              f"{row['max']:.0f} EUR/MWh", fontsize=10)
+    # The date alone heads each column, over the power panel and its price panel.
+    ax.set_title(f"{day:%d.%m.%Y}", loc="center", fontsize=10, fontweight="normal")
     if col == 0:
         ax.set_ylabel("Moč [kW]")
 
