@@ -92,6 +92,44 @@ def irr(capex, annual_savings, years, lo=-0.95, hi=5.0, tol=1e-9):
     return 0.5 * (lo + hi)
 
 
+def discounted_payback_years(capex, annual_savings, rate=DISCOUNT_RATE):
+    """Years of a level annuity whose present value at `rate` repays `capex`.
+
+    The payback that belongs next to `ROI_pct`: both discount the same savings
+    at the same rate, so `Discounted_Payback_y < Service_Life_y` exactly when
+    the ROI is positive. The simple `capex / savings` does not have that
+    property -- at 5 % over 12 years a pack with a simple payback anywhere
+    between 8.86 and 12 years reads as "repaid in time" beside a negative ROI,
+    which is the contradiction this function was added to remove.
+
+    It is `present_value_factor(rate, n) == capex / savings` solved for n, so a
+    fractional year means what it means there. The number is not capped at the
+    service life: 13 years on a 12-year pack says how far short it falls.
+
+    `inf` when the savings do not even cover the interest on the capital
+    (`savings <= rate * capex`): the annuity's present value converges below
+    capex and no horizon repays it. `inf` rather than NaN, so a median and a
+    `> Service_Life_y` test both read right. NaN where there is no capital.
+
+    Vectorised; a scalar in, a scalar out.
+    """
+    capex_a = np.asarray(capex, dtype=float)
+    savings = np.asarray(annual_savings, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        simple = capex_a / savings
+        if rate == 0:
+            years = np.where(savings > 0, simple, np.inf)
+        else:
+            repaid = savings > float(rate) * capex_a
+            years = np.where(
+                repaid,
+                -np.log1p(-float(rate) * np.where(repaid, simple, 0.0)) / np.log1p(float(rate)),
+                np.inf,
+            )
+    years = np.where(capex_a > 0, years, np.nan)
+    return float(years) if years.ndim == 0 else years
+
+
 def annualized_cost_factor(rate, years, opex_frac=OPEX_FRAC_OF_CAPEX_PER_YEAR):
     """Yearly cost of 1 EUR of installed capital: recovery plus O&M.
 
@@ -225,6 +263,9 @@ def battery_economics(savings_eur, capacity_kwh, efc_per_year, *,
             for c, s, n in zip(capex, net_savings, life)
         ]),
         "Payback_y": payback,
+        # Simple payback above is undiscounted and so cannot be read against
+        # ROI_pct; this one can -- it is under Service_Life_y iff the ROI is > 0.
+        "Discounted_Payback_y": discounted_payback_years(capex, net_savings, discount_rate),
         "Break_Even_Capex_EUR_kWh": break_even,
     }
 
@@ -240,6 +281,13 @@ assert np.isnan(irr(1000.0, 50.0, 10)), "Never-repaid capital should be NaN"
 assert abs(present_value_factor(0.05, 10) - 7.72173) < 1e-4
 assert abs(capital_recovery_factor(0.05, 12) - 0.11283) < 1e-4
 assert abs(annualized_cost_factor(0.05, 12, 0.0) - capital_recovery_factor(0.05, 12)) < 1e-12
+# The discounted payback is the life at which the NPV is exactly zero, it is the
+# simple payback at r = 0, and savings that only pay the interest never repay.
+_n = discounted_payback_years(1000.0, 200.0, 0.05)
+assert abs(200.0 * present_value_factor(0.05, _n) - 1000.0) < 1e-9, "discounted payback is off"
+assert discounted_payback_years(1000.0, 200.0, 0.0) == 5.0
+assert discounted_payback_years(1000.0, 50.0, 0.05) == float("inf")
+assert np.isnan(discounted_payback_years(0.0, 50.0, 0.05)), "no capital, no payback"
 # A 10 kWh pack at the assumed quotes prices a full cycle at 2500/6000 EUR.
 assert abs(cycle_cost_eur_per_efc(10.0) - 2500.0 / 6000.0) < 1e-12
 # Scalar in, scalar out -- and the two limits each bind where they should.
